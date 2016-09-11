@@ -1,0 +1,44 @@
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+
+repositories {
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+dependencies {
+//    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile 'org.aspectj:aspectjrt:1.7.3'
+    compile 'org.aspectj:aspectjweaver:1.7.3'
+//    compile 'redis.clients:jedis:2.8.1'
+   // compile 'mysql:mysql-connector-java:5.1.28'
+    compile("org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE")
+   // compile("org.springframework.boot:spring-boot-starter-jdbc:1.4.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-freemarker:1.4.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile 'com.google.zxing:core:3.2.0'
+    compile        'com.google.zxing:javase:3.2.0'
+    compile("org.springframework.boot:spring-boot-starter-tomcat")
+
+}
+springBoot {
+    mainClass = "org.javajidi.admin.Application"
+}
+
+bootRun {
+    addResources = true
+}
