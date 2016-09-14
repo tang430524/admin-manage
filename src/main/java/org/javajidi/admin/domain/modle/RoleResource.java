@@ -1,22 +1,22 @@
-package org.javajidi.admin.modle;
+package org.javajidi.admin.domain.modle;
 
 import java.io.Serializable;
 
 /**
  *
- * 用户角色
+ * 角色资源映射
  *
  */
-public class UserRole implements Serializable {
+public class RoleResource implements Serializable {
 
 	/** 主键 */
 	private Long id;
 
-	/** 用户ID */
-	private Long uid;
-
 	/** 角色ID */
 	private Long rid;
+
+	/** 权限ID */
+	private Long pid;
 
 	public Long getId() {
 		return this.id;
@@ -26,20 +26,20 @@ public class UserRole implements Serializable {
 		this.id = id;
 	}
 
-	public Long getUid() {
-		return this.uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
 	public Long getRid() {
 		return this.rid;
 	}
 
 	public void setRid(Long rid) {
 		this.rid = rid;
+	}
+
+	public Long getPid() {
+		return this.pid;
+	}
+
+	public void setPid(Long pid) {
+		this.pid = pid;
 	}
 
 }

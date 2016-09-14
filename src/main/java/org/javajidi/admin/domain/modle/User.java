@@ -1,4 +1,4 @@
-package org.javajidi.admin.modle;
+package org.javajidi.admin.domain.modle;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 主键ID */
-	private Long id;
+	private int id;
 
 	/** 登录名称 */
 	private String loginName;
@@ -24,28 +24,25 @@ public class User implements Serializable {
 	/** 邮箱 */
 	private String email;
 
-	/** 0、普通用户 1、管理员 */
-	private Integer type;
-
-	/** 0、禁用 1、正常 */
-	private Integer status;
+	/** 是否禁用 */
+	private boolean disabled;
 
 	/** 创建时间 */
-	private Date crTime;
+	private Date createTime;
 
 	/** 最后登录时间 */
 	private Date lastTime;
 
-	public Long getId() {
-		return this.id;
+	public int getId() {
+		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
 	public String getLoginName() {
-		return this.loginName;
+		return loginName;
 	}
 
 	public void setLoginName(String loginName) {
@@ -53,7 +50,7 @@ public class User implements Serializable {
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -61,43 +58,34 @@ public class User implements Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public Integer getType() {
-		return this.type;
+	public boolean isDisabled() {
+		return disabled;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
-	public Integer getStatus() {
-		return this.status;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-
-	public Date getCrTime() {
-		return this.crTime;
-	}
-
-	public void setCrTime(Date crTime) {
-		this.crTime = crTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public Date getLastTime() {
-		return this.lastTime;
+		return lastTime;
 	}
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
 	}
-
 }

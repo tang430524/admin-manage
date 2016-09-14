@@ -1,4 +1,4 @@
-package org.javajidi.admin.modle;
+package org.javajidi.admin.domain.modle;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,10 +11,10 @@ import java.util.Date;
 public class SysLog implements Serializable {
 
 	/** 主键 */
-	private Long id;
+	private long id;
 
 	/** 用户ID */
-	private Long uid;
+	private int uid;
 
 	/** 日志内容 */
 	private String content;
@@ -23,26 +23,26 @@ public class SysLog implements Serializable {
 	private String operation;
 
 	/** 创建时间 */
-	private Date crTime;
+	private Date createTime;
 
-	public Long getId() {
-		return this.id;
+	public long getId() {
+		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getUid() {
-		return this.uid;
+	public int getUid() {
+		return uid;
 	}
 
-	public void setUid(Long uid) {
+	public void setUid(int uid) {
 		this.uid = uid;
 	}
 
 	public String getContent() {
-		return this.content;
+		return content;
 	}
 
 	public void setContent(String content) {
@@ -50,19 +50,18 @@ public class SysLog implements Serializable {
 	}
 
 	public String getOperation() {
-		return this.operation;
+		return operation;
 	}
 
 	public void setOperation(String operation) {
 		this.operation = operation;
 	}
 
-	public Date getCrTime() {
-		return this.crTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setCrTime(Date crTime) {
-		this.crTime = crTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
-
 }
