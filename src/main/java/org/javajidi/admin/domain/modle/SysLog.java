@@ -10,8 +10,6 @@ import java.util.Date;
  */
 public class SysLog implements Serializable {
 
-	/** 主键 */
-	private long id;
 
 	/** 用户ID */
 	private int uid;
@@ -25,13 +23,6 @@ public class SysLog implements Serializable {
 	/** 创建时间 */
 	private Date createTime;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public int getUid() {
 		return uid;
