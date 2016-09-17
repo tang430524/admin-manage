@@ -6,38 +6,28 @@ import java.io.Serializable;
  *
  * 资源
  *
- * 菜单，服务地址，功能按钮，某个数据都是资源
+ * 服务地址，功能按钮，某个数据都是资源
  */
 public class Resource implements Serializable {
 
-	private int id;
+	/** 唯一权限编码 */
+	private String code;
 
 	/** 权限名称 */
 	private String title;
 
-	/** 资源类型 1. 菜单 2. 功能按钮、3. url 4.数据 */
+	/** 资源类型 1. 功能按钮、2. url 3.数据 */
 	private byte type;
 
-	/** 状态 是否启用*/
+	/** 状态 是否禁用*/
 	private boolean disabled;
 
 	/** 地址 */
 	private String url;
 
-	/** 权限编码 */
-	private String permCode;
-
-
 	/** 描述 */
 	private String description;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getTitle() {
 		return title;
@@ -71,12 +61,12 @@ public class Resource implements Serializable {
 		this.url = url;
 	}
 
-	public String getPermCode() {
-		return permCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setPermCode(String permCode) {
-		this.permCode = permCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getDescription() {
@@ -86,4 +76,6 @@ public class Resource implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
 }
