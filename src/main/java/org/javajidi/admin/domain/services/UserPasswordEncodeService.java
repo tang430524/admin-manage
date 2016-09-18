@@ -9,10 +9,14 @@ import org.springframework.util.StringUtils;
  */
 public class UserPasswordEncodeService {
 
-    public void encodePassword(User user){
+    public static void encodePassword(User user){
         if(user==null || StringUtils.isEmpty(user.getPassword())){
             return;
         }
         user.setPassword(MD5Encoder.encode(user.getPassword().getBytes()));
+    }
+
+    public static String encodePassword(String password){
+        return MD5Encoder.encode(password.getBytes());
     }
 }

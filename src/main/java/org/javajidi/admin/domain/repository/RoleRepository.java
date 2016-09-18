@@ -21,4 +21,6 @@ public interface RoleRepository {
 
     void remove(String id);
 
+    void switchStatus(String id,boolean disabled);
+
 }

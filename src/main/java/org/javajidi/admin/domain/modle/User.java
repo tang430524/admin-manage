@@ -2,6 +2,7 @@ package org.javajidi.admin.domain.modle;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -13,7 +14,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 主键ID */
-	private int id;
+	private String id;
 
 	/** 登录名称 */
 	private String loginName;
@@ -33,11 +34,13 @@ public class User implements Serializable {
 	/** 最后登录时间 */
 	private Date lastTime;
 
-	public int getId() {
+	private List<String> roles;
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -87,5 +90,17 @@ public class User implements Serializable {
 
 	public void setLastTime(Date lastTime) {
 		this.lastTime = lastTime;
+	}
+
+	public void grantRoles(List<String> roles){
+		this.roles=roles;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public boolean isRoot(){
+		return "root".equals(loginName);
 	}
 }

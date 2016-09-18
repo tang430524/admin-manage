@@ -18,4 +18,6 @@ public interface ResourceRepository {
     List<Resource> list();
 
     void remove(String code);
+
+    void switchStatus(String code,boolean disabled);
 }

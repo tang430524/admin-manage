@@ -10,13 +10,19 @@ import java.io.Serializable;
  */
 public class Resource implements Serializable {
 
+	public static final byte URL=1;
+
+	public static final byte BUTTON=2;
+
+	public static final byte DATA=3;
+
 	/** 唯一权限编码 */
 	private String code;
 
 	/** 权限名称 */
 	private String title;
 
-	/** 资源类型 1. 功能按钮、2. url 3.数据 */
+	/** 资源类型 1. url、2. 功能按钮 3.数据 */
 	private byte type;
 
 	/** 状态 是否禁用*/

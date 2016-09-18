@@ -1,5 +1,8 @@
 package org.javajidi.admin.domain.modle;
 
+import com.alibaba.fastjson.JSON;
+import org.springframework.util.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class Menu {
     /** 状态 是否禁用*/
     private boolean disabled;
 
-    //子菜单
+    //子菜单,只支持二级菜单
     private List<Menu> items=new ArrayList<>();
 
     public Menu(String code,String label){
@@ -78,5 +81,16 @@ public class Menu {
 
     public void setItems(List<Menu> items) {
         this.items = items;
+    }
+
+    public String itemsToJson(){
+        if(CollectionUtils.isEmpty(items)){
+            return null;
+        }
+        return JSON.toJSONString(items);
+    }
+
+    public void parseItemsFromJson(String jsonItems){
+        items=JSON.parseArray(jsonItems,Menu.class);
     }
 }

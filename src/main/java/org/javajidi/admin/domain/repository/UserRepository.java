@@ -23,11 +23,15 @@ public interface UserRepository {
 
     List<Resource> getUrlResources(String userId);
 
-    boolean hasResourcePermission(String resourceCode);
+    boolean hasResourcePermission(String userId,String resourceCode);
 
     List<Menu> getNavMenus(String userId);
 
     void remove(String id);
+
+    void switchStatus(String id,boolean disabled);
+
+    User find(String loginName,String password);
 
 
 }

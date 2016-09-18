@@ -1,11 +1,10 @@
 package org.javajidi.admin.application;
 
-import org.javajidi.admin.domain.repository.RoleRepository;
-import org.javajidi.admin.domain.modle.Menu;
-import org.javajidi.admin.domain.modle.Resource;
 import org.javajidi.admin.domain.modle.Role;
+import org.javajidi.admin.domain.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,20 +18,19 @@ public class RoleService {
     @Autowired
     protected RoleRepository roleRepository;
 
-    public void create(String roleName,String desc){
-        if(roleRepository.contains(roleName)){
+    public void create(Role role){
+        Assert.hasText(role.getName(),"Role name is empty");
+        if(roleRepository.contains(role.getName())){
             return;
         }
-        Role role=new Role(UUID.randomUUID().toString(),roleName,desc);
+        role.setId(UUID.randomUUID().toString());
          roleRepository.add(role);
     }
 
-    public void modify(String id,String roleName,String desc){
-        Role role=roleRepository.get(id);
-        if(role!=null){
-            role.update(roleName,desc);
-            roleRepository.update(role);
-        }
+    public void modify(Role newRole){
+        Assert.hasText(newRole.getId(),"Role id is empty");
+        Assert.hasText(newRole.getName(),"Role name is empty");
+        roleRepository.update(newRole);
     }
 
     public Role get(String id){
@@ -47,13 +45,17 @@ public class RoleService {
         roleRepository.remove(id);
     }
 
-    public void grantResource(String roleId, List<Resource> resources){
+    public void switchStatus(String id,boolean disable){
+        roleRepository.switchStatus(id,disable);
+    }
+
+    public void grantResource(String roleId, List<String> resources){
        Role role=get(roleId);
        role.grantResource(resources);
        roleRepository.update(role);
     }
 
-    public void grantMenu(String roleId, List<Menu> menus){
+    public void grantMenu(String roleId, List<String> menus){
         Role role=get(roleId);
         role.grantMenu(menus);
         roleRepository.update(role);

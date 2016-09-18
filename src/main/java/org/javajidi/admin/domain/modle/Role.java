@@ -21,9 +21,9 @@ public class Role implements Serializable {
 	/** 状态 是否禁用*/
 	private boolean disabled;
 
-	private List<Resource> resources;
+	private List<String> resources;
 
-	private List<Menu> menus;
+	private List<String> menus;
 
 	public Role(String id,String name,String desc){
 		this.name=name;
@@ -54,11 +54,11 @@ public class Role implements Serializable {
 		this.setName(name).setDescription(desc);
 	}
 
-	public void grantResource(List<Resource> resources){
+	public void grantResource(List<String> resources){
 		this.resources=resources;
 	}
 
-	public void grantMenu(List<Menu> menus){
+	public void grantMenu(List<String> menus){
 		this.menus=menus;
 	}
 
@@ -70,19 +70,17 @@ public class Role implements Serializable {
 		this.disabled = disabled;
 	}
 
-	public List<Resource> getResources() {
-		return resources;
-	}
 
-	public void setResources(List<Resource> resources) {
+
+	public void setResources(List<String> resources) {
 		this.resources = resources;
 	}
 
-	public List<Menu> getMenus() {
+	public List<String> getMenus() {
 		return menus;
 	}
 
-	public void setMenus(List<Menu> menus) {
+	public void setMenus(List<String> menus) {
 		this.menus = menus;
 	}
 
@@ -94,4 +92,9 @@ public class Role implements Serializable {
 		this.id = id;
 		return this;
 	}
+
+	public List<String> getResources() {
+		return resources;
+	}
 }
+

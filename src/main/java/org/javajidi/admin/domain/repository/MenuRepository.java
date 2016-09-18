@@ -21,4 +21,6 @@ public interface MenuRepository {
 
     void remove(String code);
 
+    void switchStatus(String code,boolean disabled);
+
 }

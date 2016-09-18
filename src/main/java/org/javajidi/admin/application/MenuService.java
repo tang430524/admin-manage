@@ -4,6 +4,9 @@ import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.domain.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.util.List;
 
 /**
  * Created by xieqiang on 2016/9/17.
@@ -15,6 +18,7 @@ public class MenuService {
     protected MenuRepository menuRepository;
 
     public void create(Menu menu){
+       validate(menu);
         if(menuRepository.contains(menu.getCode())){
             return;
         }
@@ -22,6 +26,7 @@ public class MenuService {
     }
 
     public void modify(Menu menu){
+        validate(menu);
         menuRepository.update(menu);
     }
 
@@ -33,5 +38,17 @@ public class MenuService {
         menuRepository.remove(code);
     }
 
+    public List<Menu> list(){
+        return menuRepository.list();
+    }
+
+    public void switchStatus(String menu,boolean disable){
+        menuRepository.switchStatus(menu,disable);
+    }
+
+    private void validate(Menu menu){
+        Assert.hasText(menu.getCode());
+        Assert.hasText(menu.getLabel());
+    }
 
 }
