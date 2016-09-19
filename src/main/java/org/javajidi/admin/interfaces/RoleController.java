@@ -49,5 +49,16 @@ public class RoleController {
         return roleService.list();
     }
 
+    //为角色分配资源
+    @RequestMapping(value = "/{id}/grant-resource",method = RequestMethod.PUT)
+    public void grantResources(@PathVariable("id") String id,@RequestBody List<String> rids){
+        roleService.grantResource(id,rids);
+    }
+
+    //为角色分配菜单
+    @RequestMapping(value = "/{id}/grant-menu",method = RequestMethod.PUT)
+    public void grantMenu(@PathVariable("id") String id,@RequestBody List<String> menuCodes){
+        roleService.grantMenu(id,menuCodes);
+    }
 
 }
