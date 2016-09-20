@@ -29,6 +29,12 @@ public class MenuController {
         menuService.modify(menu);
     }
 
+    @RequestMapping(value = "/{code}/additem",method = RequestMethod.POST)
+    public void addItem(@PathVariable("code") String code,@RequestBody Menu menu){
+        menuService.addItem(code,menu);
+    }
+
+
     @RequestMapping(value = "/{code}/disable",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("code") String code,@RequestParam("disable") boolean disable){
         menuService.switchStatus(code,disable);

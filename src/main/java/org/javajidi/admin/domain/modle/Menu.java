@@ -13,19 +13,19 @@ import java.util.List;
 public class Menu {
 
 
-    //唯一代码
+    /** 唯一代码*/
     private String code;
 
-    //显示名称
+    /**显示名称*/
     private String label;
 
-    //链接
+    /**链接*/
     private String url;
 
     /** 状态 是否禁用*/
     private boolean disabled;
 
-    //子菜单,只支持二级菜单
+    /**子菜单,只支持二级菜单*/
     private List<Menu> items=new ArrayList<>();
 
     public Menu(String code,String label){

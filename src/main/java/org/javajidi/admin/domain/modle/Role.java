@@ -21,9 +21,15 @@ public class Role implements Serializable {
 	/** 状态 是否禁用*/
 	private boolean disabled;
 
+
+	//todo 这两个字段待商榷
+
+	/**资源id*/
 	private List<String> resources;
 
+	/**菜单id*/
 	private List<String> menus;
+
 
 	public Role(String id,String name,String desc){
 		this.name=name;

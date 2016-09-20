@@ -30,6 +30,13 @@ public class MenuRepositoryJdbc implements MenuRepository{
     }
 
     @Override
+    public void addItem(String parentCode, Menu menu) {
+        Menu parent=get(parentCode);
+        parent.addItems(menu);
+        update(parent);
+    }
+
+    @Override
     public Menu get(String code) {
         return jdbcTemplate.queryForObject("select * from menu where code=?",createMapper(),code);
     }

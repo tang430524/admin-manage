@@ -30,6 +30,11 @@ public class MenuService {
         menuRepository.update(menu);
     }
 
+    public void addItem(String parentCode,Menu menu){
+        validate(menu);
+        menuRepository.addItem(parentCode,menu);
+    }
+
     public Menu get(String code){
         return menuRepository.get(code);
     }
