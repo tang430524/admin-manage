@@ -48,5 +48,10 @@ public class UserController {
         return userService.list();
     }
 
+    @RequestMapping(value = "/grantRole",method = RequestMethod.PUT)
+    public void grantRole(@PathVariable("id") String id,@RequestBody List<String> rids){
+        userService.grantRole(id,rids);
+    }
+
 
 }
