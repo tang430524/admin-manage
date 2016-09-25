@@ -22,6 +22,9 @@ public class User implements Serializable {
 	/** 密码 */
 	private String password;
 
+	/**密码加密的盐*/
+	private String salt;
+
 	/** 邮箱 */
 	private String email;
 
@@ -98,6 +101,14 @@ public class User implements Serializable {
 
 	public List<String> getRoles() {
 		return roles;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public boolean isRoot(){

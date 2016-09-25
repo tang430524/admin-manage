@@ -1,5 +1,5 @@
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -41,6 +41,7 @@ dependencies {
     compile 'com.alibaba:druid:1.0.25'
     compile 'com.alibaba:fastjson:1.2.17'
     compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-codec:commons-codec:1.10'
     compile 'com.google.guava:guava:19.0'
 
     compile 'org.springframework.security:spring-security-web:4.1.1.RELEASE'

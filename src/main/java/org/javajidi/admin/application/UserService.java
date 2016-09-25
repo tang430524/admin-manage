@@ -4,7 +4,6 @@ import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.domain.modle.Resource;
 import org.javajidi.admin.domain.modle.User;
 import org.javajidi.admin.domain.repository.UserRepository;
-import org.javajidi.admin.domain.services.UserPasswordEncodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -24,7 +23,7 @@ public class UserService {
     public void create(User user){
         validate(user);
         user.setId(UUID.randomUUID().toString());
-        UserPasswordEncodeService.encodePassword(user);
+      // digestutil(user);
         userRepository.add(user);
     }
 
@@ -71,7 +70,7 @@ public class UserService {
     }
 
     public User login(String loginName,String passwd){
-        return userRepository.find(loginName,  UserPasswordEncodeService.encodePassword(passwd));
+        return userRepository.find(loginName,  passwd);
     }
 
 
