@@ -14,6 +14,7 @@ var forms_1 = require('@angular/forms');
 var login_compent_1 = require('./login.compent');
 var app_routing_1 = require('./app.routing');
 var app_compent_1 = require("./app.compent");
+var dashbord_compent_1 = require("./dashbord.compent");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,7 +23,7 @@ var AppModule = (function () {
             imports: [platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
                 app_routing_1.routing],
-            declarations: [login_compent_1.LoginComponent, app_compent_1.AppComponent],
+            declarations: [login_compent_1.LoginComponent, app_compent_1.AppComponent, dashbord_compent_1.DashBordComponent],
             bootstrap: [app_compent_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

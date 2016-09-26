@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
     selector: 'login-component',
     templateUrl: 'app/pages/login.html'
 })
 export class LoginComponent {
-    username='';
+    loginName='';
     password='';
-    remember=1;
+    remember=true;
+    constructor(
+        private router: Router) {
+    }
 
-    // onSubmit() {
-    //      conso
-    // }
+    onSubmit():void{
+        // alert(this.loginName+this.password+''+this.remember);
+        //todo
+        this.router.navigate(["/dashbord"]);
+    }
 }

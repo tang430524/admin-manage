@@ -9,18 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
 var LoginComponent = (function () {
-    function LoginComponent() {
-        this.username = '';
+    function LoginComponent(router) {
+        this.router = router;
+        this.loginName = '';
         this.password = '';
-        this.remember = 1;
+        this.remember = true;
     }
+    LoginComponent.prototype.onSubmit = function () {
+        // alert(this.loginName+this.password+''+this.remember);
+        //todo
+        this.router.navigate(["/dashbord"]);
+    };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'login-component',
             templateUrl: 'app/pages/login.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());
