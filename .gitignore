@@ -2,8 +2,8 @@ build/
 .idea/
 .gradle/
 
-src/main/resources/public/node_modules/
-src/main/resources/public/typings/
-*.js
-*.js.map
-npm-debug.*
+**/node_modules/
+**/typings/
+**/*.js
+**/*.js.map
+**/npm-debug.*
