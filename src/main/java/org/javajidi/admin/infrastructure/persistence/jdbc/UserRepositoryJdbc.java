@@ -2,6 +2,7 @@ package org.javajidi.admin.infrastructure.persistence.jdbc;
 
 import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.domain.modle.Resource;
+import org.javajidi.admin.domain.modle.Role;
 import org.javajidi.admin.domain.modle.User;
 import org.javajidi.admin.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public void add(User user) {
-        jdbcTemplate.update("INSERT user (id,loginName,password,email,disabled,createTime) VALUES (?,?,?,?,?,?)",user.getId(),user.getLoginName(),user.getPassword(),user.getEmail(),user.isDisabled()?1:0,new Date());
+        jdbcTemplate.update("INSERT user (id,username,password,email,disabled,createTime) VALUES (?,?,?,?,?,?)",user.getId(),user.getUsername(),user.getPassword(),user.getEmail(),user.isDisabled()?1:0,new Date());
     }
 
     @Override
     public void update(User user) {
-        jdbcTemplate.update("UPDATE user SET loginName=?,email=?,password=? WHERE id=?",user.getLoginName(),user.getEmail(),user.getPassword(),user.getId());
+        jdbcTemplate.update("UPDATE user SET username=?,email=?,password=? WHERE id=?",user.getUsername(),user.getEmail(),user.getPassword(),user.getId());
         if(!CollectionUtils.isEmpty(user.getRoles())){
             jdbcTemplate.update("DELETE FROM user_role WHERE uid=?",user.getId());
             jdbcTemplate.batchUpdate("INSERT user_role (uid,role_id) VALUES (?,?)", new BatchPreparedStatementSetter() {
@@ -58,7 +59,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public boolean contains(String name) {
-        return jdbcTemplate.query("select count(loginName) from user where loginName=?", rs -> rs.getInt("loginName")>0,name);
+        return jdbcTemplate.query("select count(username) from user where username=?", rs -> rs.getInt("username")>0,name);
     }
 
     @Override
@@ -102,7 +103,18 @@ public class UserRepositoryJdbc implements UserRepository {
     }
 
     @Override
-    public User find(String loginName, String password) {
-        return jdbcTemplate.queryForObject("select * from user where loginName=? and password=?",BeanPropertyRowMapper.newInstance(User.class),loginName,password);
+    public User find(String username, String password) {
+        return jdbcTemplate.queryForObject("select * from user where username=? and password=?",BeanPropertyRowMapper.newInstance(User.class),username,password);
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        return jdbcTemplate.queryForObject("select * from user where username=? ",BeanPropertyRowMapper.newInstance(User.class),username);
+
+    }
+
+    @Override
+    public List<Role> getRoles(String userId) {
+        return jdbcTemplate.query("select * from role r join user_role ur on r.id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Role.class),userId);
     }
 }

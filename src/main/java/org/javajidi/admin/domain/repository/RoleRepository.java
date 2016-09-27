@@ -23,4 +23,5 @@ public interface RoleRepository {
 
     void switchStatus(String id,boolean disabled);
 
+
 }

@@ -28,6 +28,9 @@ public class Menu {
     /**子菜单,只支持二级菜单*/
     private List<Menu> items=new ArrayList<>();
 
+    public Menu(){
+
+    }
     public Menu(String code,String label){
         this.code=code;
         this.label=label;

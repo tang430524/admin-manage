@@ -30,6 +30,7 @@ public class Role implements Serializable {
 	/**菜单id*/
 	private List<String> menus;
 
+	public Role(){}
 
 	public Role(String id,String name,String desc){
 		this.name=name;

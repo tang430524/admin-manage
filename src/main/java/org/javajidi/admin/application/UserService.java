@@ -5,6 +5,7 @@ import org.javajidi.admin.domain.modle.Resource;
 import org.javajidi.admin.domain.modle.User;
 import org.javajidi.admin.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -20,10 +21,14 @@ public class UserService {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected Md5PasswordEncoder md5PasswordEncoder;
+
     public void create(User user){
         validate(user);
         user.setId(UUID.randomUUID().toString());
-      // digestutil(user);
+        user.setSalt(UUID.randomUUID().toString());
+        user.setPassword(md5PasswordEncoder.encodePassword(user.getPassword(),user.getSalt()));
         userRepository.add(user);
     }
 
@@ -75,7 +80,7 @@ public class UserService {
 
 
     private void validate(User user) {
-        Assert.hasText(user.getLoginName());
+        Assert.hasText(user.getUsername());
         Assert.hasText(user.getPassword());
         if(user.isRoot()){
             throw new IllegalArgumentException("user loginName cannot is root");

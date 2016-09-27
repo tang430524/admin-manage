@@ -47,4 +47,10 @@ public class ResourceRepositoryJdbc implements ResourceRepository{
     public void switchStatus(String code,boolean disabled){
         jdbcTemplate.update("update resource SET disable=? WHERE code=?",disabled?1:0,code);
     }
+
+
+    @Override
+    public List<Resource> listByRole(String roleId) {
+        return jdbcTemplate.query("select re.* from  role_resource rr  join resources re on re.code=rr.resource_code where rr.role_id=?",BeanPropertyRowMapper.newInstance(Resource.class),roleId);
+    }
 }

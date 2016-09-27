@@ -5,12 +5,13 @@ import { LoginComponent } from './login.compent'
 import { routing } from './app.routing';
 import {AppComponent} from "./app.compent";
 import {DashBordComponent} from "./dashbord.compent";
+import {UserComponent} from "./user.compent";
 
 @NgModule({
     imports:      [ BrowserModule,
         FormsModule,
         routing],
-    declarations: [ LoginComponent,AppComponent, DashBordComponent],
+    declarations: [ LoginComponent,AppComponent, DashBordComponent,UserComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

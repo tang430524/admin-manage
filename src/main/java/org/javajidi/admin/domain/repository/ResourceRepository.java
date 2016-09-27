@@ -20,4 +20,9 @@ public interface ResourceRepository {
     void remove(String code);
 
     void switchStatus(String code,boolean disabled);
+
+    List<Resource> listByRole(String roleId);
+
+
+
 }

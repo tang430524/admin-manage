@@ -17,7 +17,7 @@ public class User implements Serializable {
 	private String id;
 
 	/** 登录名称 */
-	private String loginName;
+	private String username;
 
 	/** 密码 */
 	private String password;
@@ -47,12 +47,12 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -112,6 +112,6 @@ public class User implements Serializable {
 	}
 
 	public boolean isRoot(){
-		return "root".equals(loginName);
+		return "root".equals(username);
 	}
 }
