@@ -11,19 +11,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var forms_1 = require('@angular/forms');
+var http_1 = require('@angular/http');
 var login_compent_1 = require('./login.compent');
 var app_routing_1 = require('./app.routing');
 var app_compent_1 = require("./app.compent");
 var dashbord_compent_1 = require("./dashbord.compent");
 var user_compent_1 = require("./user.compent");
+var login_service_1 = require('./login.service');
+require('rxjs/add/operator/toPromise');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule,
+            imports: [
+                platform_browser_1.BrowserModule,
                 forms_1.FormsModule,
-                app_routing_1.routing],
+                app_routing_1.routing,
+                http_1.HttpModule
+            ],
+            providers: [
+                login_service_1.LoginService
+            ],
             declarations: [login_compent_1.LoginComponent, app_compent_1.AppComponent, dashbord_compent_1.DashBordComponent, user_compent_1.UserComponent],
             bootstrap: [app_compent_1.AppComponent]
         }), 

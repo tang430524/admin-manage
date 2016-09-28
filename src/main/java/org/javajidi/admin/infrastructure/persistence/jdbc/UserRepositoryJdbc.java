@@ -6,6 +6,7 @@ import org.javajidi.admin.domain.modle.Role;
 import org.javajidi.admin.domain.modle.User;
 import org.javajidi.admin.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -102,15 +103,14 @@ public class UserRepositoryJdbc implements UserRepository {
         jdbcTemplate.update("update user SET disable=? WHERE id=?",disabled?1:0,id);
     }
 
-    @Override
-    public User find(String username, String password) {
-        return jdbcTemplate.queryForObject("select * from user where username=? and password=?",BeanPropertyRowMapper.newInstance(User.class),username,password);
-    }
 
     @Override
     public User findByUserName(String username) {
-        return jdbcTemplate.queryForObject("select * from user where username=? ",BeanPropertyRowMapper.newInstance(User.class),username);
-
+        try {
+            return jdbcTemplate.queryForObject("select * from user where username=? ", BeanPropertyRowMapper.newInstance(User.class), username);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override

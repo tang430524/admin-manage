@@ -2,16 +2,21 @@ package org.javajidi.admin.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.SecurityMetadataSource;
-import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 /**
@@ -20,10 +25,7 @@ import java.io.IOException;
  * @date 2016/9/23
  */
 @Component
-public class UrlSecurityInterceptor extends AbstractSecurityInterceptor implements Filter{
-
-    @Autowired
-    protected SecurityMetadataSource securityMetadataSource;
+public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
 
     @Autowired
     @Override
@@ -37,29 +39,25 @@ public class UrlSecurityInterceptor extends AbstractSecurityInterceptor implemen
         super.setAuthenticationManager(newManager);
     }
 
-    @Override
-    public Class<?> getSecureObjectClass() {
-        return FilterInvocation.class;
-    }
 
+    @Autowired
     @Override
-    public SecurityMetadataSource obtainSecurityMetadataSource() {
-        return securityMetadataSource;
-    }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource newSource) {
+        super.setSecurityMetadataSource(newSource);
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        UsernamePasswordAuthenticationToken authenticationToken= (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        String currentUser=authenticationToken.getName();
-        if("root".equalsIgnoreCase(currentUser)){//不处理root账号
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        if(authentication==null || authentication instanceof AnonymousAuthenticationToken){
+            //没有认证的，直接就结束
+            throw new AuthenticationCredentialsNotFoundException("please login");
+        }
+        String currentUser = authentication.getName();
+        if ("root".equalsIgnoreCase(currentUser)) {//不处理root账户的授权
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
-        }else {
+        }else{
             InterceptorStatusToken token = super.beforeInvocation(fi);
 
             try {

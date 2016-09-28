@@ -32,7 +32,6 @@ public interface UserRepository {
 
     void switchStatus(String id,boolean disabled);
 
-    User find(String loginName,String password);
 
     User findByUserName(String username);
 

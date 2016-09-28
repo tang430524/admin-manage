@@ -3,7 +3,10 @@ package org.javajidi.admin.config;
 import org.javajidi.admin.security.UrlSecurityInterceptor;
 import org.javajidi.admin.security.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -15,6 +18,7 @@ import org.springframework.security.authentication.dao.ReflectionSaltSource;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -31,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author qiang.xie
@@ -50,6 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected Md5PasswordEncoder md5PasswordEncoder;
 
+    @Value("${remember.key}")
+    private String key="weixin:javajidi_com";
+
     /*
         区别于传统的服务端应用直接返回页面内容（包括页面片段），服务器端采用restful的接口返回json数据，而页面则由客户端框架来实现。所以Spring Security的默认配置不是很适合。
     *   禁用csrf，由于login form并不是由服务端实现，所以spring防御跨站请求伪造的方式在这里不适用;
@@ -61,24 +69,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().disable();
+        http.cors();
+        http.headers().disable();
         http.jee().disable();
         http.x509().disable();
         http.servletApi().disable();
         http.csrf().disable();
         http.anonymous().disable();
-        http.addFilterAt(urlSecurityInterceptor,FilterSecurityInterceptor.class);
-
-        http.authorizeRequests()
-                .antMatchers("*.js", "*.css", "*.html", "/static/**" ).permitAll()
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .formLogin()
-                .successHandler(new RestAuthenticationSuccessHandler())
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                .and()
-                .logout().logoutSuccessHandler(new RestLogoutSuccessHandler())
-                .and()
-                .exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());
+        http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(true);
+        http.addFilterBefore(urlSecurityInterceptor,FilterSecurityInterceptor.class);//处理自定义的权限
+       //authorizeRequests()对应FilterSecurityInterceptor，不配置就不会加入FilterSecurityInterceptor
+        http.authorizeRequests().anyRequest().denyAll();//其他url全部拒绝
+        http.formLogin().successHandler(new RestAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
+        http.logout().logoutSuccessHandler(new RestLogoutSuccessHandler());
+        http.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());
     }
 
     @Override
@@ -103,7 +107,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return accessDecisionManager;
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**/*.map","/**/*.js","/**/*.ts", "/**/*.css", "/**/*.html", "/static/**","/public/**","/app/**");
+    }
 
+    //由于springboot默认会将所要的servlet,filter,listenr等标准servlet组件自动加入到servlet的过滤器链中，自定义的UrlSecurityInterceptor只希望加入security的过滤器链，中，所以这里配置不向servlet容器中注册
+    @Bean
+    public FilterRegistrationBean registration(UrlSecurityInterceptor filter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
 
     public static class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

@@ -74,10 +74,6 @@ public class UserService {
         userRepository.update(user);
     }
 
-    public User login(String loginName,String passwd){
-        return userRepository.find(loginName,  passwd);
-    }
-
 
     private void validate(User user) {
         Assert.hasText(user.getUsername());

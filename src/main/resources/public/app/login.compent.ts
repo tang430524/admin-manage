@@ -1,20 +1,29 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {LoginService} from './login.service';
+
 @Component({
     selector: 'login-component',
     templateUrl: 'app/pages/login.html'
 })
 export class LoginComponent {
-    loginName='';
+    username='';
     password='';
     remember=true;
     constructor(
-        private router: Router) {
+        private router: Router,private loginService: LoginService) {
     }
 
     onSubmit():void{
-        // alert(this.loginName+this.password+''+this.remember);
-        //todo
-        this.router.navigate(["/dashbord"]);
+       this.loginService.login(this.username,this.password,this.remember).then(() => {
+           this.router.navigate(["/dashbord"]);
+               // if (success) {
+               //     this.router.navigate(["/dashbord"]);
+               // } else {
+               //     alert("login fail");
+               // }
+           }
+       );
+        
     }
 }
