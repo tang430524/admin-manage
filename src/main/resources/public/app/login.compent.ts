@@ -15,15 +15,18 @@ export class LoginComponent {
     }
 
     onSubmit():void{
-       this.loginService.login(this.username,this.password,this.remember).then(() => {
-           this.router.navigate(["/dashbord"]);
-               // if (success) {
-               //     this.router.navigate(["/dashbord"]);
-               // } else {
-               //     alert("login fail");
-               // }
+       this.loginService.login(this.username,this.password,this.remember).then(success => {
+               if (success) {
+                   this.router.navigate(["/dashbord"]);
+               } else {
+                   alert("login fail");
+               }
            }
-       );
-        
+       ).catch(this.handleError);
+    }
+
+    private handleError(error: any): void{
+        console.error('An error occurred', error); // for demo purposes only
+       alert("login fail!");
     }
 }

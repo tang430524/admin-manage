@@ -1,4 +1,4 @@
-package org.javajidi.admin.interfaces;
+package org.javajidi.admin.interfaces.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

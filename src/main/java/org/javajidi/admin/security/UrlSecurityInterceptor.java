@@ -2,6 +2,7 @@ package org.javajidi.admin.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -59,7 +60,9 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         }else{
             InterceptorStatusToken token = super.beforeInvocation(fi);
-
+            if(token==null){
+                throw new AccessDeniedException("no config resource permission?");
+            }
             try {
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             } finally {

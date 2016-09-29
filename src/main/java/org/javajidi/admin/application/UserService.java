@@ -1,5 +1,6 @@
 package org.javajidi.admin.application;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.domain.modle.Resource;
 import org.javajidi.admin.domain.modle.User;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +29,9 @@ public class UserService {
     public void create(User user){
         validate(user);
         user.setId(UUID.randomUUID().toString());
-        user.setSalt(UUID.randomUUID().toString());
+        user.setDisabled(false);
+        user.setCreateTime(new Date());
+        user.setSalt(RandomStringUtils.randomAscii(10));
         user.setPassword(md5PasswordEncoder.encodePassword(user.getPassword(),user.getSalt()));
         userRepository.add(user);
     }

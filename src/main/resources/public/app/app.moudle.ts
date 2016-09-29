@@ -9,6 +9,7 @@ import {DashBordComponent} from "./dashbord.compent";
 import {UserComponent} from "./user.compent";
 import {LoginService} from './login.service';
 import 'rxjs/add/operator/toPromise';
+import {UserFormComponent} from "./user-form.compent";
 @NgModule({
     imports: [
         BrowserModule,
@@ -19,7 +20,7 @@ import 'rxjs/add/operator/toPromise';
     providers: [
       LoginService
     ],
-    declarations: [ LoginComponent,AppComponent, DashBordComponent,UserComponent],
+    declarations: [ LoginComponent,AppComponent, DashBordComponent,UserComponent,UserFormComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

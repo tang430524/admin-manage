@@ -1,4 +1,4 @@
-package org.javajidi.admin.interfaces;
+package org.javajidi.admin.interfaces.web;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,9 @@
-package org.javajidi.admin.interfaces;
+package org.javajidi.admin.interfaces.web;
 
 import org.javajidi.admin.application.UserService;
-import org.javajidi.admin.domain.modle.User;
+import org.javajidi.admin.interfaces.commondobject.UserCommond;
+import org.javajidi.admin.interfaces.facade.assembler.UserAssembler;
+import org.javajidi.admin.interfaces.facade.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +21,16 @@ public class UserController {
     protected UserService userService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public User create(@RequestBody User user){
-        userService.create(user);
-        return user;
+    public void create(@RequestBody UserCommond user){
+        userService.create(UserAssembler.commondToDomain(user));
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody User user){
-        userService.modify(user);
+    public void modify(@RequestBody UserCommond user){
+        userService.modify(UserAssembler.commondToDomain(user));
     }
 
-    @RequestMapping(value = "/{id}/disable",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/{disable}",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("id") String id,@RequestParam("disable") boolean disable){
         userService.switchStatus(id,disable);
     }
@@ -39,13 +40,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public User get(@PathVariable("id")String id){
-        return userService.get(id);
+    public UserDto get(@PathVariable("id")String id){
+        return UserAssembler.domainToDto(userService.get(id));
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
-    public List<User> list(){
-        return userService.list();
+    @RequestMapping(method = RequestMethod.GET)
+    public List<UserDto> list(){
+        return UserAssembler.domainToDto(userService.list());
     }
 
     @RequestMapping(value = "/grantRole",method = RequestMethod.PUT)

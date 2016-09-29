@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(true);
         http.addFilterBefore(urlSecurityInterceptor,FilterSecurityInterceptor.class);//处理自定义的权限
        //authorizeRequests()对应FilterSecurityInterceptor，不配置就不会加入FilterSecurityInterceptor
-        http.authorizeRequests().anyRequest().denyAll();//其他url全部拒绝
+       // http.authorizeRequests().anyRequest().denyAll();//其他url全部拒绝
         http.formLogin().successHandler(new RestAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
         http.logout().logoutSuccessHandler(new RestLogoutSuccessHandler());
         http.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());

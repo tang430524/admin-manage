@@ -1,4 +1,4 @@
-package org.javajidi.admin.interfaces;
+package org.javajidi.admin.interfaces.web;
 
 import org.javajidi.admin.application.SysLogService;
 import org.javajidi.admin.domain.modle.SysLog;

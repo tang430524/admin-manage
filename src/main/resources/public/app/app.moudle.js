@@ -19,6 +19,7 @@ var dashbord_compent_1 = require("./dashbord.compent");
 var user_compent_1 = require("./user.compent");
 var login_service_1 = require('./login.service');
 require('rxjs/add/operator/toPromise');
+var user_form_compent_1 = require("./user-form.compent");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,7 +34,7 @@ var AppModule = (function () {
             providers: [
                 login_service_1.LoginService
             ],
-            declarations: [login_compent_1.LoginComponent, app_compent_1.AppComponent, dashbord_compent_1.DashBordComponent, user_compent_1.UserComponent],
+            declarations: [login_compent_1.LoginComponent, app_compent_1.AppComponent, dashbord_compent_1.DashBordComponent, user_compent_1.UserComponent, user_form_compent_1.UserFormComponent],
             bootstrap: [app_compent_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
