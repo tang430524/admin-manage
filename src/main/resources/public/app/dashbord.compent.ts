@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 @Component({
+    moduleId: module.id,
     selector: 'dashbord-component',
-    templateUrl: 'app/pages/dashbord.html'
+    templateUrl: 'dashbord.html'
 })
 export class DashBordComponent {
    

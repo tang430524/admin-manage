@@ -1,31 +1,30 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './login.compent'
 import {DashBordComponent} from "./dashbord.compent";
-import {UserComponent} from "./user.compent";
-import {UserFormComponent} from "./user-form.compent";
+
 
 const appRoutes: Routes = [
-    {
-        path: 'login',
-        component: LoginComponent
-     },
     {
         path: 'dashbord',
         component: DashBordComponent
     },
     {
+        path: 'login',
+        loadChildren: 'app/login/login.module#LoginModule'
+    },
+    
+    {
         path: 'user',
-        component: UserComponent
+        loadChildren: 'app/system/system.module#SystemModule'
     },
     {
         path: 'user-form',
-        component: UserFormComponent
+        loadChildren: 'app/system/system.module#SystemModule'
     },
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: 'dashbord',
         pathMatch: 'full'
     }
 ];

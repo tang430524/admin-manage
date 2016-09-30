@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import {LoginService} from './login.service';
 
 @Component({
+    moduleId: module.id,
     selector: 'login-component',
-    templateUrl: 'app/pages/login.html'
+    templateUrl: 'login.html'
 })
 export class LoginComponent {
     username='';

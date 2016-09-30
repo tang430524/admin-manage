@@ -1,0 +1,1 @@
+node_modules\.bin\ngc.cmd -p tsconfig-aot.json

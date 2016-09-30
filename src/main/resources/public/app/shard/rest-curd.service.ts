@@ -9,7 +9,7 @@
 import { Injectable }    from '@angular/core';
 import { Injector }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import './rxjs';
+import './rxjs-extention';
 
 //@Injectable()
 export class RestCurdService<T> {

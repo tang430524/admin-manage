@@ -1,26 +1,24 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
-import { HttpModule }    from '@angular/http';
-import { LoginComponent } from './login.compent'
 import { routing } from './app.routing';
 import {AppComponent} from "./app.compent";
 import {DashBordComponent} from "./dashbord.compent";
-import {UserComponent} from "./user.compent";
-import {LoginService} from './login.service';
-import 'rxjs/add/operator/toPromise';
-import {UserFormComponent} from "./user-form.compent";
+import {LoginModule} from "./login/login.moudle";
+import {SystemModule} from "./system/system.moudle";
+import {ShareModule} from './shard/share.moudle';
+
 @NgModule({
     imports: [
-        BrowserModule,
-        FormsModule,
+        // BrowserModule,
+        // FormsModule,
+        LoginModule,
+        SystemModule,
         routing,
-        HttpModule
+        ShareModule
       ],
-    providers: [
-      LoginService
-    ],
-    declarations: [ LoginComponent,AppComponent, DashBordComponent,UserComponent,UserFormComponent],
+   
+    declarations: [ AppComponent, DashBordComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
