@@ -41,7 +41,9 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
   <nav-menu></nav-menu>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 900px;">
 
@@ -63,17 +65,17 @@
                 <!-- text input -->
                 <div class="form-group">
                   <label>用户名</label>
-                  <input type="text" [(ngModel)]="user.username" name="user.username" value="{{user?.username}}" class="form-control" placeholder="Enter ...">
+                  <input type="text" [(ngModel)]="user.username" name="user.username"  class="form-control" placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
                   <label>密码</label>
-                  <input type="password" [(ngModel)]="user.password" name="user.password" value="{{user?.password}}" class="form-control" placeholder="Enter ...">
+                  <input type="password" [(ngModel)]="user.password" name="user.password" class="form-control" placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
                   <label>邮箱</label>
-                  <input  type="text" [(ngModel)]="user.email" name="user.email" value="{{user?.email}}" class="form-control" placeholder="Enter ...">
+                  <input  type="text" [(ngModel)]="user.email" name="user.email"  class="form-control" placeholder="Enter ...">
                 </div>
 
                 <div class="box-footer">

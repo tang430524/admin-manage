@@ -33,7 +33,7 @@ public class UserDetailService implements UserDetailsService {
         if(user==null){
             throw new UsernameNotFoundException("no user");
         }
-        SecurityUser userDetails=new SecurityUser(username,user.getPassword(),!user.isDisabled(),true,true,true,grantedAuthorities(user.getId()),user.getSalt());
+        SecurityUser userDetails=new SecurityUser(user.getId(),username,user.getPassword(),!user.isDisabled(),true,true,true,grantedAuthorities(user.getId()),user.getSalt());
         return userDetails;
     }
 

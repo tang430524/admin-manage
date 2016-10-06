@@ -1,17 +1,36 @@
-import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import {NgModule, ErrorHandler}      from '@angular/core';
 import { routing } from './app.routing';
 import {AppComponent} from "./app.compent";
 import {DashBordComponent} from "./dashbord.compent";
 import {LoginModule} from "./login/login.moudle";
 import {SystemModule} from "./system/system.moudle";
 import {ShareModule} from './shard/share.moudle';
+import {Router} from "@angular/router";
+
+export class GlableErrorHandle implements ErrorHandler {
+    // constructor(
+    //     private router: Router) {
+    // }
+    handleError(error:any):void {
+
+        console.error("abcd" + error);
+        if (error.rejection) {
+            let status = error.rejection.status;
+            if(status==401){
+                 //this.router.navigate(["/login"]);
+            }else if(status==403){
+                alert("您无此操作权限");
+            }else{
+                alert("未知错误");
+            }
+        }else {
+            alert("出错误了!");
+        }
+    }
+}
 
 @NgModule({
     imports: [
-        // BrowserModule,
-        // FormsModule,
         LoginModule,
         SystemModule,
         routing,
@@ -19,8 +38,10 @@ import {ShareModule} from './shard/share.moudle';
       ],
    
     declarations: [ AppComponent, DashBordComponent],
+    providers: [{provide: ErrorHandler, useClass: GlableErrorHandle}],
     bootstrap:    [ AppComponent ]
 })
+
 export class AppModule { }
 /**
  * Created by qiangxie on 2016/9/24.

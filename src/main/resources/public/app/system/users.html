@@ -27,7 +27,7 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
-          <!-- User Account: style can be found in dropdown.less -->
+          <!-- UserView Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/adminlte/img/user2-160x160.jpg" class="user-image" alt="User Image">
@@ -41,32 +41,8 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
 
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>系统管理</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a routerLink="/user"><i class="fa fa-circle-o"></i> 用户管理</a></li>
-            <li><a routerLink="/menu"><i class="fa fa-circle-o"></i> 菜单管理</a></li>
-            <li><a routerLink="/resource"><i class="fa fa-circle-o"></i> 资源管理</a></li>
-            <li><a routerLink="/role"><i class="fa fa-circle-o"></i>角色管理</a></li>
-            <li><a routerLink="/syslog"><i class="fa fa-circle-o"></i>系统日志</a></li>
-          </ul>
-        </li>
-
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+  <nav-menu></nav-menu>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 900px;">
@@ -89,15 +65,19 @@
                   <th>disabled</th>
                   <th>createTime</th>
                   <th>lastTime</th>
+                  <th>ChangeStatus</th>
+                  <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let user of users" >
+                <tr *ngFor="let user of users" (click)="itemClick(user.id)">
                   <td>{{user.username}}</td>
                   <td>{{user.email}}</td>
                   <td>{{disabled(user.disabled)}}</td>
                   <td>{{user.createTime | date:"yyyy-MM-dd HH:mm"}}</td>
                   <td>{{user.lastTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
+                  <td><a style="cursor: pointer;" (click)="changeStatus(user.id,user.disabled);$event.stopPropagation();">{{disabled(!user.disabled)}}</a></td>
+                  <td><a style="cursor: pointer;" (click)="del(user.id);$event.stopPropagation();">Del</a></td>
                 </tr>
 
 

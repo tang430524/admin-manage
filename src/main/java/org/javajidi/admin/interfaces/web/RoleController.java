@@ -29,7 +29,7 @@ public class RoleController {
         roleService.modify(role);
     }
 
-    @RequestMapping(value = "/{id}/disable",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/status",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("id") String id,@RequestParam("disable") boolean disable){
         roleService.switchStatus(id,disable);
     }

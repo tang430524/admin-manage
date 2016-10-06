@@ -57,7 +57,7 @@ public class MenuRepositoryJdbc implements MenuRepository{
     }
 
     public void switchStatus(String code,boolean disabled){
-        jdbcTemplate.update("update menu SET disable=? WHERE code=?",disabled?1:0,code);
+        jdbcTemplate.update("update menu SET disabled=? WHERE code=?",disabled?1:0,code);
     }
 
     private RowMapper<Menu> createMapper() {

@@ -87,6 +87,6 @@ public class RoleRepositoryJdbc implements RoleRepository {
     }
 
     public void switchStatus(String id,boolean disabled){
-        jdbcTemplate.update("update role SET disable=? WHERE id=?",disabled?1:0,id);
+        jdbcTemplate.update("update role SET disabled=? WHERE id=?",disabled?1:0,id);
     }
 }

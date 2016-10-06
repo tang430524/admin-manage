@@ -29,7 +29,7 @@ public class ResourceController {
         resourceService.modify(resource);
     }
 
-    @RequestMapping(value = "/{code}/disable",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{code}/status",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("code") String code,@RequestParam("disable") boolean disable){
         resourceService.switchStatus(code,disable);
     }

@@ -45,7 +45,7 @@ public class ResourceRepositoryJdbc implements ResourceRepository{
     }
 
     public void switchStatus(String code,boolean disabled){
-        jdbcTemplate.update("update resource SET disable=? WHERE code=?",disabled?1:0,code);
+        jdbcTemplate.update("update resource SET disabled=? WHERE code=?",disabled?1:0,code);
     }
 
 

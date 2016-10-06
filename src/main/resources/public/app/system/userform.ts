@@ -1,13 +1,10 @@
 /**
  * Created by qiangxie on 2016/9/29.
  */
-export class User{
-    id;
+export class UserForm{
+    id:string;
     username;
     password;
     email;
-    disabled;
-    createTime;
-    lastTime;
 
 }

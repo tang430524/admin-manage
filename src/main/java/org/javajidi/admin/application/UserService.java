@@ -1,10 +1,12 @@
 package org.javajidi.admin.application;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.domain.modle.Resource;
 import org.javajidi.admin.domain.modle.User;
 import org.javajidi.admin.domain.repository.UserRepository;
+import org.javajidi.admin.infrastructure.BeanUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class UserService {
 
     public void create(User user){
         validate(user);
+        Assert.hasText(user.getPassword());
         user.setId(UUID.randomUUID().toString());
         user.setDisabled(false);
         user.setCreateTime(new Date());
@@ -40,8 +43,17 @@ public class UserService {
 
     public void modify(User user){
         Assert.hasText(user.getId());
-        validate(user);
-        userRepository.update(user);
+        User old=get(user.getId());
+        if(StringUtils.isNotBlank(user.getUsername())){
+            old.setUsername(user.getUsername());
+        }
+        if(StringUtils.isNotBlank(user.getPassword())){
+            old.setPassword(md5PasswordEncoder.encodePassword(user.getPassword(), old.getSalt()));
+        }
+        if(StringUtils.isNotBlank(user.getEmail())) {
+            old.setEmail(user.getEmail());
+        }
+        userRepository.update(old);
     }
 
     public void delete(String id){
@@ -81,7 +93,6 @@ public class UserService {
 
     private void validate(User user) {
         Assert.hasText(user.getUsername());
-        Assert.hasText(user.getPassword());
         if(user.isRoot()){
             throw new IllegalArgumentException("user loginName cannot is root");
         }

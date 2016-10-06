@@ -1,12 +1,17 @@
 package org.javajidi.admin.interfaces.web;
 
 import org.javajidi.admin.application.UserService;
+import org.javajidi.admin.domain.modle.Menu;
 import org.javajidi.admin.interfaces.commondobject.UserCommond;
 import org.javajidi.admin.interfaces.facade.assembler.UserAssembler;
 import org.javajidi.admin.interfaces.facade.dto.UserDto;
+import org.javajidi.admin.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,7 +35,7 @@ public class UserController {
         userService.modify(UserAssembler.commondToDomain(user));
     }
 
-    @RequestMapping(value = "/{id}/{disable}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/status",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("id") String id,@RequestParam("disable") boolean disable){
         userService.switchStatus(id,disable);
     }
@@ -54,5 +59,9 @@ public class UserController {
         userService.grantRole(id,rids);
     }
 
+    @RequestMapping(value = "/nav",method = RequestMethod.GET)
+    public List<Menu> myMenus(HttpServletRequest request){
+        return userService.getNavMenus(SecurityUtil.getUid());
+    }
 
 }

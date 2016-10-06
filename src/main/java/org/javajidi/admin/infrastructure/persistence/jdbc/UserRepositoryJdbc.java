@@ -65,7 +65,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public List<User> list() {
-        return jdbcTemplate.query("select * from user", BeanPropertyRowMapper.newInstance(User.class));
+        return jdbcTemplate.query("select * from user where username <> 'root'", BeanPropertyRowMapper.newInstance(User.class));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public List<Menu> getNavMenus(String userId) {
-        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.code=rm.menu_code join user_role ur on rm.role_id=ur.role_id where.ur.uid=?", (rs, rowNum) -> {
+        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.code=rm.menu_code join user_role ur on rm.role_id=ur.role_id where m.disabled=0 and ur.uid=?", (rs, rowNum) -> {
             Menu menu = new Menu(rs.getString("code"), rs.getString("label"), rs.getString("url"));
             menu.setDisabled(rs.getBoolean("disabled"));
             menu.parseItemsFromJson(rs.getString("items"));
@@ -96,11 +96,11 @@ public class UserRepositoryJdbc implements UserRepository {
         }
         jdbcTemplate.update("DELETE FROM user WHERE id=?",id);
         jdbcTemplate.update("DELETE FROM user_role WHERE uid=?",id);
-        jdbcTemplate.update("DELETE FROM user_menu WHERE uid=?",id);
+        //jdbcTemplate.update("DELETE FROM user_menu WHERE uid=?",id);
     }
 
     public void switchStatus(String id,boolean disabled){
-        jdbcTemplate.update("update user SET disable=? WHERE id=?",disabled?1:0,id);
+        jdbcTemplate.update("update user SET disabled=? WHERE id=?",disabled?1:0,id);
     }
 
 

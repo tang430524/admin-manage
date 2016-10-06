@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { OnInit } from '@angular/core';
-import { Injector }    from '@angular/core';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {OnInit} from '@angular/core';
+import {Injector}    from '@angular/core';
 
-import {User} from "./user";
+import {UserView} from "./userview";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -13,43 +13,63 @@ import {RestCurdService} from "../shard/rest-curd.service";
 })
 export class UserComponent implements OnInit {
 
-    constructor(private router: Router,private indecter:Injector) {
+    constructor(private router:Router, private indecter:Injector) {
 
     }
 
-    restService:RestCurdService<User>=new RestCurdService<User>(this.indecter,"/user");
+    restService:RestCurdService<UserView> = new RestCurdService<UserView>(this.indecter, "/user");
 
-    users:User[];
+    users:UserView[];
 
-    newClick():void{
+    newClick():void {
         this.router.navigate(["/user-form"]);
     }
 
-    itemClick(user:User):void{
-       // this.router.navigate(["/user-form"]);
-    }
-    
-    save():void{
-
+    itemClick(id:string):void {
+        this.router.navigate(["/user-detail", id]);
     }
 
+    changeStatus(id:string, disable:boolean):void {
+        this.restService.switchStatus(id, !disable).then(()=> {
+            this.users.forEach((u:UserView)=> {
+                if (u.id == id) {
+                    u.disabled = !disable;
+                }
+            });
+        });
+    }
 
-     ngOnInit():void {
-       this.restService.list().then(data => {
-           this.users= (data as User[]);
-        }
-       ).catch(this.handleError);
-     }
+    del(id:string):void {
+        this.restService.delete(id).then(()=> {
+            // this.users = this.users.filter((u:UserView)=> {
+            //     u.id != id;
+            // });
+            let news:UserView[]=[];
+            this.users.forEach((u:UserView)=> {
+                if (u.id != id) {
+                    news.push(u);
+                }
+                this.users=news;
+            });
 
-    private handleError(error: any): void{
-        console.error('An error occurred', error); // for demo purposes only
-        alert("operation fail!"+error.text());
-    };
+
+        });
+    }
+
+
+    ngOnInit():void {
+        this.restService.list().then(data => {
+                this.users = (data as UserView[]);
+            }
+        );
+    }
+
+
 
     disabled(disable):string {
-        if (disable){
+        if (disable) {
             return "禁用";
         }
-        return "正常";
+        return "启用";
     }
 }

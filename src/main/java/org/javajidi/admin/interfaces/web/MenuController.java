@@ -35,7 +35,7 @@ public class MenuController {
     }
 
 
-    @RequestMapping(value = "/{code}/disable",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{code}/status",method = RequestMethod.PUT)
     public void switchStatus(@PathVariable("code") String code,@RequestParam("disable") boolean disable){
         menuService.switchStatus(code,disable);
     }

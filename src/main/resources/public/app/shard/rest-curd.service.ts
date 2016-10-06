@@ -42,11 +42,11 @@ export class RestCurdService<T> {
     }
 
     switchStatus(id:string,disable:boolean): Promise<void> {
-        return this.http.put(this.resourceUrl+"/"+id+"/"+disable, {headers: this.headers}).toPromise()
+        return this.http.put(this.resourceUrl+"/"+id+"/status?disable"+disable, {headers: this.headers}).toPromise()
             .then(response =>null);
     }
 
-    get(id:string): Promise<T> {
+    get(id): Promise<T> {
         return this.http.get(this.resourceUrl+"/"+id, {headers: this.headers}).toPromise()
             .then(response => (response.json() as T));
     }

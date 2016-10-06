@@ -23,11 +23,6 @@ export class LoginComponent {
                    alert("login fail");
                }
            }
-       ).catch(this.handleError);
-    }
-
-    private handleError(error: any): void{
-        console.error('An error occurred', error); // for demo purposes only
-       alert("login fail!");
+       );
     }
 }
