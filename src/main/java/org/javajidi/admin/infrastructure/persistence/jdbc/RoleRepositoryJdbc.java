@@ -68,7 +68,7 @@ public class RoleRepositoryJdbc implements RoleRepository {
 
     @Override
     public boolean contains(String roleName) {
-        return jdbcTemplate.query("select count(`name`) from role where `name`=?", rs -> rs.getInt("name")>0,roleName);
+        return jdbcTemplate.queryForObject("select count(`name`) from role where `name`=?", Integer.class,roleName)>0;
     }
 
     @Override

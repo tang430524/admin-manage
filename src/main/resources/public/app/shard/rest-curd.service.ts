@@ -42,7 +42,7 @@ export class RestCurdService<T> {
     }
 
     switchStatus(id:string,disable:boolean): Promise<void> {
-        return this.http.put(this.resourceUrl+"/"+id+"/status?disable"+disable, {headers: this.headers}).toPromise()
+        return this.http.put(this.resourceUrl+"/"+id+"/status?disable="+disable, {headers: this.headers}).toPromise()
             .then(response =>null);
     }
 

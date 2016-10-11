@@ -50,7 +50,7 @@ public class MenuController {
         return menuService.get(code);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Menu> list(){
         return menuService.list();
     }

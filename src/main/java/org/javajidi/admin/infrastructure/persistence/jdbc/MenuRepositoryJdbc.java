@@ -43,7 +43,7 @@ public class MenuRepositoryJdbc implements MenuRepository{
 
     @Override
     public boolean contains(String code) {
-        return jdbcTemplate.query("select count(code) from menu where code=?", rs -> rs.getInt("code")>0,code);
+        return jdbcTemplate.queryForObject("select count(code) from menu where code=?",Integer.class,code)>0;
     }
 
     @Override

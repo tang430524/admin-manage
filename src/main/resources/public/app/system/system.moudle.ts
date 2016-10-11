@@ -5,13 +5,16 @@ import {routing} from "./system.routing";
 import {ShareModule} from '../shard/share.moudle';
 import {UserDetailComponent} from "./user-detail.compent";
 import {MenuComponent} from "./menu.compent";
+import {RoleComponent} from "./role.compent";
+import {RoleFormComponent} from "./role-form.compent";
+import {RoleDetailComponent} from "./role-detail.compent";
 @NgModule({
     imports: [
         ShareModule,
         routing,
       ],
    
-    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent]
+    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent]
 })
 export class SystemModule { }
 /**

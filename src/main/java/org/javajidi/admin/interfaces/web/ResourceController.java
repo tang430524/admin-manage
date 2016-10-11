@@ -44,7 +44,7 @@ public class ResourceController {
         return resourceService.get(code);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Resource> list(){
         return resourceService.list();
     }

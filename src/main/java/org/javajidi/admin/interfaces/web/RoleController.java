@@ -44,7 +44,7 @@ public class RoleController {
         return roleService.get(id);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<Role> list(){
         return roleService.list();
     }

@@ -60,7 +60,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public boolean contains(String name) {
-        return jdbcTemplate.query("select count(username) from user where username=?", rs -> rs.getInt("username")>0,name);
+        return jdbcTemplate.query("select count(username) from user where username=?", rs -> rs.getInt(1)>0,name);
     }
 
     @Override
