@@ -21,17 +21,17 @@ public class ResourceRepositoryJdbc implements ResourceRepository{
 
     @Override
     public void add(Resource resource) {
-        jdbcTemplate.update("INSERT INTO resource (code,title,type,disabled,url,description) VALUES (?,?,?,?,?,?)",resource.getCode(),resource.getTitle(),resource.getType(),resource.isDisabled()?1:0,resource.getUrl(),resource.getDescription());
+        jdbcTemplate.update("INSERT INTO resource (id,title,disabled,url,description) VALUES (?,?,?,?,?)",resource.getId(),resource.getTitle(),resource.isDisabled()?1:0,resource.getUrl(),resource.getDescription());
     }
 
     @Override
     public void update(Resource resource) {
-        jdbcTemplate.update("UPDATE resource title=?,`type`=?,disabled=?,url=?,description=? WHERE code=?) VALUES (?,?,?,?,?,?)",resource.getTitle(),resource.getType(),resource.isDisabled()?1:0,resource.getUrl(),resource.getDescription(),resource.getCode());
+        jdbcTemplate.update("UPDATE resource SET title=?,disabled=?,url=?,description=? WHERE `id`=?",resource.getTitle(),resource.isDisabled()?1:0,resource.getUrl(),resource.getDescription(),resource.getId());
     }
 
     @Override
-    public Resource get(String code) {
-        return jdbcTemplate.queryForObject("select * from resource where code=?",BeanPropertyRowMapper.newInstance(Resource.class),code);
+    public Resource get(String id) {
+        return jdbcTemplate.queryForObject("select * from resource where id=?",BeanPropertyRowMapper.newInstance(Resource.class),id);
     }
 
     @Override
@@ -40,17 +40,17 @@ public class ResourceRepositoryJdbc implements ResourceRepository{
     }
 
     @Override
-    public void remove(String code) {
-        jdbcTemplate.update("DELETE FROM resource WHERE code=?",code);
+    public void remove(String id) {
+        jdbcTemplate.update("DELETE FROM resource WHERE id=?",id);
     }
 
-    public void switchStatus(String code,boolean disabled){
-        jdbcTemplate.update("update resource SET disabled=? WHERE code=?",disabled?1:0,code);
+    public void switchStatus(String id,boolean disabled){
+        jdbcTemplate.update("update resource SET disabled=? WHERE id=?",disabled?1:0,id);
     }
 
 
     @Override
     public List<Resource> listByRole(String roleId) {
-        return jdbcTemplate.query("select re.* from  role_resource rr  join resources re on re.code=rr.resource_code where rr.role_id=?",BeanPropertyRowMapper.newInstance(Resource.class),roleId);
+        return jdbcTemplate.query("select re.* from  role_resource rr  join resources re on re.id=rr.resource_id where rr.role_id=?",BeanPropertyRowMapper.newInstance(Resource.class),roleId);
     }
 }

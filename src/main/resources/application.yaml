@@ -6,7 +6,7 @@ spring:
   application:
     name: admin-managee
   datasource:
-    url: jdbc:mysql://localhost:3306/admin_manage
+    url: jdbc:mysql://localhost:3306/test
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -21,7 +21,7 @@ spring:
           test-while-idle: true
           test-on-borrow: false
           test-on-return: false
-debug: true
+debug: false
 
 #logging:
 #  file: /var/log/admin-manager.log

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by xieqiang on 2016/9/17.
@@ -19,6 +20,7 @@ public class ResourceService {
 
     public void create(Resource resource){
         validate(resource);
+        resource.setId(UUID.randomUUID().toString());
         resourceRepository.add(resource);
     }
 
@@ -44,10 +46,8 @@ public class ResourceService {
         resourceRepository.switchStatus(code,disable);
     }
     private void validate(Resource resource) {
-        Assert.hasText(resource.getCode());
         Assert.hasText(resource.getTitle());
-        if(resource.getType()==Resource.URL){
-            Assert.hasText(resource.getUrl());
-        }
+        Assert.hasText(resource.getUrl());
+
     }
 }

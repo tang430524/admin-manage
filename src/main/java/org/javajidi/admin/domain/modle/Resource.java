@@ -4,26 +4,15 @@ import java.io.Serializable;
 
 /**
  *
- * 资源
- *
- * 服务地址，功能按钮，某个数据都是资源
+ * url资源
  */
 public class Resource implements Serializable {
 
-	public static final byte URL=1;
+	/** 唯一资源编码 */
+	private String id;
 
-	public static final byte BUTTON=2;
-
-	public static final byte DATA=3;
-
-	/** 唯一权限编码 */
-	private String code;
-
-	/** 权限名称 */
+	/** 资源名称 */
 	private String title;
-
-	/** 资源类型 1. url、2. 功能按钮 3.数据 */
-	private byte type;
 
 	/** 状态 是否禁用*/
 	private boolean disabled;
@@ -43,13 +32,6 @@ public class Resource implements Serializable {
 		this.title = title;
 	}
 
-	public byte getType() {
-		return type;
-	}
-
-	public void setType(byte type) {
-		this.type = type;
-	}
 
 	public boolean isDisabled() {
 		return disabled;
@@ -67,12 +49,12 @@ public class Resource implements Serializable {
 		this.url = url;
 	}
 
-	public String getCode() {
-		return code;
+	public String getId() {
+		return id;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getDescription() {

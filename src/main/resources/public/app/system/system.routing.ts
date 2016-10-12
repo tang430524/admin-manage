@@ -6,11 +6,17 @@ import {UserDetailComponent} from "./user-detail.compent";
 import {RoleComponent} from "./role.compent";
 import {RoleFormComponent} from "./role-form.compent";
 import {RoleDetailComponent} from "./role-detail.compent";
+import {ResourceComponent} from "./resources.compent";
+import {ResourceFormComponent} from "./resource-form.compent";
+import {ResourceDetailComponent} from "./resource-detail.compent";
 export const routing: ModuleWithProviders = RouterModule.forChild([
     { path: 'user', component: UserComponent},
     { path: 'user-form', component: UserFormComponent},
     { path: 'user-detail/:id', component: UserDetailComponent},
     { path: 'role', component: RoleComponent},
     { path: 'role-form', component: RoleFormComponent},
-    { path: 'role-detail/:id', component: RoleDetailComponent}
+    { path: 'role-detail/:id', component: RoleDetailComponent},
+    { path: 'resource', component: ResourceComponent},
+    { path: 'resource-form', component: ResourceFormComponent},
+    { path: 'resource-detail/:id', component: ResourceDetailComponent}
 ]);

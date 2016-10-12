@@ -41,7 +41,9 @@
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
+
   <nav-menu></nav-menu>
+
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 900px;">
 
@@ -54,7 +56,7 @@
           <!-- general form elements disabled -->
           <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">新增角色</h3>
+              <h3 class="box-title">编辑资源</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -62,16 +64,25 @@
 
                 <!-- text input -->
                 <div class="form-group">
-                  <label>角色名</label>
-                  <input type="text" [(ngModel)]="role.name" name="role.name" value="{{user?.name}}" class="form-control" placeholder="Enter ...">
+                  <label>编码</label>
+                  <input type="text" [(ngModel)]="resource.code" name="resource.code"  class="form-control" placeholder="Enter ...">
+                </div>
+
+                <div class="form-group">
+                  <label>资源名称</label>
+                  <input type="text" [(ngModel)]="resource.title" name="resource.title"  class="form-control" placeholder="Enter ...">
+                </div>
+
+                <div class="form-group">
+                  <label>url(支持ant分格)</label>
+                  <input type="text" [(ngModel)]="resource.url" name="resource.url"  class="form-control" placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
                   <label>描述</label>
-                  <input type="text" [(ngModel)]="role.description" name="role.description" value="{{user?.description}}" class="form-control" placeholder="Enter ...">
+                  <input type="text" [(ngModel)]="resource.description" name="resource.description" class="form-control" placeholder="Enter ...">
                 </div>
 
-              
                 <div class="box-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

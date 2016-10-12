@@ -8,13 +8,16 @@ import {MenuComponent} from "./menu.compent";
 import {RoleComponent} from "./role.compent";
 import {RoleFormComponent} from "./role-form.compent";
 import {RoleDetailComponent} from "./role-detail.compent";
+import {ResourceComponent} from "./resources.compent";
+import {ResourceFormComponent} from "./resource-form.compent";
+import {ResourceDetailComponent} from "./resource-detail.compent";
 @NgModule({
     imports: [
         ShareModule,
         routing,
       ],
    
-    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent]
+    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent,ResourceComponent,ResourceFormComponent,ResourceDetailComponent]
 })
 export class SystemModule { }
 /**

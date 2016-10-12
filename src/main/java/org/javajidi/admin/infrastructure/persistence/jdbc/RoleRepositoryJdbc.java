@@ -49,7 +49,7 @@ public class RoleRepositoryJdbc implements RoleRepository {
 
         if(!CollectionUtils.isEmpty(role.getResources())){
             jdbcTemplate.update("DELETE FROM role_resource WHERE role_id=?",role.getId());
-            jdbcTemplate.batchUpdate("INSERT role_resource (role_id,resource_code) VALUES (?,?)", new BatchPreparedStatementSetter() {
+            jdbcTemplate.batchUpdate("INSERT role_resource (role_id,resource_id) VALUES (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     ps.setString(1,role.getId());

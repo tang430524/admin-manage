@@ -70,12 +70,12 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public List<Resource> getUrlResources(String userId) {
-        return jdbcTemplate.query("select r.* from resource r join role_resource rr on r.code=rr.resource_code join user_role ur on rr.role_id=ur.role_id where r.type=? and ur.uid=?",BeanPropertyRowMapper.newInstance(Resource.class),Resource.URL,userId);
+        return jdbcTemplate.query("select r.* from resource r join role_resource rr on r.id=rr.resource_id join user_role ur on rr.role_id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Resource.class),userId);
     }
 
     @Override
     public boolean hasResourcePermission(String uid,String resourceCode) {
-        return jdbcTemplate.query("select count(*) from user_role ur join role_resource rr on ur.role_id=rr.role_id where ur.uid=? and rr.resource_code=?",rs -> rs.getInt(0)>0,uid,resourceCode);
+        return jdbcTemplate.query("select count(*) from user_role ur join role_resource rr on ur.role_id=rr.role_id where ur.uid=? and rr.resource_id=?",rs -> rs.getInt(0)>0,uid,resourceCode);
     }
 
     @Override

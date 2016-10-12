@@ -23,14 +23,13 @@ CREATE TABLE `menu` (
 -- ----------------------------
 -- Table structure for resources
 -- ----------------------------
-CREATE TABLE `resources` (
-  `code` varchar(30) NOT NULL COMMENT '编码',
+CREATE TABLE `resource` (
+  `id` varchar(50) NOT NULL COMMENT '编码',
   `title` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '标题',
-  `type` smallint(6) NOT NULL DEFAULT '1',
   `disabled` smallint(6) NOT NULL DEFAULT '0',
   `url` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '地址',
   `description` varchar(80) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
-  PRIMARY KEY (`code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
@@ -60,9 +59,9 @@ CREATE TABLE `role_menu` (
 -- ----------------------------
 CREATE TABLE `role_resource` (
   `role_id` varchar(50) DEFAULT NULL,
-  `resource_code` varchar(30) DEFAULT NULL,
+  `resource_id` varchar(30) DEFAULT NULL,
   KEY `roleid_rr` (`role_id`),
-  KEY `resource_rr` (`resource_code`)
+  KEY `resource_rr` (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -105,7 +104,7 @@ CREATE TABLE `user_role` (
 -- Records 
 -- ----------------------------
 INSERT INTO `menu` VALUES ('system', '系统管理', null, '0', '[{\"code\":\"user\",\"label\":\"用户管理\",\"url\":\"/user\"},{\"code\":\"role\",\"label\":\"角色管理\",\"url\":\"/role\"},{\"code\":\"resource\",\"label\":\"资源管理\",\"url\":\"/resource\"},{\"code\":\"menu\",\"label\":\"菜单管理\",\"url\":\"/menu\"}]');
-INSERT INTO `resources` VALUES ('admin', 'fa', '1', '0', '/user/*', 'fa');
+INSERT INTO `resources` VALUES ('admin', 'fa', '0', '/user/*', 'fa');
 INSERT INTO `role` VALUES ('1', 'admin', '0', 'fa');
 INSERT INTO `role_menu` VALUES ('1', 'system');
 INSERT INTO `role_resource` VALUES ('1', 'admin');
