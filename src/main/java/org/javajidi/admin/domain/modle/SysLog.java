@@ -14,6 +14,8 @@ public class SysLog implements Serializable {
 	/** 用户ID */
 	private int uid;
 
+	private String user;
+
 	/** 日志内容 */
 	private String content;
 
@@ -56,5 +58,11 @@ public class SysLog implements Serializable {
 		this.createTime = createTime;
 	}
 
+	public String getUser() {
+		return user;
+	}
 
+	public void setUser(String user) {
+		this.user = user;
+	}
 }

@@ -26,7 +26,7 @@ public class SysLogController {
     }
 
    
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public List<SysLog> list(){
         return sysLogService.list();
     }

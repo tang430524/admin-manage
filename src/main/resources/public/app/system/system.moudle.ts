@@ -11,13 +11,14 @@ import {RoleDetailComponent} from "./role-detail.compent";
 import {ResourceComponent} from "./resources.compent";
 import {ResourceFormComponent} from "./resource-form.compent";
 import {ResourceDetailComponent} from "./resource-detail.compent";
+import {SyslogComponent} from "./syslog.compent";
 @NgModule({
     imports: [
         ShareModule,
         routing,
       ],
    
-    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent,ResourceComponent,ResourceFormComponent,ResourceDetailComponent]
+    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent,ResourceComponent,ResourceFormComponent,ResourceDetailComponent,SyslogComponent]
 })
 export class SystemModule { }
 /**

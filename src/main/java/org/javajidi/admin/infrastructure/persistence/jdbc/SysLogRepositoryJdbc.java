@@ -21,7 +21,7 @@ public class SysLogRepositoryJdbc implements SysLogRepository {
 
     @Override
     public void add(SysLog sysLog) {
-        jdbcTemplate.update("INSERT syslog (uid,content,operation,createTime) VALUES (?,?,?,?)",sysLog.getUid(),sysLog.getContent(),sysLog.getOperation(),sysLog.getCreateTime());
+        jdbcTemplate.update("INSERT syslog (uid,content,operation,createTime,user) VALUES (?,?,?,?,?)",sysLog.getUid(),sysLog.getContent(),sysLog.getOperation(),sysLog.getCreateTime(),sysLog.getUser());
     }
 
     @Override

@@ -67,11 +67,12 @@ CREATE TABLE `role_resource` (
 -- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
-CREATE TABLE `sys_log` (
+CREATE TABLE `syslog` (
   `uid` varchar(50) DEFAULT NULL COMMENT '用户ID',
   `content` varchar(600) NOT NULL DEFAULT '' COMMENT '日志内容',
   `operation` varchar(250) DEFAULT NULL COMMENT '用户操作',
-  `createTime` datetime NOT NULL COMMENT '创建时间'
+  `createTime` datetime NOT NULL COMMENT '创建时间',
+  `user` varchar(50) DEFAULT NULL COMMENT '用户'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
 -- ----------------------------
