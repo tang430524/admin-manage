@@ -21,6 +21,9 @@ export class SyslogComponent implements OnInit {
     syslogs:any;
 
     clear():void {
+        if(!confirm("确认清除日志?")){
+            return;
+        }
         this.http.delete("/syslog").toPromise().then((response)=>{
             this.syslogs=[];
         });
