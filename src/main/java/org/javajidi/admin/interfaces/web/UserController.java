@@ -7,8 +7,6 @@ import org.javajidi.admin.interfaces.facade.assembler.UserAssembler;
 import org.javajidi.admin.interfaces.facade.dto.UserDto;
 import org.javajidi.admin.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +52,7 @@ public class UserController {
         return UserAssembler.domainToDto(userService.list());
     }
 
-    @RequestMapping(value = "/grantRole",method = RequestMethod.PUT)
+    @RequestMapping(value = "/grantRole/{id}",method = RequestMethod.PUT)
     public void grantRole(@PathVariable("id") String id,@RequestBody List<String> rids){
         userService.grantRole(id,rids);
     }

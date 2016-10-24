@@ -31,13 +31,7 @@ export class UserDetailComponent implements OnInit{
             });
 
     }
-
-
     
-    private handleError(error: any): void{
-        console.error('An error occurred', error); // for demo purposes only
-        alert("operation fail!"+error.text());
-    };
 
 
      ngOnInit():void {

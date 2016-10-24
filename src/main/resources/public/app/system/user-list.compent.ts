@@ -29,6 +29,10 @@ export class UserListComponent implements OnInit {
         this.router.navigate(["/user-detail", id]);
     }
 
+    grant(id:string):void {
+        this.router.navigate(["/grant-role", id]);
+    }
+
     changeStatus(id:string, disable:boolean):void {
         this.restService.switchStatus(id, !disable).then(()=> {
             this.users.forEach((u:UserVo)=> {

@@ -1,11 +1,9 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
 import {OnInit} from '@angular/core';
-import {Input} from '@angular/core';
 import {Injector}    from '@angular/core';
-
 import {RestCurdService} from "../shard/rest-curd.service";
-import {UserVo} from "./user-vo";
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {Http, Headers} from "@angular/http";
 
 /**为用户分配角色*/
 @Component({
@@ -15,30 +13,42 @@ import {UserVo} from "./user-vo";
 })
 export class GrantRoleComponent implements OnInit {
 
-    constructor(private router:Router, private indecter:Injector) {
+    constructor(private router:Router, private indecter:Injector, private active:ActivatedRoute, private http:Http) {
 
     }
 
-    restService:RestCurdService<Object[]> = new RestCurdService<Object[]>(this.indecter, "/role");
+    restService:RestCurdService<any> = new RestCurdService<any>(this.indecter, "/role");
 
     roles:any;
 
-    checkedRoles:GrantRole[]=[];
-
-    @Input()
-    user:UserVo;
+    uid:string;//当前用户id
 
     grant():void {
-
-        this.router.navigate(["/role"]);
+        let checkedRoles = this.roles.filter((role:any) => {
+            return role.disabled;
+        }).map((role:any)=>{
+            return role.id;
+        });
+        if (checkedRoles.length == 0) {
+            return;
+        }
+        this.http.put("/user/grantRole/" + this.uid, JSON.stringify(checkedRoles), {headers: new Headers({'Content-Type': 'application/json'})}).toPromise().then(()=> {
+            this.router.navigate(["/user"]);
+        });
     }
-
-   
 
 
     ngOnInit():void {
+        this.active.params.forEach((params:Params) => {
+            var id = params['id'];
+            if (!id) {
+                return;
+            }
+            this.uid = id;
+        });
+
         this.restService.list().then(data => {
-                this.roles = (data as Object[]);
+                this.roles = data;
             }
         );
     }

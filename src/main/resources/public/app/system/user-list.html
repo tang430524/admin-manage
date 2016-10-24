@@ -67,6 +67,7 @@
                   <th>lastTime</th>
                   <th>ChangeStatus</th>
                   <th>Delete</th>
+                  <th>grantRoles</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +79,7 @@
                   <td>{{user.lastTime | date:"yyyy-MM-dd HH:mm:ss"}}</td>
                   <td><a style="cursor: pointer;" (click)="changeStatus(user.id,user.disabled);$event.stopPropagation();">{{disabled(!user.disabled)}}</a></td>
                   <td><a style="cursor: pointer;" (click)="del(user.id);$event.stopPropagation();">Del</a></td>
+                  <td><a style="cursor: pointer;" (click)="grant(user.id);$event.stopPropagation();">Grant</a></td>
                 </tr>
 
 
