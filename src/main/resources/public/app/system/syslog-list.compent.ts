@@ -8,9 +8,9 @@ import {RestCurdService} from "../shard/rest-curd.service";
 @Component({
     moduleId: module.id,
     selector: 'syslog-list',
-    templateUrl: 'syslog.html'
+    templateUrl: 'syslog-list.html'
 })
-export class SyslogComponent implements OnInit {
+export class SyslogListComponent implements OnInit {
 
     constructor(private http:Http, private indecter:Injector) {
 

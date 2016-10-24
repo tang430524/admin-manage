@@ -4,9 +4,9 @@ import {Http} from "@angular/http";
 @Component({
     moduleId: module.id,
     selector: 'nav-menu',
-    templateUrl: 'menu.html'
+    templateUrl: 'nav-menu.html'
 })
-export class MenuComponent implements OnInit {
+export class NavMenuComponent implements OnInit {
 
     menus:Menu[];
 

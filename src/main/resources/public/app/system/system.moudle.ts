@@ -1,24 +1,25 @@
 import { NgModule }      from '@angular/core';
-import {UserComponent} from "./user.compent";
+import {UserListComponent} from "./user-list.compent";
 import {UserFormComponent} from "./user-form.compent";
 import {routing} from "./system.routing";
 import {ShareModule} from '../shard/share.moudle';
 import {UserDetailComponent} from "./user-detail.compent";
-import {MenuComponent} from "./menu.compent";
-import {RoleComponent} from "./role.compent";
+import {NavMenuComponent} from "./nav-menu.compent";
+import {RoleListComponent} from "./role-list.compent";
 import {RoleFormComponent} from "./role-form.compent";
 import {RoleDetailComponent} from "./role-detail.compent";
-import {ResourceComponent} from "./resources.compent";
+import {ResourceListComponent} from "./resource-list.compent";
 import {ResourceFormComponent} from "./resource-form.compent";
 import {ResourceDetailComponent} from "./resource-detail.compent";
-import {SyslogComponent} from "./syslog.compent";
+import {SyslogListComponent} from "./syslog-list.compent";
+import {MenuListComponent} from "./menu-list.compent";
 @NgModule({
     imports: [
         ShareModule,
         routing,
       ],
    
-    declarations: [UserComponent,UserFormComponent,UserDetailComponent,MenuComponent,RoleComponent,RoleFormComponent,RoleDetailComponent,ResourceComponent,ResourceFormComponent,ResourceDetailComponent,SyslogComponent]
+    declarations: [UserListComponent,UserFormComponent,UserDetailComponent,NavMenuComponent,RoleListComponent,RoleFormComponent,RoleDetailComponent,ResourceListComponent,ResourceFormComponent,ResourceDetailComponent,SyslogListComponent,MenuListComponent]
 })
 export class SystemModule { }
 /**

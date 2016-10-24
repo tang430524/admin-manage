@@ -7,30 +7,30 @@ import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
     moduleId: module.id,
-    selector: 'role-list',
-    templateUrl: 'roles.html'
+    selector: 'resource-list',
+    templateUrl: 'resource-list.html'
 })
-export class RoleComponent implements OnInit {
+export class ResourceListComponent implements OnInit {
 
     constructor(private router:Router, private indecter:Injector) {
 
     }
 
-    restService:RestCurdService<Object[]> = new RestCurdService<Object[]>(this.indecter, "/role");
+    restService:RestCurdService<Object[]> = new RestCurdService<Object[]>(this.indecter, "/resource");
 
-    roles:any;
+    resources:any;
 
     newClick():void {
-        this.router.navigate(["/role-form"]);
+        this.router.navigate(["/resource-form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/role-detail", id]);
+        this.router.navigate(["/resource-detail", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {
         this.restService.switchStatus(id, !disable).then(()=> {
-            this.roles.forEach((u)=> {
+            this.resources.forEach((u)=> {
                 if (u.id == id) {
                     u.disabled = !disable;
                 }
@@ -40,15 +40,15 @@ export class RoleComponent implements OnInit {
 
     del(id:string):void {
         this.restService.delete(id).then(()=> {
-            // this.roles = this.roles.filter((u:Object)=> {
+            // this.resources = this.resources.filter((u:Object)=> {
             //     u.id != id;
             // });
             let news=[];
-            this.roles.forEach((u)=> {
+            this.resources.forEach((u)=> {
                 if (u.id != id) {
                     news.push(u);
                 }
-                this.roles=news;
+                this.resources=news;
             });
 
 
@@ -58,7 +58,7 @@ export class RoleComponent implements OnInit {
 
     ngOnInit():void {
         this.restService.list().then(data => {
-                this.roles = (data as Object[]);
+                this.resources = (data as Object[]);
             }
         );
     }

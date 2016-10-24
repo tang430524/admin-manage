@@ -3,7 +3,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { OnInit } from '@angular/core';
 import { Injector }    from '@angular/core';
 import {RestCurdService} from "../shard/rest-curd.service";
-import {UserForm} from "./userform";
+import {UserForm} from "./user-form";
 @Component({
     moduleId: module.id,
     selector: 'user-detail',

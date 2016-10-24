@@ -1,7 +1,7 @@
 /**
  * Created by qiangxie on 2016/9/29.
  */
-export class UserView{
+export class UserVo{
     id:string;
     username;
     password;

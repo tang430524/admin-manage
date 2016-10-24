@@ -5,7 +5,7 @@ import {Input} from '@angular/core';
 import {Injector}    from '@angular/core';
 
 import {RestCurdService} from "../shard/rest-curd.service";
-import {UserView} from "./userview";
+import {UserVo} from "./user-vo";
 
 /**为用户分配角色*/
 @Component({
@@ -26,7 +26,7 @@ export class GrantRoleComponent implements OnInit {
     checkedRoles:GrantRole[]=[];
 
     @Input()
-    user:UserView;
+    user:UserVo;
 
     grant():void {
 

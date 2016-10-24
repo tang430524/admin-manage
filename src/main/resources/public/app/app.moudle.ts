@@ -12,8 +12,7 @@ export class GlableErrorHandle implements ErrorHandler {
     //     private router: Router) {
     // }
     handleError(error:any):void {
-
-        console.error("abcd" + error);
+        console.error("error:"+error);
         if (error.rejection) {
             let status = error.rejection.status;
             if(status==401){
@@ -21,7 +20,7 @@ export class GlableErrorHandle implements ErrorHandler {
             }else if(status==403){
                 alert("您无此操作权限");
             }else{
-                alert("未知错误");
+                alert("未知错误:"+status);
             }
         }else {
             alert("出错误了!");

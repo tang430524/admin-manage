@@ -3,34 +3,35 @@ import {Router} from '@angular/router';
 import {OnInit} from '@angular/core';
 import {Injector}    from '@angular/core';
 
+import {UserVo} from "./user-vo";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
     moduleId: module.id,
-    selector: 'resource-list',
-    templateUrl: 'resource.html'
+    selector: 'user-list',
+    templateUrl: 'user-list.html'
 })
-export class ResourceComponent implements OnInit {
+export class UserListComponent implements OnInit {
 
     constructor(private router:Router, private indecter:Injector) {
 
     }
 
-    restService:RestCurdService<Object[]> = new RestCurdService<Object[]>(this.indecter, "/resource");
+    restService:RestCurdService<UserVo> = new RestCurdService<UserVo>(this.indecter, "/user");
 
-    resources:any;
+    users:UserVo[];
 
     newClick():void {
-        this.router.navigate(["/resource-form"]);
+        this.router.navigate(["/user-form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/resource-detail", id]);
+        this.router.navigate(["/user-detail", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {
         this.restService.switchStatus(id, !disable).then(()=> {
-            this.resources.forEach((u)=> {
+            this.users.forEach((u:UserVo)=> {
                 if (u.id == id) {
                     u.disabled = !disable;
                 }
@@ -40,15 +41,15 @@ export class ResourceComponent implements OnInit {
 
     del(id:string):void {
         this.restService.delete(id).then(()=> {
-            // this.resources = this.resources.filter((u:Object)=> {
+            // this.users = this.users.filter((u:UserVo)=> {
             //     u.id != id;
             // });
-            let news=[];
-            this.resources.forEach((u)=> {
+            let news:UserVo[]=[];
+            this.users.forEach((u:UserVo)=> {
                 if (u.id != id) {
                     news.push(u);
                 }
-                this.resources=news;
+                this.users=news;
             });
 
 
@@ -58,7 +59,7 @@ export class ResourceComponent implements OnInit {
 
     ngOnInit():void {
         this.restService.list().then(data => {
-                this.resources = (data as Object[]);
+                this.users = (data as UserVo[]);
             }
         );
     }

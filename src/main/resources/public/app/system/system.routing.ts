@@ -1,24 +1,26 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {UserComponent} from "./user.compent";
+import {UserListComponent} from "./user-list.compent";
 import {UserFormComponent} from "./user-form.compent";
 import {UserDetailComponent} from "./user-detail.compent";
-import {RoleComponent} from "./role.compent";
+import {RoleListComponent} from "./role-list.compent";
 import {RoleFormComponent} from "./role-form.compent";
 import {RoleDetailComponent} from "./role-detail.compent";
-import {ResourceComponent} from "./resources.compent";
+import {ResourceListComponent} from "./resource-list.compent";
 import {ResourceFormComponent} from "./resource-form.compent";
 import {ResourceDetailComponent} from "./resource-detail.compent";
-import {SyslogComponent} from "./syslog.compent";
+import {SyslogListComponent} from "./syslog-list.compent";
+import {MenuListComponent} from "./menu-list.compent";
 export const routing: ModuleWithProviders = RouterModule.forChild([
-    { path: 'user', component: UserComponent},
+    { path: 'user', component: UserListComponent},
     { path: 'user-form', component: UserFormComponent},
     { path: 'user-detail/:id', component: UserDetailComponent},
-    { path: 'role', component: RoleComponent},
+    { path: 'role', component: RoleListComponent},
     { path: 'role-form', component: RoleFormComponent},
     { path: 'role-detail/:id', component: RoleDetailComponent},
-    { path: 'resource', component: ResourceComponent},
+    { path: 'resource', component: ResourceListComponent},
     { path: 'resource-form', component: ResourceFormComponent},
     { path: 'resource-detail/:id', component: ResourceDetailComponent},
-    { path: 'syslog', component: SyslogComponent}
+    { path: 'syslog', component: SyslogListComponent},
+    { path: 'menu', component: MenuListComponent},
 ]);

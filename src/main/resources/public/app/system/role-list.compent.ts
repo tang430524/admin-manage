@@ -3,35 +3,34 @@ import {Router} from '@angular/router';
 import {OnInit} from '@angular/core';
 import {Injector}    from '@angular/core';
 
-import {UserView} from "./userview";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
     moduleId: module.id,
-    selector: 'user-list',
-    templateUrl: 'users.html'
+    selector: 'role-list',
+    templateUrl: 'role-list.html'
 })
-export class UserComponent implements OnInit {
+export class RoleListComponent implements OnInit {
 
     constructor(private router:Router, private indecter:Injector) {
 
     }
 
-    restService:RestCurdService<UserView> = new RestCurdService<UserView>(this.indecter, "/user");
+    restService:RestCurdService<Object[]> = new RestCurdService<Object[]>(this.indecter, "/role");
 
-    users:UserView[];
+    roles:any;
 
     newClick():void {
-        this.router.navigate(["/user-form"]);
+        this.router.navigate(["/role-form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/user-detail", id]);
+        this.router.navigate(["/role-detail", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {
         this.restService.switchStatus(id, !disable).then(()=> {
-            this.users.forEach((u:UserView)=> {
+            this.roles.forEach((u)=> {
                 if (u.id == id) {
                     u.disabled = !disable;
                 }
@@ -41,15 +40,15 @@ export class UserComponent implements OnInit {
 
     del(id:string):void {
         this.restService.delete(id).then(()=> {
-            // this.users = this.users.filter((u:UserView)=> {
+            // this.roles = this.roles.filter((u:Object)=> {
             //     u.id != id;
             // });
-            let news:UserView[]=[];
-            this.users.forEach((u:UserView)=> {
+            let news=[];
+            this.roles.forEach((u)=> {
                 if (u.id != id) {
                     news.push(u);
                 }
-                this.users=news;
+                this.roles=news;
             });
 
 
@@ -59,7 +58,7 @@ export class UserComponent implements OnInit {
 
     ngOnInit():void {
         this.restService.list().then(data => {
-                this.users = (data as UserView[]);
+                this.roles = (data as Object[]);
             }
         );
     }
