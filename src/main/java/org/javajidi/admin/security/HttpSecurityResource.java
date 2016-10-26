@@ -46,7 +46,10 @@ public class HttpSecurityResource implements FilterInvocationSecurityMetadataSou
         String requestUrl=invocation.getRequestUrl();
         roles.stream().forEach(role -> {
             List<Resource> resources=resourceRepository.listByRole(role.getId());
-            resources.stream().forEach(resource -> {
+            if(CollectionUtils.isEmpty(resources)){
+                return;
+            }
+            resources.stream().filter(resource -> !resource.isDisabled()).forEach(resource -> {
                 if(pathMatcher.match(resource.getUrl(),requestUrl)) {
                     attributes.add(new SecurityConfig(role.getName()));
                     return;

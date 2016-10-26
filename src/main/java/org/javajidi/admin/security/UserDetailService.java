@@ -43,7 +43,8 @@ public class UserDetailService implements UserDetailsService {
             return new ArrayList<>();
         }
         Collection<GrantedAuthority> authorities=new HashSet<>();
-        resources.stream().forEach((resource -> {
+        //忽略已经禁用的角色
+        resources.stream().filter(role -> !role.isDisabled()).forEach((resource -> {
             authorities.add(new SimpleGrantedAuthority(resource.getName()));
         }));
         return authorities;

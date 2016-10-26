@@ -55,6 +55,11 @@ export class RoleListComponent implements OnInit {
         });
     }
 
+    grant(id:string):void {
+        this.router.navigate(["/grant-resource", id]);
+    }
+
+
 
     ngOnInit():void {
         this.restService.list().then(data => {

@@ -18,13 +18,19 @@ import {ResourceDetailComponent} from "./resource-detail.compent";
 import {SyslogListComponent} from "./syslog-list.compent";
 import {MenuListComponent} from "./menu-list.compent";
 import {GrantRoleComponent} from "./grant-role.compent";
+import {GrantResourceComponent} from "./grant-resource.compent";
 @NgModule({
     imports: [
         ShareModule,
         routing,
       ],
    
-    declarations: [UserListComponent,UserFormComponent,UserDetailComponent,NavMenuComponent,RoleListComponent,RoleFormComponent,RoleDetailComponent,ResourceListComponent,ResourceFormComponent,ResourceDetailComponent,SyslogListComponent,MenuListComponent,GrantRoleComponent]
+    declarations: [UserListComponent,UserFormComponent,UserDetailComponent,NavMenuComponent,
+        RoleListComponent,RoleFormComponent,RoleDetailComponent,
+        ResourceListComponent,ResourceFormComponent,ResourceDetailComponent,
+        SyslogListComponent,MenuListComponent,GrantRoleComponent,
+        GrantResourceComponent
+    ]
 })
 export class SystemModule { }
 

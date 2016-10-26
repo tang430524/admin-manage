@@ -5,35 +5,35 @@ import {RestCurdService} from "../shard/rest-curd.service";
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {Http, Headers} from "@angular/http";
 
-/**为用户分配角色*/
+/**为角色分配资源权限*/
 @Component({
     moduleId: module.id,
-    selector: 'grant-role',
-    templateUrl: 'grant-role.html'
+    selector: 'grant-resource',
+    templateUrl: 'grant-resource.html'
 })
-export class GrantRoleComponent implements OnInit {
+export class GrantResourceComponent implements OnInit {
 
     constructor(private router:Router, private indecter:Injector, private active:ActivatedRoute, private http:Http) {
 
     }
 
-    restService:RestCurdService<any> = new RestCurdService<any>(this.indecter, "/role");
+    restService:RestCurdService<any> = new RestCurdService<any>(this.indecter, "/resource");
 
-    roles:any;
+    resources:any;
 
-    uid:string;//当前用户id
+    rid:string;//当前角色id
 
     grant():void {
-        let checkedRoles = this.roles.filter((role:any) => {
-            return role.disabled;
-        }).map((role:any)=>{
-            return role.id;
+        let checkedRoles = this.resources.filter((resource:any) => {
+            return resource.disabled;
+        }).map((resource:any)=>{
+            return resource.id;
         });
         if (checkedRoles.length == 0) {
             return;
         }
-        this.http.put("/user/"+ this.uid+"/grantRole", JSON.stringify(checkedRoles), {headers: new Headers({'Content-Type': 'application/json'})}).toPromise().then(()=> {
-            this.router.navigate(["/user"]);
+        this.http.put("/role/"+ this.rid+"/grant-resource", JSON.stringify(checkedRoles), {headers: new Headers({'Content-Type': 'application/json'})}).toPromise().then(()=> {
+            this.router.navigate(["/role"]);
         });
     }
 
@@ -44,11 +44,11 @@ export class GrantRoleComponent implements OnInit {
             if (!id) {
                 return;
             }
-            this.uid = id;
+            this.rid = id;
         });
 
         this.restService.list().then(data => {
-                this.roles = data;
+                this.resources = data;
             }
         );
     }

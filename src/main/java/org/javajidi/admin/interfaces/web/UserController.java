@@ -52,7 +52,7 @@ public class UserController {
         return UserAssembler.domainToDto(userService.list());
     }
 
-    @RequestMapping(value = "/grantRole/{id}",method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/grantRole",method = RequestMethod.PUT)
     public void grantRole(@PathVariable("id") String id,@RequestBody List<String> rids){
         userService.grantRole(id,rids);
     }

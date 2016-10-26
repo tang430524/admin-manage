@@ -60,9 +60,6 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         }else{
             InterceptorStatusToken token = super.beforeInvocation(fi);
-            if(token==null){
-                throw new AccessDeniedException("no config resource permission?");
-            }
             try {
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             } finally {

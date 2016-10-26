@@ -59,7 +59,7 @@ CREATE TABLE `role_menu` (
 -- ----------------------------
 CREATE TABLE `role_resource` (
   `role_id` varchar(50) DEFAULT NULL,
-  `resource_id` varchar(30) DEFAULT NULL,
+  `resource_id` varchar(50) DEFAULT NULL,
   KEY `roleid_rr` (`role_id`),
   KEY `resource_rr` (`resource_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
