@@ -3,6 +3,7 @@ package org.bumishi.admin.security;
 import org.springframework.stereotype.Component;
 
 /**
+ * 重写此类的目的是改变默认的合并密码和盐的行为， password + "{" + salt.toString() + "}";
  * @author qiang.xie
  * @date 2016/9/27
  */

@@ -2,6 +2,7 @@ package org.bumishi.admin.interfaces.web;
 
 import org.bumishi.admin.application.UserService;
 import org.bumishi.admin.domain.modle.Menu;
+import org.bumishi.admin.domain.modle.SelectRole;
 import org.bumishi.admin.interfaces.commondobject.UserCommond;
 import org.bumishi.admin.interfaces.facade.assembler.UserAssembler;
 import org.bumishi.admin.interfaces.facade.dto.UserDto;
@@ -9,8 +10,8 @@ import org.bumishi.admin.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author qiang.xie
@@ -53,13 +54,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}/grantRole",method = RequestMethod.PUT)
-    public void grantRole(@PathVariable("id") String id,@RequestBody List<String> rids){
-        userService.grantRole(id,rids);
+    public void grantRole(@PathVariable("id") String id, @RequestBody List<SelectRole> rids) {
+        userService.grantRole(id, rids.stream().filter(selectRole -> selectRole.isChecked()).map(selectRole -> selectRole.getRid()).collect(Collectors.toList()));
     }
 
     @RequestMapping(value = "/nav",method = RequestMethod.GET)
-    public List<Menu> myMenus(HttpServletRequest request){
+    public List<Menu> myMenus() {
         return userService.getNavMenus(SecurityUtil.getUid());
+    }
+
+    @RequestMapping(value = "/{id}/select-role", method = RequestMethod.GET)
+    public List<SelectRole> selectRole(@PathVariable("id") String id) {
+        return userService.selectRoles(id);
     }
 
 }

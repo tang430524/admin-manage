@@ -16,6 +16,8 @@ public interface UserRepository {
 
     void update(User user);
 
+    void updateRoles(String uid, List<String> rids);
+
     User get(String id);
 
     boolean contains(String name);

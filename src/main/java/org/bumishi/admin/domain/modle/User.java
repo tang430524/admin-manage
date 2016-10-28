@@ -95,14 +95,6 @@ public class User implements Serializable {
 		this.lastTime = lastTime;
 	}
 
-	public void grantRoles(List<String> roles){
-		this.roles=roles;
-	}
-
-	public List<String> getRoles() {
-		return roles;
-	}
-
 	public String getSalt() {
 		return salt;
 	}

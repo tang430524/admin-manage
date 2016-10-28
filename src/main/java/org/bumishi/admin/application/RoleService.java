@@ -1,7 +1,12 @@
 package org.bumishi.admin.application;
 
 import org.bumishi.admin.domain.modle.Role;
+import org.bumishi.admin.domain.modle.SelectMenu;
+import org.bumishi.admin.domain.modle.SelectResource;
+import org.bumishi.admin.domain.repository.MenuRepository;
+import org.bumishi.admin.domain.repository.ResourceRepository;
 import org.bumishi.admin.domain.repository.RoleRepository;
+import org.bumishi.admin.domain.service.ResourceSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -17,6 +22,17 @@ public class RoleService {
 
     @Autowired
     protected RoleRepository roleRepository;
+
+    @Autowired
+    protected ResourceRepository resourceRepository;
+
+    @Autowired
+    protected ResourceSelectService resourceSelectService;
+
+    @Autowired
+    protected MenuRepository menuRepository;
+
+
 
     public void create(Role role){
         Assert.hasText(role.getName(),"Role name is empty");
@@ -50,14 +66,19 @@ public class RoleService {
     }
 
     public void grantResource(String roleId, List<String> resources){
-       Role role=get(roleId);
-       role.grantResource(resources);
-       roleRepository.update(role);
+        roleRepository.updateResources(roleId, resources);
     }
 
     public void grantMenu(String roleId, List<String> menus){
-        Role role=get(roleId);
-        role.grantMenu(menus);
-        roleRepository.update(role);
+        roleRepository.updateMenus(roleId, menus);
+    }
+
+    public List<SelectResource> selectResources(String roleId) {
+        return resourceSelectService.mergeResource(resourceRepository.list(), resourceRepository.listByRole(roleId));
+    }
+
+
+    public List<SelectMenu> selectMenus(String roleId) {
+        return resourceSelectService.mergeMenus(menuRepository.list(), menuRepository.roleMenus(roleId));
     }
 }

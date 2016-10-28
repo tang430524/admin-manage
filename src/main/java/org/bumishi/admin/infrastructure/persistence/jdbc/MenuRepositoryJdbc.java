@@ -68,4 +68,9 @@ public class MenuRepositoryJdbc implements MenuRepository{
             return menu;
         };
     }
+
+    @Override
+    public List<Menu> roleMenus(String roleId) {
+        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.code=rm.menu_code where rm.role_id=?", createMapper(), roleId);
+    }
 }

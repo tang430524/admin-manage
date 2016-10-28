@@ -61,19 +61,13 @@
                 <thead>
                 <tr>
                   <th>&nbsp;</th>
-                  <th>title</th>
-                  <th>url</th>
-                  <th>description</th>
-
-
+                  <th>label</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let user of resources">
-                  <td><input type="checkbox" [(ngModel)]="user.disabled"/></td>
-                  <td>{{user.title}}</td>
-                  <td>{{user.url}}</td>
-                  <td>{{user.description}}</td>
+                  <td><input type="checkbox" [(ngModel)]="user.checked"/></td>
+                  <td>{{user.label}}</td>
                 </tr>
 
 

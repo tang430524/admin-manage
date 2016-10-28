@@ -2,10 +2,13 @@ package org.bumishi.admin.interfaces.web;
 
 import org.bumishi.admin.application.RoleService;
 import org.bumishi.admin.domain.modle.Role;
+import org.bumishi.admin.domain.modle.SelectMenu;
+import org.bumishi.admin.domain.modle.SelectResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author qiang.xie
@@ -49,16 +52,26 @@ public class RoleController {
         return roleService.list();
     }
 
+    @RequestMapping(value = "/{id}/select-resource", method = RequestMethod.GET)
+    public List<SelectResource> selectRole(@PathVariable("id") String id) {
+        return roleService.selectResources(id);
+    }
+
+    @RequestMapping(value = "/{id}/select-menu", method = RequestMethod.GET)
+    public List<SelectMenu> selectMenu(@PathVariable("id") String id) {
+        return roleService.selectMenus(id);
+    }
+
     //为角色分配资源
     @RequestMapping(value = "/{id}/grant-resource",method = RequestMethod.PUT)
-    public void grantResources(@PathVariable("id") String id,@RequestBody List<String> rids){
-        roleService.grantResource(id,rids);
+    public void grantResources(@PathVariable("id") String id, @RequestBody List<SelectResource> rids) {
+        roleService.grantResource(id, rids.stream().filter(selectResource -> selectResource.isChecked()).map(selectResource -> selectResource.getRid()).collect(Collectors.toList()));
     }
 
     //为角色分配菜单
     @RequestMapping(value = "/{id}/grant-menu",method = RequestMethod.PUT)
-    public void grantMenu(@PathVariable("id") String id,@RequestBody List<String> menuCodes){
-        roleService.grantMenu(id,menuCodes);
+    public void grantMenu(@PathVariable("id") String id, @RequestBody List<SelectMenu> menuCodes) {
+        roleService.grantMenu(id, menuCodes.stream().filter(selectMenu -> selectMenu.isChecked()).map(selectMenu -> selectMenu.getMid()).collect(Collectors.toList()));
     }
 
 }

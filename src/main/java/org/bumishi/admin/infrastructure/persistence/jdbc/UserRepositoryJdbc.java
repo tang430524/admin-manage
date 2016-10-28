@@ -36,18 +36,22 @@ public class UserRepositoryJdbc implements UserRepository {
     @Override
     public void update(User user) {
         jdbcTemplate.update("UPDATE user SET username=?,email=?,password=? WHERE id=?",user.getUsername(),user.getEmail(),user.getPassword(),user.getId());
-        if(!CollectionUtils.isEmpty(user.getRoles())){
-            jdbcTemplate.update("DELETE FROM user_role WHERE uid=?",user.getId());
+    }
+
+    @Override
+    public void updateRoles(String uid, List<String> rids) {
+        jdbcTemplate.update("DELETE FROM user_role WHERE uid=?", uid);
+        if (!CollectionUtils.isEmpty(rids)) {
             jdbcTemplate.batchUpdate("INSERT user_role (uid,role_id) VALUES (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    ps.setString(1,user.getId());
-                    ps.setString(2,user.getRoles().get(i));
+                    ps.setString(1, uid);
+                    ps.setString(2, rids.get(i));
                 }
 
                 @Override
                 public int getBatchSize() {
-                    return user.getRoles().size();
+                    return rids.size();
                 }
             });
         }
@@ -96,7 +100,6 @@ public class UserRepositoryJdbc implements UserRepository {
         }
         jdbcTemplate.update("DELETE FROM user WHERE id=?",id);
         jdbcTemplate.update("DELETE FROM user_role WHERE uid=?",id);
-        //jdbcTemplate.update("DELETE FROM user_menu WHERE uid=?",id);
     }
 
     public void switchStatus(String id,boolean disabled){

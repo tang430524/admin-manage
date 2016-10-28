@@ -3,9 +3,11 @@ package org.bumishi.admin.application;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.domain.modle.Menu;
-import org.bumishi.admin.domain.modle.Resource;
+import org.bumishi.admin.domain.modle.SelectRole;
 import org.bumishi.admin.domain.modle.User;
+import org.bumishi.admin.domain.repository.RoleRepository;
 import org.bumishi.admin.domain.repository.UserRepository;
+import org.bumishi.admin.domain.service.RoleSelectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,13 @@ public class UserService {
 
     @Autowired
     protected Md5PasswordEncoder md5PasswordEncoder;
+
+    @Autowired
+    protected RoleSelectService roleSelectService;
+
+    @Autowired
+    protected RoleRepository roleRepository;
+
 
     public void create(User user){
         validate(user);
@@ -71,10 +80,6 @@ public class UserService {
         userRepository.switchStatus(id,disable);
     }
 
-    public List<Resource> getUrlResources(String uid){
-        return userRepository.getUrlResources(uid);
-    }
-
     public List<Menu> getNavMenus(String uid){
         return userRepository.getNavMenus(uid);
     }
@@ -84,9 +89,7 @@ public class UserService {
     }
 
     public void grantRole(String uid,List<String> roleIds){
-        User user=get(uid);
-        user.grantRoles(roleIds);
-        userRepository.update(user);
+        userRepository.updateRoles(uid, roleIds);
     }
 
 
@@ -95,6 +98,10 @@ public class UserService {
         if(user.isRoot()){
             throw new IllegalArgumentException("user loginName cannot is root");
         }
+    }
+
+    public List<SelectRole> selectRoles(String uid) {
+        return roleSelectService.mergeRole(roleRepository.list(), userRepository.getRoles(uid));
     }
 
 }

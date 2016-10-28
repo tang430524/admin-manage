@@ -13,6 +13,10 @@ public interface RoleRepository {
 
     void update(Role role);
 
+    void updateMenus(String rid, List<String> mids);
+
+    void updateResources(String rid, List<String> resources);
+
     boolean contains(String roleName);
 
     Role get(String id);

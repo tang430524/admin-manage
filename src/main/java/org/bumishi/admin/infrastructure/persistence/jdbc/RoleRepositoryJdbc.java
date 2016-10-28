@@ -31,39 +31,45 @@ public class RoleRepositoryJdbc implements RoleRepository {
     @Override
     public void update(Role role) {
         jdbcTemplate.update("update role SET `name` =?,disabled=?,description=? WHERE id=?",role.getName(),role.isDisabled()?1:0,role.getDescription(),role.getId());
-        if(!CollectionUtils.isEmpty(role.getMenus())){
-            jdbcTemplate.update("DELETE FROM role_menu WHERE role_id=?",role.getId());
+    }
+
+    @Override
+    public void updateMenus(String rid, List<String> mids) {
+        jdbcTemplate.update("DELETE FROM role_menu WHERE role_id=?", rid);
+        if (!CollectionUtils.isEmpty(mids)) {
             jdbcTemplate.batchUpdate("INSERT role_menu (role_id,menu_code) VALUES (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    ps.setString(1,role.getId());
-                    ps.setString(2,role.getMenus().get(i));
+                    ps.setString(1, rid);
+                    ps.setString(2, mids.get(i));
                 }
 
                 @Override
                 public int getBatchSize() {
-                    return role.getMenus().size();
+                    return mids.size();
                 }
             });
         }
 
-        if(!CollectionUtils.isEmpty(role.getResources())){
-            jdbcTemplate.update("DELETE FROM role_resource WHERE role_id=?",role.getId());
+    }
+
+    @Override
+    public void updateResources(String rid, List<String> resources) {
+        jdbcTemplate.update("DELETE FROM role_resource WHERE role_id=?", rid);
+        if (!CollectionUtils.isEmpty(resources)) {
             jdbcTemplate.batchUpdate("INSERT role_resource (role_id,resource_id) VALUES (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    ps.setString(1,role.getId());
-                    ps.setString(2,role.getResources().get(i));
+                    ps.setString(1, rid);
+                    ps.setString(2, resources.get(i));
                 }
 
                 @Override
                 public int getBatchSize() {
-                    return role.getResources().size();
+                    return resources.size();
                 }
             });
         }
-
-
     }
 
     @Override
@@ -83,6 +89,8 @@ public class RoleRepositoryJdbc implements RoleRepository {
 
     @Override
     public void remove(String id) {
+        jdbcTemplate.update("DELETE FROM role_menu WHERE role_id=?", id);
+        jdbcTemplate.update("DELETE FROM role_resource WHERE role_id=?", id);
         jdbcTemplate.update("DELETE FROM role WHERE id=?",id);
     }
 

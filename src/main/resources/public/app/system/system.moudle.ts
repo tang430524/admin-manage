@@ -2,11 +2,11 @@
  * Created by qiangxie on 2016/9/24.
  */
 
-import { NgModule }      from '@angular/core';
+import {NgModule} from "@angular/core";
 import {UserListComponent} from "./user-list.compent";
 import {UserFormComponent} from "./user-form.compent";
 import {routing} from "./system.routing";
-import {ShareModule} from '../shard/share.moudle';
+import {ShareModule} from "../shard/share.moudle";
 import {UserDetailComponent} from "./user-detail.compent";
 import {NavMenuComponent} from "./nav-menu.compent";
 import {RoleListComponent} from "./role-list.compent";

@@ -61,13 +61,6 @@ public class Role implements Serializable {
 		this.setName(name).setDescription(desc);
 	}
 
-	public void grantResource(List<String> resources){
-		this.resources=resources;
-	}
-
-	public void grantMenu(List<String> menus){
-		this.menus=menus;
-	}
 
 	public boolean isDisabled() {
 		return disabled;
@@ -78,19 +71,6 @@ public class Role implements Serializable {
 	}
 
 
-
-	public void setResources(List<String> resources) {
-		this.resources = resources;
-	}
-
-	public List<String> getMenus() {
-		return menus;
-	}
-
-	public void setMenus(List<String> menus) {
-		this.menus = menus;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -100,8 +80,21 @@ public class Role implements Serializable {
 		return this;
 	}
 
-	public List<String> getResources() {
-		return resources;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Role role = (Role) o;
+
+		return id != null ? id.equals(role.id) : role.id == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }
 
