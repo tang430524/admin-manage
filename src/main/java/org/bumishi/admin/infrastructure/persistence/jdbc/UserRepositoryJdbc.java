@@ -1,7 +1,5 @@
 package org.bumishi.admin.infrastructure.persistence.jdbc;
 
-import org.bumishi.admin.domain.modle.Menu;
-import org.bumishi.admin.domain.modle.Resource;
 import org.bumishi.admin.domain.modle.Role;
 import org.bumishi.admin.domain.modle.User;
 import org.bumishi.admin.domain.repository.UserRepository;
@@ -72,25 +70,13 @@ public class UserRepositoryJdbc implements UserRepository {
         return jdbcTemplate.query("select * from user where username <> 'root'", BeanPropertyRowMapper.newInstance(User.class));
     }
 
-    @Override
-    public List<Resource> getUrlResources(String userId) {
-        return jdbcTemplate.query("select r.* from resource r join role_resource rr on r.id=rr.resource_id join user_role ur on rr.role_id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Resource.class),userId);
-    }
 
     @Override
     public boolean hasResourcePermission(String uid,String resourceCode) {
         return jdbcTemplate.query("select count(*) from user_role ur join role_resource rr on ur.role_id=rr.role_id where ur.uid=? and rr.resource_id=?",rs -> rs.getInt(0)>0,uid,resourceCode);
     }
 
-    @Override
-    public List<Menu> getNavMenus(String userId) {
-        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.code=rm.menu_code join user_role ur on rm.role_id=ur.role_id where m.disabled=0 and ur.uid=?", (rs, rowNum) -> {
-            Menu menu = new Menu(rs.getString("code"), rs.getString("label"), rs.getString("url"));
-            menu.setDisabled(rs.getBoolean("disabled"));
-            menu.parseItemsFromJson(rs.getString("items"));
-            return menu;
-        },userId);
-    }
+
 
     @Override
     public void remove(String id) {
@@ -116,8 +102,4 @@ public class UserRepositoryJdbc implements UserRepository {
         }
     }
 
-    @Override
-    public List<Role> getRoles(String userId) {
-        return jdbcTemplate.query("select * from role r join user_role ur on r.id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Role.class),userId);
-    }
 }

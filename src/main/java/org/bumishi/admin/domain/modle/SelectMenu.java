@@ -10,7 +10,7 @@ public class SelectMenu {
 
     private String label;
 
-    private boolean checked;//角色是否有次菜单权限
+    private boolean checked;//角色是否有此菜单权限
 
     public SelectMenu() {
     }

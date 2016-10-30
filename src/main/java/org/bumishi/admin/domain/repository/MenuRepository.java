@@ -23,7 +23,7 @@ public interface MenuRepository {
 
     void switchStatus(String code,boolean disabled);
 
-    void addItem(String parentCode, Menu menu);
-
     List<Menu> roleMenus(String roleId);
+
+    List<Menu> getNavMenus(String userId);
 }

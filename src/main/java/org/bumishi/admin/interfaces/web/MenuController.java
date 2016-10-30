@@ -2,6 +2,9 @@ package org.bumishi.admin.interfaces.web;
 
 import org.bumishi.admin.application.MenuService;
 import org.bumishi.admin.domain.modle.Menu;
+import org.bumishi.admin.interfaces.commondobject.MenuCreateCommand;
+import org.bumishi.admin.interfaces.commondobject.MenuUpdateCommond;
+import org.bumishi.admin.interfaces.facade.assembler.MenuAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,35 +22,30 @@ public class MenuController {
     protected MenuService menuService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Menu create(@RequestBody Menu menu){
-        menuService.create(menu);
-        return menu;
+    public void create(@RequestBody MenuCreateCommand menu){
+        menuService.create(MenuAssembler.createCommendToDomain(menu));
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody Menu menu){
-        menuService.modify(menu);
-    }
-
-    @RequestMapping(value = "/{code}/additem",method = RequestMethod.POST)
-    public void addItem(@PathVariable("code") String code,@RequestBody Menu menu){
-        menuService.addItem(code,menu);
+    public void modify(@RequestBody MenuUpdateCommond menu){
+        menuService.modify(MenuAssembler.updateCommendToDomain(menu));
     }
 
 
-    @RequestMapping(value = "/{code}/status",method = RequestMethod.PUT)
-    public void switchStatus(@PathVariable("code") String code,@RequestParam("disable") boolean disable){
-        menuService.switchStatus(code,disable);
+
+    @RequestMapping(value = "/{id}/status",method = RequestMethod.PUT)
+    public void switchStatus(@PathVariable("id") String id,@RequestParam("disable") boolean disable){
+        menuService.switchStatus(id,disable);
     }
 
-    @RequestMapping(value = "/{code}",method = RequestMethod.DELETE)
-    public void delete(@PathVariable("code")String code){
-         menuService.delete(code);
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id")String id){
+         menuService.delete(id);
     }
 
-    @RequestMapping(value = "/{code}",method = RequestMethod.GET)
-    public Menu get(@PathVariable("code")String code){
-        return menuService.get(code);
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public Menu get(@PathVariable("id")String id){
+        return menuService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)

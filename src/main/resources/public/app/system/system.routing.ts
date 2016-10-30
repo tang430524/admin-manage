@@ -13,6 +13,9 @@ import {SyslogListComponent} from "./syslog-list.compent";
 import {MenuListComponent} from "./menu-list.compent";
 import {GrantRoleComponent} from "./grant-role.compent";
 import {GrantResourceComponent} from "./grant-resource.compent";
+import {MenuDetailComponent} from "./menu-detail.compent";
+import {MenuFormComponent} from "./menu-form.compent";
+import {GrantMenuComponent} from "./grant-menu.compent";
 export const routing: ModuleWithProviders = RouterModule.forChild([
     { path: 'user', component: UserListComponent},
     { path: 'user-form', component: UserFormComponent},
@@ -25,6 +28,9 @@ export const routing: ModuleWithProviders = RouterModule.forChild([
     { path: 'resource-detail/:id', component: ResourceDetailComponent},
     { path: 'syslog', component: SyslogListComponent},
     { path: 'menu', component: MenuListComponent},
-    { path: 'grant-role/:id',component:GrantRoleComponent},
-    { path: 'grant-resource/:id',component:GrantResourceComponent}
+    { path: 'menu-form/:path', component: MenuFormComponent},
+    { path: 'menu-detail/:id', component: MenuDetailComponent},
+    { path: 'grant-role/:uid',component:GrantRoleComponent},
+    { path: 'grant-resource/:rid',component:GrantResourceComponent},
+    { path: 'grant-menu/:rid',component:GrantMenuComponent}
 ]);

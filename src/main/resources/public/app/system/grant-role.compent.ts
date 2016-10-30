@@ -29,7 +29,7 @@ export class GrantRoleComponent implements OnInit {
 
     ngOnInit():void {
         this.active.params.forEach((params:Params) => {
-            var id = params['id'];
+            var id = params['uid'];
             if (!id) {
                 return;
             }

@@ -27,5 +27,7 @@ public interface RoleRepository {
 
     void switchStatus(String id,boolean disabled);
 
+    List<Role> getRoles(String userId);
+
 
 }

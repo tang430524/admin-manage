@@ -20,8 +20,8 @@ export class MenuListComponent implements OnInit {
 
     menus:any;
 
-    newClick():void {
-        this.router.navigate(["/menu-form"]);
+    newClick(parentId:string):void {
+        this.router.navigate(["/menu-form",parentId]);
     }
 
     itemClick(id:string):void {

@@ -55,14 +55,14 @@ public class ResourceSelectService {
         }
 
         if (CollectionUtils.isEmpty(part)) {
-            return all.stream().map(role -> new SelectMenu(role.getCode(), role.getLabel(), false)).collect(Collectors.toList());
+            return all.stream().map(role -> new SelectMenu(role.getId(), role.getLabel(), false)).collect(Collectors.toList());
         }
 
         return all.stream().map(role -> {
             if (part.contains(role)) {
-                return new SelectMenu(role.getCode(), role.getLabel(), true);
+                return new SelectMenu(role.getId(), role.getLabel(), true);
             }
-            return new SelectMenu(role.getCode(), role.getLabel(), false);
+            return new SelectMenu(role.getId(), role.getLabel(), false);
         }).collect(Collectors.toList());
     }
 }

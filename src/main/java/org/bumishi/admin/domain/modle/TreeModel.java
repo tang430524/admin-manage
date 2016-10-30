@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  */
 public class TreeModel {
 
-    private int id;
+    private String id;
 
     private String label;
 
@@ -23,13 +23,16 @@ public class TreeModel {
 
     private int order=1;  //排序
 
-    private List<TreeModel> childNodes=new ArrayList<>();
+    /** 状态 是否禁用*/
+    private boolean disabled;
 
-    public int getId() {
+    private List<? extends TreeModel> childNodes=new ArrayList<>();
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,6 +53,9 @@ public class TreeModel {
     }
 
     public int getLevel() {
+        if(path==null){
+            return 1;
+        }
         return path.split(",").length;
     }
 
@@ -62,7 +68,15 @@ public class TreeModel {
         this.order = order;
     }
 
-    public TreeModel newChildNode(int nodeId,String label,int order){
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public TreeModel newChildNode(String nodeId, String label, int order){
         TreeModel node=new TreeModel();
         node.path =this.path +","+this.id;
         node.id=nodeId;
@@ -71,88 +85,135 @@ public class TreeModel {
         return node;
     }
 
+    public List<? extends TreeModel> getChildNodes() {
+        return childNodes;
+    }
+
     @Override
     public String toString() {
         return label+"-"+ path +"-"+id+"-"+order;
     }
 
-    public static List<TreeModel> buildTree(List<TreeModel> nodes){
-        if(nodes==null || nodes.isEmpty()){
+    /***
+     * 以level==1的节点作为开始节点构建树结构
+     * @param nodes
+     * @return
+     */
+    public static List<? extends TreeModel> buildTree(List<? extends TreeModel> nodes){
+        if (isEmpty(nodes)){
             return null;
         }
-        List<TreeModel> firstLevels=nodes.stream().filter(node->node.getLevel()==1).collect(Collectors.toList());
-        firstLevels.sort((node1,node2)->Integer.valueOf(node1.getOrder()).compareTo(Integer.valueOf(node2.getOrder())));
-        firstLevels.stream().forEach(node-> findChild(node,nodes));
+        List<? extends TreeModel> firstLevels=nodes.stream().filter(node->!node.isDisabled() && node.getLevel()==1).collect(Collectors.toList());
+        sortByOrder(firstLevels);
+        firstLevels.stream().forEach(node-> setChildren(node,nodes));
         return firstLevels;
     }
 
-    private static void findChild(TreeModel currentNode,List<TreeModel> nodeList){
-        List<TreeModel> childrens=nodeList.stream().filter(node->node.getPath().equals(currentNode.getPath()+","+currentNode.getId())).collect(Collectors.toList());
+
+    private static  void setChildren(TreeModel currentNode, List<? extends TreeModel> nodeList){
+        List<? extends TreeModel> childrens=nodeList.stream().filter(node->(!node.isDisabled() && node.getPath().equals(currentNode.getPath()+","+currentNode.getId()))).collect(Collectors.toList());
         currentNode.childNodes=childrens;
-        if(childrens==null || childrens.isEmpty()){
+        if (isEmpty(childrens)){
             return;
         }
-        childrens.sort((node1,node2)->Integer.valueOf(node1.getOrder()).compareTo(Integer.valueOf(node2.getOrder())));
-        childrens.stream().forEach(node->findChild(node,nodeList));
+        sortByOrder(childrens);
+        childrens.stream().forEach(node-> setChildren(node,nodeList));
 
     }
 
-    public static void show(List<TreeModel> nodes){
-       if(nodes==null || nodes.isEmpty()){
-           return;
-       }
-        nodes.sort((o1,o2)->Integer.valueOf(o1.getOrder()).compareTo(Integer.valueOf(o2.getOrder())));
-       nodes.sort((o1, o2) -> (o1.getPath()+","+o1.getId()).compareTo(o2.getPath()+","+o2.getId()));
-
-       nodes.stream().forEach(node->{
-           for(int i=1;i<node.getLevel();i++){
-                      System.out.print("\t");
-           }
-           System.out.println(node);
-       });
+    private static void sortByOrder(List<? extends TreeModel> firstLevels) {
+        firstLevels.sort((node1,node2)->Integer.valueOf(node1.getOrder()).compareTo(Integer.valueOf(node2.getOrder())));
     }
 
-    public static void printTree(List<TreeModel> nodes){
+
+    /***
+     * 按数结构给节点排序
+     * @param nodes
+     */
+    public static void sortByTree(List<? extends TreeModel> nodes) {
+        if(isEmpty(nodes)){
+            return;
+        }
+        sortByOrder(nodes);
+        nodes.sort((o1, o2) -> (o1.getPath()+","+o1.getId()).compareTo(o2.getPath()+","+o2.getId()));
+    }
+
+    private static boolean isEmpty(List nodes) {
         if(nodes==null || nodes.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+
+    //按节点的父子层次顺序展示
+    private static void printTreeToConsole(List<TreeModel> nodes){
+        if (isEmpty(nodes)){
+            return;
+        }
+
+        sortByTree(nodes);
+
+        nodes.stream().forEach(node->{
+            if(node.isDisabled()){
+                return;
+            }
+            for(int i=1;i<node.getLevel();i++){
+                System.out.print("\t");
+            }
+            System.out.println(node);
+        });
+    }
+
+
+    //以第一层为起点，递归方式展示父子层次树
+    private static void printFirstLevelTreeToConsole(List<? extends TreeModel> nodes){
+        if (isEmpty(nodes)){
             return;
         }
         nodes.forEach(item->{
+            if(item.isDisabled()){
+                return;
+            }
+            for(int i=1;i<item.getLevel();i++){
+                System.out.print("\t");
+            }
             System.out.println(item);
-            printTree(item.childNodes);
+
+            printFirstLevelTreeToConsole(item.getChildNodes());
         });
     }
 
     public static void main(String[] arg){
         List<TreeModel> nodes=new ArrayList<>();
         TreeModel fruit=new TreeModel();
-        fruit.setId(1);
+        fruit.setId("1");
         fruit.setLabel("水果");
-        fruit.setPath("0");
         fruit.setOrder(2);
         nodes.add(fruit);
 
-        TreeModel apple=fruit.newChildNode(7,"苹果",2);
+        TreeModel apple=fruit.newChildNode("7","苹果",2);
         nodes.add(apple);
-        nodes.add(apple.newChildNode(4,"红富士",2));
-        nodes.add(apple.newChildNode(15,"山东苹果",1));
+        nodes.add(apple.newChildNode("4","红富士",2));
+        nodes.add(apple.newChildNode("15","山东苹果",1));
 
-        TreeModel lizi=fruit.newChildNode(8,"梨子",1);
+        TreeModel lizi=fruit.newChildNode("e8","梨子",1);
         nodes.add(lizi);
-        nodes.add(lizi.newChildNode(77,"雪梨",1));
-        nodes.add(lizi.newChildNode(31,"鸭梨",2));
+        nodes.add(lizi.newChildNode("7r7","雪梨",1));
+        nodes.add(lizi.newChildNode("t31o","鸭梨",2));
 
         TreeModel shucai=new TreeModel();
-        shucai.setId(101);
+        shucai.setId("a101");
         shucai.setLabel("蔬菜");
-        shucai.setPath("0");
         shucai.setOrder(1);
+        shucai.setDisabled(true);
          nodes.add(shucai);
-        nodes.add(shucai.newChildNode(213,"白菜",2));
-       // TreeModel.show(nodes);
+        nodes.add(shucai.newChildNode("213","白菜",2));
+        printTreeToConsole(nodes);
 
-        List<TreeModel> tree=TreeModel.buildTree(nodes);
-
-          printTree(tree);
+        System.out.println("====================");
+        List<? extends TreeModel> tree=TreeModel.buildTree(nodes);
+        printFirstLevelTreeToConsole(tree);
 
 
 

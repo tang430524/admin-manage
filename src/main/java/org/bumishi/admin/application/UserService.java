@@ -4,7 +4,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.domain.modle.Menu;
 import org.bumishi.admin.domain.modle.SelectRole;
+import org.bumishi.admin.domain.modle.TreeModel;
 import org.bumishi.admin.domain.modle.User;
+import org.bumishi.admin.domain.repository.MenuRepository;
 import org.bumishi.admin.domain.repository.RoleRepository;
 import org.bumishi.admin.domain.repository.UserRepository;
 import org.bumishi.admin.domain.service.RoleSelectService;
@@ -34,6 +36,9 @@ public class UserService {
 
     @Autowired
     protected RoleRepository roleRepository;
+
+    @Autowired
+    protected MenuRepository menuRepository;
 
 
     public void create(User user){
@@ -81,7 +86,8 @@ public class UserService {
     }
 
     public List<Menu> getNavMenus(String uid){
-        return userRepository.getNavMenus(uid);
+        List<Menu> list = menuRepository.getNavMenus(uid);
+        return (List<Menu>) TreeModel.buildTree(list);
     }
 
     public boolean hasResourcePermission(String uid,String resourceCode){
@@ -101,7 +107,7 @@ public class UserService {
     }
 
     public List<SelectRole> selectRoles(String uid) {
-        return roleSelectService.mergeRole(roleRepository.list(), userRepository.getRoles(uid));
+        return roleSelectService.mergeRole(roleRepository.list(), roleRepository.getRoles(uid));
     }
 
 }

@@ -1,6 +1,7 @@
 package org.bumishi.admin.infrastructure;
 
-import org.apache.commons.beanutils.BeanUtils;
+
+import org.springframework.beans.BeanUtils;
 
 /**
  * @author qiang.xie
@@ -10,7 +11,7 @@ public class BeanUtil {
 
     public static void copeProperties(Object from,Object dest){
         try {
-            BeanUtils.copyProperties(dest, from);
+            BeanUtils.copyProperties(from, dest);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

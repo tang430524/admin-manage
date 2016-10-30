@@ -24,6 +24,6 @@ export class NavMenuComponent implements OnInit {
  class Menu{
     label:string;
     url:string;
-    items:Menu[];
+     childNodes:Menu[];
 
 }

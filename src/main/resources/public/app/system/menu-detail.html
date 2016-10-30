@@ -25,24 +25,28 @@
           <!-- general form elements disabled -->
           <div class="box box-warning">
             <div class="box-header with-border">
-              <h3 class="box-title">编辑角色</h3>
+              <h3 class="box-title">编辑菜单</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <form role="form" (ngSubmit)="save()" #userForm="ngForm">
 
-                <!-- text input -->
+
                 <div class="form-group">
-                  <label>角色名</label>
-                  <input type="text" [(ngModel)]="role.name" name="role.name"  class="form-control" placeholder="Enter ...">
+                  <label>菜单label</label>
+                  <input type="text" [(ngModel)]="menu.label" name="menu.label"  class="form-control" placeholder="Enter ...">
+                </div>
+
+
+                <div class="form-group">
+                  <label>url</label>
+                  <input type="text" [(ngModel)]="menu.url" name="menu.url"  class="form-control" placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
-                  <label>密码</label>
-                  <input type="text" [(ngModel)]="role.description" name="role.description" class="form-control" placeholder="Enter ...">
+                  <label>排序</label>
+                  <input type="number" [(ngModel)]="menu.order" name="menu.order" class="form-control" placeholder="Enter ...">
                 </div>
-
-                
 
                 <div class="box-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
@@ -64,6 +68,8 @@
   <footer-compent></footer-compent>
 </div>
 <!-- ./wrapper -->
+
+
 
 </body>
 </html>

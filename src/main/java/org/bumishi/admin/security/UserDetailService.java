@@ -2,6 +2,7 @@ package org.bumishi.admin.security;
 
 import org.bumishi.admin.domain.modle.Role;
 import org.bumishi.admin.domain.modle.User;
+import org.bumishi.admin.domain.repository.RoleRepository;
 import org.bumishi.admin.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,6 +28,9 @@ public class UserDetailService implements UserDetailsService {
     @Autowired
     protected UserRepository userRepository;
 
+    @Autowired
+    protected RoleRepository roleRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user=userRepository.findByUserName(username);
@@ -38,7 +42,7 @@ public class UserDetailService implements UserDetailsService {
     }
 
     protected Collection<GrantedAuthority> grantedAuthorities(String userId){
-        List<Role> resources=userRepository.getRoles(userId);
+        List<Role> resources=roleRepository.getRoles(userId);
         if(CollectionUtils.isEmpty(resources)){
             return new ArrayList<>();
         }

@@ -21,29 +21,22 @@ public class MenuRepositoryJdbc implements MenuRepository{
 
     @Override
     public void add(Menu menu) {
-        jdbcTemplate.update("INSERT menu (code,label,url,disaled,items) VALUES (?,?,?,?,?)",menu.getCode(),menu.getLabel(),menu.getUrl(),menu.isDisabled()?1:0,menu.itemsToJson());
+        jdbcTemplate.update("INSERT menu (id,label,path,`level`,`order`,`url`,`disabled`) VALUES (?,?,?,?,?,?,?)",menu.getId(),menu.getLabel(),menu.getPath(),menu.getLevel(),menu.getOrder(),menu.getUrl(),menu.isDisabled()?1:0);
     }
 
     @Override
     public void update(Menu menu) {
-        jdbcTemplate.update("update menu SET label=?,url=?,disabled=?,items=? WHERE code=?",menu.getLabel(),menu.getUrl(),menu.isDisabled()?1:0,menu.itemsToJson(),menu.getCode());
+        jdbcTemplate.update("update menu SET label=?,`order`=?,url=?,disabled=? WHERE id=?",menu.getLabel(),menu.getOrder(),menu.getUrl(),menu.isDisabled()?1:0,menu.getId());
     }
 
     @Override
-    public void addItem(String parentCode, Menu menu) {
-        Menu parent=get(parentCode);
-        parent.addItems(menu);
-        update(parent);
+    public Menu get(String id) {
+        return jdbcTemplate.queryForObject("select * from menu where id=?",createMapper(),id);
     }
 
     @Override
-    public Menu get(String code) {
-        return jdbcTemplate.queryForObject("select * from menu where code=?",createMapper(),code);
-    }
-
-    @Override
-    public boolean contains(String code) {
-        return jdbcTemplate.queryForObject("select count(code) from menu where code=?",Integer.class,code)>0;
+    public boolean contains(String id) {
+        return jdbcTemplate.queryForObject("select count(id) from menu where id=?",Integer.class,id)>0;
     }
 
     @Override
@@ -52,25 +45,34 @@ public class MenuRepositoryJdbc implements MenuRepository{
     }
 
     @Override
-    public void remove(String code) {
-        jdbcTemplate.update("DELETE FROM menu WHERE code=?",code);
+    public void remove(String id) {       //删除父节点没必要删除所有子节点，因为删除父节点后子节点并不会被展示
+        jdbcTemplate.update("DELETE FROM menu WHERE id=?",id);
     }
 
-    public void switchStatus(String code,boolean disabled){
-        jdbcTemplate.update("update menu SET disabled=? WHERE code=?",disabled?1:0,code);
+    public void switchStatus(String id,boolean disabled){ //禁用父节点没必要禁用所有子节点，同上
+        jdbcTemplate.update("update menu SET disabled=? WHERE id=?",disabled?1:0,id);
     }
 
     private RowMapper<Menu> createMapper() {
         return (rs, rowNum) -> {
-            Menu menu = new Menu(rs.getString("code"), rs.getString("label"), rs.getString("url"));
+            Menu menu = new Menu();
+            menu.setId(rs.getString("id"));
+            menu.setLabel(rs.getString("label"));
+            menu.setUrl(rs.getString("url"));
             menu.setDisabled(rs.getBoolean("disabled"));
-            menu.parseItemsFromJson(rs.getString("items"));
+            menu.setPath(rs.getString("path"));
+            menu.setOrder(rs.getInt("order"));
             return menu;
         };
     }
 
     @Override
     public List<Menu> roleMenus(String roleId) {
-        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.code=rm.menu_code where rm.role_id=?", createMapper(), roleId);
+        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.id=rm.menu_id where rm.role_id=?", createMapper(), roleId);
+    }
+
+    @Override
+    public List<Menu> getNavMenus(String userId) {
+        return jdbcTemplate.query("select m.* from menu m join role_menu rm on m.id=rm.menu_id join user_role ur on rm.role_id=ur.role_id where m.disabled=0 and ur.uid=?", createMapper(),userId);
     }
 }

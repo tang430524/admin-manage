@@ -53,4 +53,10 @@ public class ResourceRepositoryJdbc implements ResourceRepository{
     public List<Resource> listByRole(String roleId) {
         return jdbcTemplate.query("select re.* from  role_resource rr  join resource re on re.id=rr.resource_id where rr.role_id=?", BeanPropertyRowMapper.newInstance(Resource.class), roleId);
     }
+
+
+    @Override
+    public List<Resource> getUrlResources(String userId) {
+        return jdbcTemplate.query("select r.* from resource r join role_resource rr on r.id=rr.resource_id join user_role ur on rr.role_id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Resource.class),userId);
+    }
 }

@@ -3,6 +3,8 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpUtil} from "./HttpUtil";
+import {HeaderComponent} from "./layout/header.compent";
+import {FooterComponent} from "./layout/footer.compent";
 
 @NgModule({
     imports: [
@@ -13,7 +15,8 @@ import {HttpUtil} from "./HttpUtil";
     providers: [
         HttpUtil
     ],
-    exports:[BrowserModule,FormsModule,HttpModule]
+    declarations:[HeaderComponent,FooterComponent],
+    exports:[BrowserModule,FormsModule,HttpModule,HeaderComponent,FooterComponent]
 })
 export class ShareModule { }
 /**

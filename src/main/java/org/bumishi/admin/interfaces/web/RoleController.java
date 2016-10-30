@@ -22,9 +22,8 @@ public class RoleController {
     protected RoleService roleService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Role create(@RequestBody Role role){
+    public void create(@RequestBody Role role){
         roleService.create(role);
-        return role;
     }
 
     @RequestMapping(method = RequestMethod.PUT)

@@ -1,6 +1,7 @@
 package org.bumishi.admin.application;
 
 import org.bumishi.admin.domain.modle.Menu;
+import org.bumishi.admin.domain.modle.TreeModel;
 import org.bumishi.admin.domain.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class MenuService {
 
     public void create(Menu menu){
        validate(menu);
-        if(menuRepository.contains(menu.getCode())){
+        if(menuRepository.contains(menu.getId())){
             return;
         }
         menuRepository.add(menu);
@@ -30,10 +31,6 @@ public class MenuService {
         menuRepository.update(menu);
     }
 
-    public void addItem(String parentCode,Menu menu){
-        validate(menu);
-        menuRepository.addItem(parentCode,menu);
-    }
 
     public Menu get(String code){
         return menuRepository.get(code);
@@ -44,7 +41,9 @@ public class MenuService {
     }
 
     public List<Menu> list(){
-        return menuRepository.list();
+        List<Menu> list = menuRepository.list();
+        TreeModel.sortByTree(list);
+        return list;
     }
 
     public void switchStatus(String menu,boolean disable){
@@ -52,7 +51,7 @@ public class MenuService {
     }
 
     private void validate(Menu menu){
-        Assert.hasText(menu.getCode());
+        Assert.hasText(menu.getId());
         Assert.hasText(menu.getLabel());
     }
 

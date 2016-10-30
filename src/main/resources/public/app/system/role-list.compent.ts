@@ -59,6 +59,10 @@ export class RoleListComponent implements OnInit {
         this.router.navigate(["/grant-resource", id]);
     }
 
+    grantMenu(id:string):void {
+        this.router.navigate(["/grant-menu", id]);
+    }
+
 
 
     ngOnInit():void {

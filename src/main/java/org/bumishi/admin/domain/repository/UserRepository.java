@@ -1,7 +1,5 @@
 package org.bumishi.admin.domain.repository;
 
-import org.bumishi.admin.domain.modle.Menu;
-import org.bumishi.admin.domain.modle.Resource;
 import org.bumishi.admin.domain.modle.Role;
 import org.bumishi.admin.domain.modle.User;
 
@@ -24,20 +22,14 @@ public interface UserRepository {
 
     List<User> list();
 
-    List<Resource> getUrlResources(String userId);
-
     boolean hasResourcePermission(String userId,String resourceCode);
-
-    List<Menu> getNavMenus(String userId);
 
     void remove(String id);
 
     void switchStatus(String id,boolean disabled);
 
-
     User findByUserName(String username);
 
-    List<Role> getRoles(String userId);
 
 
 }

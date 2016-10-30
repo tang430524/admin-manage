@@ -12,12 +12,14 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for menu
 -- ----------------------------
 CREATE TABLE `menu` (
-  `code` varchar(30) NOT NULL,
+  `id` varchar(50) NOT NULL,
   `label` varchar(20) NOT NULL,
+  `path` varchar(200) DEFAULT '0',
+  `order` smallint(6) DEFAULT '1',
+  `level` smallint(6) DEFAULT '1' COMMENT '层级，方便根据层级查询',
   `url` varchar(200) DEFAULT NULL,
   `disabled` smallint(6) DEFAULT '0',
-  `items` text COMMENT '子菜单json',
-  PRIMARY KEY (`code`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -49,9 +51,9 @@ CREATE TABLE `role` (
 -- ----------------------------
 CREATE TABLE `role_menu` (
   `role_id` varchar(50) DEFAULT NULL,
-  `menu_code` varchar(30) DEFAULT NULL,
+  `menu_id` varchar(50) DEFAULT NULL,
   KEY `role_id_rm` (`role_id`),
-  KEY `menu_code_rm` (`menu_code`)
+  KEY `menu_code_rm` (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -102,10 +104,18 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records
 -- ----------------------------
-INSERT INTO `menu` VALUES ('system', '系统管理', null, '0', '[{\"code\":\"user\",\"label\":\"用户管理\",\"url\":\"/user\"},{\"code\":\"role\",\"label\":\"角色管理\",\"url\":\"/role\"},{\"code\":\"resource\",\"label\":\"资源管理\",\"url\":\"/resource\"},{\"code\":\"menu\",\"label\":\"菜单管理\",\"url\":\"/menu\"}]');
-INSERT INTO `resources` VALUES ('admin', 'fa', '0', '/user/*', 'fa');
+INSERT INTO `menu` VALUES ('blog', '博客管理', '0', '1', '1', 'blog', '0');
+INSERT INTO `menu` VALUES ('comment', '评论', '0,blog', '2', '2', '/comment', '0');
+INSERT INTO `menu` VALUES ('menu', '菜单管理', '0,system', '2', '1', '/menu', '0');
+INSERT INTO `menu` VALUES ('resource', '资源管理', '0,system', '2', '4', '/resource', '0');
+INSERT INTO `menu` VALUES ('role', '角色管理', '0,system', '2', '3', '/role', '0');
+INSERT INTO `menu` VALUES ('syslog', '系统日志', '0,system', '2', '5', '/syslog', '0');
+INSERT INTO `menu` VALUES ('system', '系统管理', '0', '1', '1', null, '0');
+INSERT INTO `menu` VALUES ('user', '用户管理', '0,system', '2', '2', '/user', '0');
+
+INSERT INTO `resource` VALUES ('admin', 'fa', '0', '/user/*', 'fa');
 INSERT INTO `role` VALUES ('1', 'admin', '0', 'fa');
 INSERT INTO `role_menu` VALUES ('1', 'system');
 INSERT INTO `role_resource` VALUES ('1', 'admin');

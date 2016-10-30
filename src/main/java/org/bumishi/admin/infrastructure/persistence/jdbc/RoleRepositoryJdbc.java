@@ -37,7 +37,7 @@ public class RoleRepositoryJdbc implements RoleRepository {
     public void updateMenus(String rid, List<String> mids) {
         jdbcTemplate.update("DELETE FROM role_menu WHERE role_id=?", rid);
         if (!CollectionUtils.isEmpty(mids)) {
-            jdbcTemplate.batchUpdate("INSERT role_menu (role_id,menu_code) VALUES (?,?)", new BatchPreparedStatementSetter() {
+            jdbcTemplate.batchUpdate("INSERT role_menu (role_id,menu_id) VALUES (?,?)", new BatchPreparedStatementSetter() {
                 @Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     ps.setString(1, rid);
@@ -96,5 +96,11 @@ public class RoleRepositoryJdbc implements RoleRepository {
 
     public void switchStatus(String id,boolean disabled){
         jdbcTemplate.update("update role SET disabled=? WHERE id=?",disabled?1:0,id);
+    }
+
+
+    @Override
+    public List<Role> getRoles(String userId) {
+        return jdbcTemplate.query("select * from role r join user_role ur on r.id=ur.role_id where ur.uid=?",BeanPropertyRowMapper.newInstance(Role.class),userId);
     }
 }

@@ -19,9 +19,8 @@ public class ResourceController {
     protected ResourceService resourceService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public Resource create(@RequestBody Resource resource){
+    public void create(@RequestBody Resource resource){
         resourceService.create(resource);
-        return resource;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
