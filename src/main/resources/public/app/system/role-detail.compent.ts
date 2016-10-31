@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import { OnInit } from '@angular/core';
-import { Injector }    from '@angular/core';
+import {Component, OnInit, Injector} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -17,16 +15,15 @@ export class RoleDetailComponent implements OnInit{
 
     restService:RestCurdService<Object>=new RestCurdService<Object>(this.indecter,"/role");
 
-    role:any=new Object();
+    role:any = {};
 
 
-   
-    save():void{
+    save(id:any):void {
         if (this.role ==null){
             return;
         }
 
-            this.restService.update(this.role).then(()=>{
+        this.restService.update(id, this.role).then(()=> {
                 this.router.navigate(["/role"]);
             });
 

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Injector }    from '@angular/core';
+import {Component, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -16,7 +15,7 @@ export class RoleFormComponent {
 
     restService:RestCurdService<Object>=new RestCurdService<Object>(this.indecter,"/role");
 
-    role:any=new Object();
+    role:any = {};
 
 
    
@@ -24,15 +23,11 @@ export class RoleFormComponent {
         if (this.role ==null){
             return;
         }
-        if (this.role.id==null){
-            this.restService.save(this.role).then(()=>{
+
+        this.restService.save(this.role).then(()=>{
                 this.router.navigate(["/role"]);
             });
-        }else{
-            this.restService.update(this.role).then(()=>{
-                this.router.navigate(["/role"]);
-            });
-        }
+
     }
    
 }

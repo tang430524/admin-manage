@@ -2,7 +2,7 @@ package org.bumishi.admin.domain.modle;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -14,7 +14,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 主键ID */
-	private String id;
+	private String id = UUID.randomUUID().toString();
 
 	/** 登录名称 */
 	private String username;
@@ -36,8 +36,6 @@ public class User implements Serializable {
 
 	/** 最后登录时间 */
 	private Date lastTime;
-
-	private List<String> roles;
 
 	public String getId() {
 		return id;

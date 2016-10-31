@@ -15,16 +15,15 @@ export class MenuDetailComponent implements OnInit{
 
     restService:RestCurdService<Object>=new RestCurdService<Object>(this.indecter,"/menu");
 
-    menu:any=new Object();
+    menu:any = {};
 
 
-   
-    save():void{
+    save(id:any):void {
         if (this.menu ==null){
             return;
         }
 
-            this.restService.update(this.convert(this.menu)).then(()=>{
+        this.restService.update(id, this.convert(this.menu)).then(()=> {
                 this.router.navigate(["/menu"]);
             });
 
@@ -32,7 +31,6 @@ export class MenuDetailComponent implements OnInit{
 
     convert(menu:any):UpdateMenuVo{
         let vo=new UpdateMenuVo();
-        vo.id=menu.id;
         vo.label=menu.label;
         vo.order=menu.order;
         vo.url = menu.url;

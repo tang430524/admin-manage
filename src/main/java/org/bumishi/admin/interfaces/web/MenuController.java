@@ -26,9 +26,9 @@ public class MenuController {
         menuService.create(MenuAssembler.createCommendToDomain(menu));
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody MenuUpdateCommond menu){
-        menuService.modify(MenuAssembler.updateCommendToDomain(menu));
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void modify(@PathVariable("id") String id, @RequestBody MenuUpdateCommond menu) {
+        menuService.modify(MenuAssembler.updateCommendToDomain(id, menu));
     }
 
 

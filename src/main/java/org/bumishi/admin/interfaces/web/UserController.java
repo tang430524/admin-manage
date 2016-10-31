@@ -29,9 +29,9 @@ public class UserController {
         userService.create(UserAssembler.commondToDomain(user));
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody UserCommond user){
-        userService.modify(UserAssembler.commondToDomain(user));
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void modify(@PathVariable("id") String id, @RequestBody UserCommond user) {
+        userService.modify(UserAssembler.commondToDomain(id, user));
     }
 
     @RequestMapping(value = "/{id}/status",method = RequestMethod.PUT)

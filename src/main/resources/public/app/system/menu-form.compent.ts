@@ -18,10 +18,7 @@ export class MenuFormComponent implements OnInit{
     menu:CreateMenuVo=new CreateMenuVo();
    
     save():void{
-        if (this.menu ==null || this.menu.id==null){
-            return;
-        }
-
+       
         this.restService.save(this.menu).then(()=>{
             this.router.navigate(["/menu"]);
         });
@@ -39,7 +36,6 @@ export class MenuFormComponent implements OnInit{
 }
 
 class CreateMenuVo{
-    id:string;
     label:string;
     order:number;
     path:string;

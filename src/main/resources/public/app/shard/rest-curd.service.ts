@@ -6,10 +6,9 @@
 /**
  * Created by qiangxie on 2016/9/28.
  */
-import { Injectable }    from '@angular/core';
-import { Injector }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
-import './rxjs-extention';
+import {Injector} from "@angular/core";
+import {Headers, Http} from "@angular/http";
+import "./rxjs-extention";
 
 //@Injectable()
 export class RestCurdService<T> {
@@ -22,6 +21,9 @@ export class RestCurdService<T> {
     list():Promise<T[]>{
         return this.http.get(this.resourceUrl, {headers: this.headers}).toPromise()
             .then((response) => {
+                if (response._body == "") {
+                    return [];
+                }
                 return response.json() as T[] ;
             });
     }
@@ -31,22 +33,22 @@ export class RestCurdService<T> {
             .then(response =>null);
     }
 
-    update(T): Promise<void> {
-        return this.http.put(this.resourceUrl, JSON.stringify(T), {headers: this.headers}).toPromise()
+    update(id:any, T):Promise<void> {
+        return this.http.put(this.resourceUrl + "/" + id, JSON.stringify(T), {headers: this.headers}).toPromise()
             .then(response =>null);
     }
 
-    delete(id:string): Promise<void> {
+    delete(id:any):Promise<void> {
         return this.http.delete(this.resourceUrl+"/"+id, {headers: this.headers}).toPromise()
             .then(response =>null);
     }
 
-    switchStatus(id:string,disable:boolean): Promise<void> {
+    switchStatus(id:any, disable:boolean):Promise<void> {
         return this.http.put(this.resourceUrl+"/"+id+"/status?disable="+disable, {headers: this.headers}).toPromise()
             .then(response =>null);
     }
 
-    get(id): Promise<T> {
+    get(id:any):Promise<T> {
         return this.http.get(this.resourceUrl+"/"+id, {headers: this.headers}).toPromise()
             .then(response => (response.json() as T));
     }

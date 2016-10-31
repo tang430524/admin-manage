@@ -26,8 +26,9 @@ public class RoleController {
         roleService.create(role);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody Role role){
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void modify(@PathVariable("id") String id, @RequestBody Role role) {
+        role.setId(id);
         roleService.modify(role);
     }
 

@@ -10,9 +10,10 @@ import org.bumishi.admin.interfaces.commondobject.MenuUpdateCommond;
  */
 public class MenuAssembler {
 
-    public static Menu updateCommendToDomain(MenuUpdateCommond updateCommond){
+    public static Menu updateCommendToDomain(String id, MenuUpdateCommond updateCommond) {
         Menu menu=new Menu();
       BeanUtil.copeProperties(updateCommond,menu);
+        menu.setId(id);
         return menu;
     }
 

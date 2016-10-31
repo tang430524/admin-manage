@@ -17,10 +17,14 @@ public class UserAssembler {
 
     public static User commondToDomain(UserCommond commond) {
         User user=new User();
-//        user.setUsername(commond.getUsername());
-//        user.setEmail(commond.getEmail());
-//        user.setPassword(commond.getPassword());
         BeanUtil.copeProperties(commond,user);
+        return user;
+    }
+
+    public static User commondToDomain(String uid, UserCommond commond) {
+        User user = new User();
+        BeanUtil.copeProperties(commond, user);
+        user.setId(uid);
         return user;
     }
 

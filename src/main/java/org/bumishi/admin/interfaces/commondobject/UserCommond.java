@@ -6,8 +6,6 @@ package org.bumishi.admin.interfaces.commondobject;
  */
 public class UserCommond {
 
-    /** 主键ID */
-    private String id;
 
     /** 登录名称 */
     private String username;
@@ -18,14 +16,6 @@ public class UserCommond {
     /** 邮箱 */
     private String email;
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

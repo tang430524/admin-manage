@@ -23,8 +23,9 @@ public class ResourceController {
         resourceService.create(resource);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void modify(@RequestBody Resource resource){
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void modify(@PathVariable("id") String id, @RequestBody Resource resource) {
+        resource.setId(id);
         resourceService.modify(resource);
     }
 

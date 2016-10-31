@@ -1,7 +1,7 @@
 package org.bumishi.admin.domain.modle;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Role implements Serializable {
 
-	private String id;
+	private String id = UUID.randomUUID().toString();
 
 	/** 角色名*/
 	private String name;
@@ -20,15 +20,6 @@ public class Role implements Serializable {
 
 	/** 状态 是否禁用*/
 	private boolean disabled;
-
-
-	//todo 这两个字段待商榷
-
-	/**资源id*/
-	private List<String> resources;
-
-	/**菜单id*/
-	private List<String> menus;
 
 	public Role(){}
 

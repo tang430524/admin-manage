@@ -25,6 +25,10 @@ public interface RoleRepository {
 
     void remove(String id);
 
+    void removeRoleMenuByMenuId(String menuId);
+
+    void removeRoleResourceByResourceId(String resourceId);
+
     void switchStatus(String id,boolean disabled);
 
     List<Role> getRoles(String userId);

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Injector }    from '@angular/core';
+import {Component, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 import {UserForm} from "./user-form";
 @Component({
@@ -24,15 +23,11 @@ export class UserFormComponent {
         if (this.user ==null){
             return;
         }
-        if (this.user.id==null){
-            this.restService.save(this.user).then(()=>{
+       
+        this.restService.save(this.user).then(()=>{
                 this.router.navigate(["/user"]);
             });
-        }else{
-            this.restService.update(this.user).then(()=>{
-                this.router.navigate(["/user"]);
-            });
-        }
+
     }
    
 }

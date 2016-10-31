@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
-import { OnInit } from '@angular/core';
-import { Injector }    from '@angular/core';
+import {Component, OnInit, Injector} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 import {UserForm} from "./user-form";
 @Component({
@@ -20,13 +18,12 @@ export class UserDetailComponent implements OnInit{
     user:UserForm=new UserForm();
 
 
-   
-    save():void{
+    save(id:any):void {
         if (this.user ==null){
             return;
         }
 
-            this.restService.update(this.user).then(()=>{
+        this.restService.update(id, this.user).then(()=> {
                 this.router.navigate(["/user"]);
             });
 

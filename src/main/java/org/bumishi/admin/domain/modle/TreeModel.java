@@ -139,10 +139,7 @@ public class TreeModel {
     }
 
     private static boolean isEmpty(List nodes) {
-        if(nodes==null || nodes.isEmpty()){
-            return true;
-        }
-        return false;
+        return nodes == null || nodes.isEmpty();
     }
 
 
@@ -182,6 +179,22 @@ public class TreeModel {
 
             printFirstLevelTreeToConsole(item.getChildNodes());
         });
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TreeModel treeModel = (TreeModel) o;
+
+        return id != null ? id.equals(treeModel.id) : treeModel.id == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 
     public static void main(String[] arg){

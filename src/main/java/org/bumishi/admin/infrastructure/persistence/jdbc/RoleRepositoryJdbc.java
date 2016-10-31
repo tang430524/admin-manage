@@ -94,7 +94,17 @@ public class RoleRepositoryJdbc implements RoleRepository {
         jdbcTemplate.update("DELETE FROM role WHERE id=?",id);
     }
 
-    public void switchStatus(String id,boolean disabled){
+    @Override
+    public void removeRoleMenuByMenuId(String menuId) {
+        jdbcTemplate.update("DELETE FROM role_menu WHERE menu_id=?", menuId);
+    }
+
+    @Override
+    public void removeRoleResourceByResourceId(String resourceId) {
+        jdbcTemplate.update("DELETE FROM role_resource WHERE resource_id=?", resourceId);
+    }
+
+    public void switchStatus(String id, boolean disabled) {
         jdbcTemplate.update("update role SET disabled=? WHERE id=?",disabled?1:0,id);
     }
 

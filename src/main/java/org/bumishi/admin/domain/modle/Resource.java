@@ -1,6 +1,7 @@
 package org.bumishi.admin.domain.modle;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  *
@@ -9,7 +10,7 @@ import java.io.Serializable;
 public class Resource implements Serializable {
 
 	/** 唯一资源编码 */
-	private String id;
+	private String id = UUID.randomUUID().toString();
 
 	/** 资源名称 */
 	private String title;

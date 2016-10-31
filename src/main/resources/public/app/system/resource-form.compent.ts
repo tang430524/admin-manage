@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Injector }    from '@angular/core';
+import {Component, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -16,7 +15,7 @@ export class ResourceFormComponent {
 
     restService:RestCurdService<Object>=new RestCurdService<Object>(this.indecter,"/resource");
 
-    resource:any=new Object();
+    resource:any = {};
 
 
    
@@ -24,15 +23,11 @@ export class ResourceFormComponent {
         if (this.resource ==null){
             return;
         }
-        if (this.resource.id==null){
-            this.restService.save(this.resource).then(()=>{
+
+        this.restService.save(this.resource).then(()=>{
                 this.router.navigate(["/resource"]);
             });
-        }else{
-            this.restService.update(this.resource).then(()=>{
-                this.router.navigate(["/resource"]);
-            });
-        }
+
     }
    
 }
