@@ -1,5 +1,6 @@
 package org.bumishi.admin.interfaces.web;
 
+import org.bumishi.admin.application.MenuService;
 import org.bumishi.admin.application.UserService;
 import org.bumishi.admin.domain.modle.Menu;
 import org.bumishi.admin.domain.modle.SelectRole;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired
     protected UserService userService;
+
+    @Autowired
+    protected MenuService menuService;
 
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody UserCommond user){
@@ -60,7 +64,7 @@ public class UserController {
 
     @RequestMapping(value = "/nav",method = RequestMethod.GET)
     public List<Menu> myMenus() {
-        return userService.getNavMenus(SecurityUtil.getUid());
+        return menuService.getNavMenus(SecurityUtil.getUid());
     }
 
     @RequestMapping(value = "/{id}/select-role", method = RequestMethod.GET)

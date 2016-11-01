@@ -8,8 +8,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityUtil {
 
     public static String getUid(){
-        SecurityUser su=(SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return su.getUid();
+        return getUser().getUid();
+    }
+
+    public static SecurityUser getUser() {
+        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public static boolean isRoot() {
+        return "root".equals(getUser().getUsername());
     }
 
 

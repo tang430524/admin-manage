@@ -1,8 +1,8 @@
 /**
  * Created by qiangxie on 2016/9/28.
  */
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import {Injectable} from "@angular/core";
+import {Headers, Http} from "@angular/http";
 
 @Injectable()
 export class LoginService {
@@ -14,8 +14,11 @@ export class LoginService {
     login(username,password,remember): Promise<boolean> {
         return this.http.post(this.url, `username=${username}&password=${password}&remember-me=${remember}`, {headers: this.headers}).toPromise()
             .then((response) => {
+                let token = response.headers.get("x-auth-token");
+                sessionStorage.setItem("token", token);
                 return response.ok;
             });
     }
+    
 
 }

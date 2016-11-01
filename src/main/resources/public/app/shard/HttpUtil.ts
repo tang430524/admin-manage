@@ -8,29 +8,36 @@ import {Injectable} from "@angular/core";
 @Injectable()//非Component需要加此注解才能注入
 export class HttpUtil {
 
-    private jsonHeaders = new Headers({'Content-Type': 'application/json'});
-
-    private formHeaders = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
 
     constructor(private http:Http) {
 
     }
 
     getWithJsonContentType(url:string):Promise<any> {
-        return this.http.get(url, {headers: this.jsonHeaders}).toPromise()
+        return this.http.get(url, {headers: this.getJsonHeader()}).toPromise()
             .then((response) => {
                 return response.json();
             });
     }
 
     getWithFormType(url:string):Promise<any> {
-        return this.http.get(url, {headers: this.formHeaders}).toPromise()
+        return this.http.get(url, {
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-auth-token': sessionStorage.getItem("token")
+            })
+        }).toPromise()
             .then((response) => {
                 return response.json();
             });
     }
 
     put(url:string, data:any):Promise<void> {
-        return this.http.put(url, data, {headers: new Headers({'Content-Type': 'application/json'})}).toPromise().then(response=>null);
+        return this.http.put(url, data, {headers: this.getJsonHeader()}).toPromise().then(response=>null);
+    }
+
+    getJsonHeader():Headers {
+        return new Headers({'Content-Type': 'application/json', 'x-auth-token': sessionStorage.getItem("token")});
+
     }
 }

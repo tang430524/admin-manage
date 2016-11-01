@@ -1,11 +1,10 @@
-import {NgModule, ErrorHandler}      from '@angular/core';
-import { routing } from './app.routing';
+import {NgModule, ErrorHandler} from "@angular/core";
+import {routing} from "./app.routing";
 import {AppComponent} from "./app.compent";
 import {DashBordComponent} from "./dashbord.compent";
 import {LoginModule} from "./login/login.moudle";
 import {SystemModule} from "./system/system.moudle";
-import {ShareModule} from './shard/share.moudle';
-import {Router} from "@angular/router";
+import {ShareModule} from "./shard/share.moudle";
 
 export class GlableErrorHandle implements ErrorHandler {
     // constructor(
@@ -17,6 +16,7 @@ export class GlableErrorHandle implements ErrorHandler {
             let status = error.rejection.status;
             if(status==401){
                  //this.router.navigate(["/login"]);
+                window.location.href = "/login";
             }else if(status==403){
                 alert("您无此操作权限");
             }else{

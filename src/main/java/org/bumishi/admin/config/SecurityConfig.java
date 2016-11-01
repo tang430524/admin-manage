@@ -66,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     * */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().disable();
-        http.cors();
+        http.httpBasic().realmName("bumishi");
+        http.cors().disable();
         http.headers().disable();
         http.jee().disable();
         http.x509().disable();

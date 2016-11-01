@@ -4,6 +4,7 @@ import org.bumishi.admin.domain.modle.Menu;
 import org.bumishi.admin.domain.modle.TreeModel;
 import org.bumishi.admin.domain.repository.MenuRepository;
 import org.bumishi.admin.domain.repository.RoleRepository;
+import org.bumishi.admin.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class MenuService {
     /*cache操作相关的注解中key都是spel表达式，字符串需要用''*/
     @Caching(
             put = @CachePut(key = "#menu.id"),
-            evict = @CacheEvict(key = "'list'")
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "'nav-menu'")}
     )
     public Menu create(Menu menu) {
         validate(menu);
@@ -37,7 +38,7 @@ public class MenuService {
 
     @Caching(
             put = @CachePut(key = "#menu.id"),
-            evict = @CacheEvict(key = "'list'")
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "'nav-menu'")}
     )
     public Menu modify(Menu menu) {
         validate(menu);
@@ -52,7 +53,7 @@ public class MenuService {
     }
 
     @Caching(
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#code")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#code"), @CacheEvict(key = "'nav-menu'")}
     )
     public void delete(String code) {
         roleRepository.removeRoleMenuByMenuId(code);
@@ -67,10 +68,21 @@ public class MenuService {
     }
 
     @Caching(
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu.id")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu.id"), @CacheEvict(key = "'nav-menu'")}
     )
     public void switchStatus(String menu, boolean disable) {
         menuRepository.switchStatus(menu, disable);
+    }
+
+    @Cacheable(value = "'nav-menu'")
+    public List<Menu> getNavMenus(String uid) {
+        List<Menu> list = null;
+        if (SecurityUtil.isRoot()) {
+            list = menuRepository.list();
+        } else {
+            list = menuRepository.getNavMenus(uid);
+        }
+        return (List<Menu>) TreeModel.buildTree(list);
     }
 
     private void validate(Menu menu) {

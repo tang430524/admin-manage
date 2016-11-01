@@ -3,7 +3,6 @@ package org.bumishi.admin.interfaces.web;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -16,12 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class RestAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler()
-    @ResponseBody
+    @ExceptionHandler
     ResponseEntity<?> handleControllerException(HttpServletRequest request, Throwable ex) {
         ex.printStackTrace();
         HttpStatus status = getStatus(request);
-        return new ResponseEntity<>(status);
+        return new ResponseEntity<>(ex.getMessage(), status);
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {

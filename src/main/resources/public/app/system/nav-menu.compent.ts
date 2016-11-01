@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Http} from "@angular/http";
+import {HttpUtil} from "../shard/HttpUtil";
 
 @Component({
     moduleId: module.id,
@@ -10,12 +10,12 @@ export class NavMenuComponent implements OnInit {
 
     menus:Menu[];
 
-    constructor(private http:Http) {
+    constructor(private http:HttpUtil) {
     }
 
     ngOnInit():void {
-        this.http.get("/user/nav").toPromise().then((response)=>{
-            this.menus=response.json() as Menu[];
+        this.http.getWithJsonContentType("/user/nav").then((response)=> {
+            this.menus = response;
         });
     }
 
