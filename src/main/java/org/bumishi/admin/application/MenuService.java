@@ -28,7 +28,7 @@ public class MenuService {
     /*cache操作相关的注解中key都是spel表达式，字符串需要用''*/
     @Caching(
             put = @CachePut(key = "#menu.id"),
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "'nav-menu'")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
     )
     public Menu create(Menu menu) {
         validate(menu);
@@ -38,7 +38,7 @@ public class MenuService {
 
     @Caching(
             put = @CachePut(key = "#menu.id"),
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "'nav-menu'")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
     )
     public Menu modify(Menu menu) {
         validate(menu);
@@ -53,7 +53,7 @@ public class MenuService {
     }
 
     @Caching(
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#code"), @CacheEvict(key = "'nav-menu'")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#code"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
     )
     public void delete(String code) {
         roleRepository.removeRoleMenuByMenuId(code);
@@ -68,13 +68,13 @@ public class MenuService {
     }
 
     @Caching(
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu.id"), @CacheEvict(key = "'nav-menu'")}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu.id"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
     )
     public void switchStatus(String menu, boolean disable) {
         menuRepository.switchStatus(menu, disable);
     }
 
-    @Cacheable(value = "'nav-menu'")
+    @Cacheable(value = "user-nav-menu")
     public List<Menu> getNavMenus(String uid) {
         List<Menu> list = null;
         if (SecurityUtil.isRoot()) {

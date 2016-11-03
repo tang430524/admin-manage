@@ -102,7 +102,7 @@ public class UserService {
     }
 
     @Caching(
-            evict = {@CacheEvict(value = "nav-menu", key = "#uid")}
+            evict = {@CacheEvict(value = "user-nav-menu", key = "#uid")}
     )
     public void grantRole(String uid, List<String> roleIds) {
         userRepository.updateRoles(uid, roleIds);

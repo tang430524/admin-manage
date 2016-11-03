@@ -40,5 +40,7 @@ class CreateMenuVo{
     order:number;
     path:string;
     url:string;
+    type:number;
+    style:string;
 }
 

@@ -2,6 +2,21 @@
 server:
   port: 8080
 
+debug: false
+
+#logging:
+#  file: /var/log/admin-manager.log
+
+##登录记住我的token加密key
+remember:
+  key: javajidi_com
+
+##actuator config,actuator运行在一个独立的webappcontext中，see AnnotationConfigEmbeddedWebApplicationContext
+management:
+  context-path: /management
+  security:
+    enabled: false
+
 spring:
   application:
     name: admin-managee
@@ -24,11 +39,9 @@ spring:
   cache:
     guava:
       spec: maximumSize=500,expireAfterAccess=3600s
-debug: false
 
-#logging:
-#  file: /var/log/admin-manager.log
-
-##登录记住我的token加密key
-remember:
-  key: javajidi_com
+ #spring-boot-admin config
+  boot:
+    admin:
+      url: http://localhost:${server.port}${spring.boot.admin.context-path}
+      context-path: /admin

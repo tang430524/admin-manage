@@ -23,6 +23,10 @@ public class TreeModel {
 
     private int order=1;  //排序
 
+    private int type;//扩展字段。菜单类型，供不同业务区分
+
+    private String style;//样式，方便ui展现
+
     /** 状态 是否禁用*/
     private boolean disabled;
 
@@ -74,6 +78,22 @@ public class TreeModel {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public TreeModel newChildNode(String nodeId, String label, int order){

@@ -34,6 +34,8 @@ export class MenuDetailComponent implements OnInit{
         vo.label=menu.label;
         vo.order=menu.order;
         vo.url = menu.url;
+        vo.type = menu.type;
+        vo.style = menu.style;
         return vo;
     }
     
@@ -57,5 +59,7 @@ class UpdateMenuVo{
     label:string;
     order:number;
     url:string;
+    type:number;
+    style:string;
 }
 

@@ -3,6 +3,7 @@ package org.bumishi.admin.infrastructure.persistence.jdbc;
 import org.bumishi.admin.domain.modle.Menu;
 import org.bumishi.admin.domain.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -21,12 +22,12 @@ public class MenuRepositoryJdbc implements MenuRepository{
 
     @Override
     public void add(Menu menu) {
-        jdbcTemplate.update("INSERT menu (id,label,path,`level`,`order`,`url`,`disabled`) VALUES (?,?,?,?,?,?,?)",menu.getId(),menu.getLabel(),menu.getPath(),menu.getLevel(),menu.getOrder(),menu.getUrl(),menu.isDisabled()?1:0);
+        jdbcTemplate.update("INSERT menu (id,label,path,`level`,`order`,`url`,`type`,`style`,`disabled`) VALUES (?,?,?,?,?,?,?,?,?)", menu.getId(), menu.getLabel(), menu.getPath(), menu.getLevel(), menu.getOrder(), menu.getUrl(), menu.getType(), menu.getStyle(), menu.isDisabled() ? 1 : 0);
     }
 
     @Override
     public void update(Menu menu) {
-        jdbcTemplate.update("update menu SET label=?,`order`=?,url=?,disabled=? WHERE id=?",menu.getLabel(),menu.getOrder(),menu.getUrl(),menu.isDisabled()?1:0,menu.getId());
+        jdbcTemplate.update("update menu SET label=?,`order`=?,url=?,disabled=?,`type`=?,`style`=? WHERE id=?", menu.getLabel(), menu.getOrder(), menu.getUrl(), menu.isDisabled() ? 1 : 0, menu.getType(), menu.getStyle(), menu.getId());
     }
 
     @Override
@@ -54,16 +55,19 @@ public class MenuRepositoryJdbc implements MenuRepository{
     }
 
     private RowMapper<Menu> createMapper() {
-        return (rs, rowNum) -> {
-            Menu menu = new Menu();
-            menu.setId(rs.getString("id"));
-            menu.setLabel(rs.getString("label"));
-            menu.setUrl(rs.getString("url"));
-            menu.setDisabled(rs.getBoolean("disabled"));
-            menu.setPath(rs.getString("path"));
-            menu.setOrder(rs.getInt("order"));
-            return menu;
-        };
+//        return (rs, rowNum) -> {
+//            Menu menu = new Menu();
+//            menu.setId(rs.getString("id"));
+//            menu.setLabel(rs.getString("label"));
+//            menu.setUrl(rs.getString("url"));
+//            menu.setDisabled(rs.getBoolean("disabled"));
+//            menu.setPath(rs.getString("path"));
+//            menu.setOrder(rs.getInt("order"));
+//            menu.setType(rs.getInt("type"));
+//            menu.setStyle(rs.getString("style"));
+//            return menu;
+//        };
+        return BeanPropertyRowMapper.newInstance(Menu.class);
     }
 
     @Override

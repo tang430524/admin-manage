@@ -18,6 +18,8 @@ CREATE TABLE `menu` (
   `order` smallint(6) DEFAULT '1',
   `level` smallint(6) DEFAULT '1' COMMENT '层级，方便根据层级查询',
   `url` varchar(200) DEFAULT NULL,
+  `type` smallint(6) DEFAULT '1',
+  `style` VARCHAR (50),
   `disabled` smallint(6) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

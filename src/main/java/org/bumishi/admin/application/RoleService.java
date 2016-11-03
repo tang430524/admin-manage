@@ -86,6 +86,7 @@ public class RoleService {
     }
 
 
+    @CacheEvict(value = "user-nav-menu", allEntries = true)
     public void grantMenu(String roleId, List<String> menus){
         roleRepository.updateMenus(roleId, menus);
     }
