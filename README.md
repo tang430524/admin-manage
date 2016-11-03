@@ -6,6 +6,8 @@
 
 ##专注Java技术研究的公众号:javajidi_com##
 
+###目前已完成系统管理功能，并已整合spring-security,spring-session,spring-boot-admin监控。期待前端高手加入完善UI。
+
 ##预览
 
 ![输入图片说明](http://git.oschina.net/uploads/images/2016/1103/205721_4f3aaaab_20686.png "在这里输入图片标题")
