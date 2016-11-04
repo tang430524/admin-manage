@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/**/*.js", "/**/*.ts", "/**/*.css", "/**/*.png ", "/**/*.gif ", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf", "/**/*.html", "/admin/**");
+        web.ignoring().antMatchers("/", "/**/*.js", "/**/*.js.map", "/**/*.ts", "/**/*.css", "/**/*.png ", "/**/*.gif ", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf", "/**/*.html", "/admin/api/**");
     }
 
     //由于springboot默认会将所要的servlet,filter,listenr等标准servlet组件自动加入到servlet的过滤器链中，自定义的UrlSecurityInterceptor只希望加入security的过滤器链，中，所以这里配置不向servlet容器中注册

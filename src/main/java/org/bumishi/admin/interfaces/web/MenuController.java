@@ -2,9 +2,9 @@ package org.bumishi.admin.interfaces.web;
 
 import org.bumishi.admin.application.MenuService;
 import org.bumishi.admin.domain.modle.Menu;
-import org.bumishi.admin.interfaces.commondobject.MenuCreateCommand;
-import org.bumishi.admin.interfaces.commondobject.MenuUpdateCommond;
 import org.bumishi.admin.interfaces.facade.assembler.MenuAssembler;
+import org.bumishi.admin.interfaces.facade.commondobject.MenuCreateCommand;
+import org.bumishi.admin.interfaces.facade.commondobject.MenuUpdateCommond;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

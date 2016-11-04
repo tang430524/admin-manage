@@ -1,21 +1,21 @@
-package org.bumishi.admin.interfaces.commondobject;
+package org.bumishi.admin.interfaces.facade.dto;
 
 /**
+ * 用户个人信息
+ *
  * @author qiang.xie
- * @date 2016/9/29
+ * @date 2016/11/4
  */
-public class UserCommond {
+public class MyProfile {
 
-
-    /** 登录名称 */
     private String username;
 
-    /** 密码 */
-    private String password;
-
-    /** 邮箱 */
     private String email;
 
+    public MyProfile(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
 
     public String getUsername() {
         return username;
@@ -25,14 +25,6 @@ public class UserCommond {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -40,5 +32,4 @@ public class UserCommond {
     public void setEmail(String email) {
         this.email = email;
     }
-
 }

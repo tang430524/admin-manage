@@ -34,12 +34,14 @@
                 <!-- text input -->
                 <div class="form-group">
                   <label>角色名</label>
-                  <input type="text" [(ngModel)]="role.name" name="role.name"  class="form-control" placeholder="Enter ...">
+                  <input type="text" [(ngModel)]="role.name" name="role.name" required class="form-control"
+                         placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
-                  <label>密码</label>
-                  <input type="text" [(ngModel)]="role.description" name="role.description" class="form-control" placeholder="Enter ...">
+                  <label>描述</label>
+                  <input type="text" [(ngModel)]="role.description" name="role.description" class="form-control"
+                         placeholder="Enter ...">
                 </div>
 
                 

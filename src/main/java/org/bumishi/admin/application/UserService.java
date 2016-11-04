@@ -97,9 +97,6 @@ public class UserService {
     }
 
 
-    public boolean hasResourcePermission(String uid, String resourceCode) {
-        return userRepository.hasResourcePermission(uid, resourceCode);
-    }
 
     @Caching(
             evict = {@CacheEvict(value = "user-nav-menu", key = "#uid")}

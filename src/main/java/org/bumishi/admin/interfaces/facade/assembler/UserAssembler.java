@@ -2,7 +2,8 @@ package org.bumishi.admin.interfaces.facade.assembler;
 
 import org.bumishi.admin.domain.modle.User;
 import org.bumishi.admin.infrastructure.BeanUtil;
-import org.bumishi.admin.interfaces.commondobject.UserCommond;
+import org.bumishi.admin.interfaces.facade.commondobject.ProfileCommand;
+import org.bumishi.admin.interfaces.facade.commondobject.UserCommond;
 import org.bumishi.admin.interfaces.facade.dto.UserDto;
 import org.springframework.util.CollectionUtils;
 
@@ -27,6 +28,14 @@ public class UserAssembler {
         user.setId(uid);
         return user;
     }
+
+    public static User profileToDomain(String uid, ProfileCommand commond) {
+        User user = new User();
+        BeanUtil.copeProperties(commond, user);
+        user.setId(uid);
+        return user;
+    }
+
 
     public static UserDto domainToDto(User user){
         UserDto dto=new UserDto();

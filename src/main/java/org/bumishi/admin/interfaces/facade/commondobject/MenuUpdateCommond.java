@@ -1,4 +1,4 @@
-package org.bumishi.admin.interfaces.commondobject;
+package org.bumishi.admin.interfaces.facade.commondobject;
 
 /**
  * Created by xieqiang on 2016/10/30.

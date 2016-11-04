@@ -1,8 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {OnInit} from '@angular/core';
-import {Injector}    from '@angular/core';
-
+import {Component, OnInit, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {UserVo} from "./user-vo";
 import {RestCurdService} from "../shard/rest-curd.service";
 
@@ -22,15 +19,15 @@ export class UserListComponent implements OnInit {
     users:UserVo[];
 
     newClick():void {
-        this.router.navigate(["/user-form"]);
+        this.router.navigate(["/user/form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/user-detail", id]);
+        this.router.navigate(["/user/detail", id]);
     }
 
     grant(id:string):void {
-        this.router.navigate(["/grant-role", id]);
+        this.router.navigate(["/grant/role", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {

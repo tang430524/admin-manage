@@ -54,6 +54,11 @@ export class RestCurdService<T> {
     }
 
     getHeader():Headers {
+        // let has=sessionStorage.hasOwnProperty("token");
+        // let toke="";
+        // if (has){
+        //     toke=sessionStorage.getItem("token");
+        // }
         return new Headers({'Content-Type': 'application/json', 'x-auth-token': sessionStorage.getItem("token")});
     }
 

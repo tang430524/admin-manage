@@ -20,17 +20,6 @@ export class HttpUtil {
             });
     }
 
-    getWithFormType(url:string):Promise<any> {
-        return this.http.get(url, {
-            headers: new Headers({
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'x-auth-token': sessionStorage.getItem("token")
-            })
-        }).toPromise()
-            .then((response) => {
-                return response.json();
-            });
-    }
 
     put(url:string, data:any):Promise<void> {
         return this.http.put(url, data, {headers: this.getJsonHeader()}).toPromise().then(response=>null);

@@ -34,12 +34,14 @@
                 <!-- text input -->
                 <div class="form-group">
                   <label>用户名</label>
-                  <input type="text" [(ngModel)]="user.username" name="user.username"  class="form-control" placeholder="Enter ...">
+                  <input type="text" [(ngModel)]="user.username" name="user.username" class="form-control" required
+                         placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">
                   <label>密码</label>
-                  <input type="password" [(ngModel)]="user.password" name="user.password" class="form-control" placeholder="Enter ...">
+                  <input type="password" [(ngModel)]="user.password" name="user.password" class="form-control" required
+                         placeholder="Enter ...">
                 </div>
 
                 <div class="form-group">

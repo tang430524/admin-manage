@@ -1,8 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {OnInit} from '@angular/core';
-import {Injector}    from '@angular/core';
-
+import {Component, OnInit, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -21,11 +18,11 @@ export class ResourceListComponent implements OnInit {
     resources:any;
 
     newClick():void {
-        this.router.navigate(["/resource-form"]);
+        this.router.navigate(["/resource/form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/resource-detail", id]);
+        this.router.navigate(["/resource/detail", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {

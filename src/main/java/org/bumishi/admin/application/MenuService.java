@@ -68,7 +68,7 @@ public class MenuService {
     }
 
     @Caching(
-            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu.id"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
+            evict = {@CacheEvict(key = "'list'"), @CacheEvict(key = "#menu"), @CacheEvict(value = "user-nav-menu", allEntries = true)}
     )
     public void switchStatus(String menu, boolean disable) {
         menuRepository.switchStatus(menu, disable);

@@ -59,6 +59,7 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         }else{
             InterceptorStatusToken token = super.beforeInvocation(fi);
+            //这里对于未配置的资源均通过
             try {
                 fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             } finally {

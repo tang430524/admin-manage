@@ -1,13 +1,14 @@
-import { ModuleWithProviders }  from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import {ModuleWithProviders, Injectable} from "@angular/core";
+import {Routes, Router, RouterModule, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {DashBordComponent} from "./dashbord.compent";
+import "./shard/rxjs-extention";
+import {Observable} from "rxjs";
 
-
-const appRoutes: Routes = [
+const appRoutes:Routes = [
     {
         path: 'dashbord',
-        component: DashBordComponent
+        component: DashBordComponent,
+        //canActivate: [canToDashbord]
     },
     {
         path: 'login',
@@ -15,18 +16,33 @@ const appRoutes: Routes = [
     },
     
     {
-        path: 'user',
-        loadChildren: 'app/system/system.module#SystemModule'
-    },
-    {
-        path: 'user-form',
-        loadChildren: 'app/system/system.module#SystemModule'
-    },
-    {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
+        pathMatch: 'full',
+        //canActivate: [canToDashbord]
     }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const routing:ModuleWithProviders = RouterModule.forRoot(appRoutes);
+
+@Injectable()
+class canToDashbord implements CanActivate {
+
+    private router:Router;
+
+
+    canActivate(route:ActivatedRouteSnapshot, state:RouterStateSnapshot):Observable<boolean>|Promise<boolean>|boolean {
+        try {
+            let can = sessionStorage.hasOwnProperty("token");
+            if (!can) {
+                this.router.navigate(['/login']);
+            }
+            return can;
+        } catch (e:any) {
+            this.router.navigate(['/login']);
+            return false;
+        }
+    }
+
+
+}

@@ -22,6 +22,7 @@ import {MenuFormComponent} from "./menu-form.compent";
 import {MenuDetailComponent} from "./menu-detail.compent";
 import {GrantMenuComponent} from "./grant-menu.compent";
 import {NavMenuComponent} from "./nav-menu.compent";
+import {MyProfileComponent} from "./myprofile.compent";
 @NgModule({
     imports: [
         ShareModule,
@@ -33,7 +34,7 @@ import {NavMenuComponent} from "./nav-menu.compent";
         ResourceListComponent,ResourceFormComponent,ResourceDetailComponent,
         SyslogListComponent,MenuListComponent, MenuFormComponent,MenuDetailComponent,
         GrantRoleComponent, GrantResourceComponent,GrantMenuComponent,
-        NavMenuComponent
+        NavMenuComponent, MyProfileComponent
     ] ,
     exports:[NavMenuComponent]
 })

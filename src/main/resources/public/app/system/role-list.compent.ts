@@ -1,8 +1,5 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {OnInit} from '@angular/core';
-import {Injector}    from '@angular/core';
-
+import {Component, OnInit, Injector} from "@angular/core";
+import {Router} from "@angular/router";
 import {RestCurdService} from "../shard/rest-curd.service";
 
 @Component({
@@ -21,11 +18,11 @@ export class RoleListComponent implements OnInit {
     roles:any;
 
     newClick():void {
-        this.router.navigate(["/role-form"]);
+        this.router.navigate(["/role/form"]);
     }
 
     itemClick(id:string):void {
-        this.router.navigate(["/role-detail", id]);
+        this.router.navigate(["/role/detail", id]);
     }
 
     changeStatus(id:string, disable:boolean):void {
@@ -56,11 +53,11 @@ export class RoleListComponent implements OnInit {
     }
 
     grant(id:string):void {
-        this.router.navigate(["/grant-resource", id]);
+        this.router.navigate(["/grant/resource", id]);
     }
 
     grantMenu(id:string):void {
-        this.router.navigate(["/grant-menu", id]);
+        this.router.navigate(["/grant/menu", id]);
     }
 
 

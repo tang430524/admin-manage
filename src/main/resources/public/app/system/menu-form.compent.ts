@@ -37,10 +37,10 @@ export class MenuFormComponent implements OnInit{
 
 class CreateMenuVo{
     label:string;
-    order:number;
+    order:number = 1;
     path:string;
     url:string;
-    type:number;
+    type:number = 1;
     style:string;
 }
 
