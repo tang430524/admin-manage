@@ -39,5 +39,29 @@
 
    6.浏览器打开http://localhost:8080/index.html，账号root,密码root
 
-   7.支持前后分离部署，配置nginx代理即可
 
+###支持前后分离部署，配置nginx代理即可
+
+将public目录映射到nginx根目录，配置反向代理：
+
+```
+    root F:\\admin-manage\\src\\main\\resources\\public;
+	index  index.html;	
+    server {
+        listen       80;
+        server_name  localhost;
+
+		location = / {    
+			
+		}  
+			
+		
+		location / {    
+			proxy_pass http://localhost:8080; #后台地址   
+		}    
+            
+		location ~ \.(ico|html|js|css|png|gif|jpeg|font|svg|woff|woff2|jpg|\.map)$ {    
+			
+		}   
+   }
+```
