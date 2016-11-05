@@ -108,15 +108,15 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 -- Records
 -- ----------------------------
-INSERT INTO `menu` VALUES ('blog', '博客管理', '0', '1', '1', 'blog', '0');
-INSERT INTO `menu` VALUES ('comment', '评论', '0,blog', '2', '2', '/comment', '0');
-INSERT INTO `menu` VALUES ('menu', '菜单管理', '0,system', '2', '1', '/menu', '0');
-INSERT INTO `menu` VALUES ('resource', '资源管理', '0,system', '2', '4', '/resource', '0');
-INSERT INTO `menu` VALUES ('role', '角色管理', '0,system', '2', '3', '/role', '0');
-INSERT INTO `menu` VALUES ('syslog', '系统日志', '0,system', '2', '5', '/syslog', '0');
-INSERT INTO `menu` VALUES ('system', '系统管理', '0', '1', '1', null, '0');
-INSERT INTO `menu` VALUES ('user', '用户管理', '0,system', '2', '2', '/user', '0');
-
+INSERT INTO `menu` VALUES ('blog', '博客管理', '0', '1', '1', 'blog', '1','',0);
+INSERT INTO `menu` VALUES ('comment', '评论', '0,blog', '2', '2', '/comment', '1','',0);
+INSERT INTO `menu` VALUES ('menu', '菜单管理', '0,system', '2', '1', '/menu', '1','',0);
+INSERT INTO `menu` VALUES ('resource', '资源管理', '0,system', '2', '4', '/resource', '1','',0);
+INSERT INTO `menu` VALUES ('role', '角色管理', '0,system', '2', '3', '/role', '1','',0);
+INSERT INTO `menu` VALUES ('syslog', '系统日志', '0,system', '2', '5', '/syslog', '1','',0);
+INSERT INTO `menu` VALUES ('system', '系统管理', '0', '1', '1', null, '1','',0);
+INSERT INTO `menu` VALUES ('user', '用户管理', '0,system', '2', '2', '/user', '1','',0);
+INSERT INTO `menu` VALUES ('monitor', '系统健康', '0,system', '2', '2', '/admin', '2','',0);
 INSERT INTO `resource` VALUES ('admin', 'fa', '0', '/user/*', 'fa');
 INSERT INTO `role` VALUES ('1', 'admin', '0', 'fa');
 INSERT INTO `role_menu` VALUES ('1', 'system');
