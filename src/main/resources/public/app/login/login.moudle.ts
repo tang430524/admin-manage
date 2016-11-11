@@ -3,6 +3,7 @@ import {LoginService} from "./login.service";
 import {LoginComponent} from "./login.compent";
 import {routing} from "./login.routing";
 import {ShareModule} from "../shard/share.moudle";
+import {LoginGuard} from "./login-guard-service";
 @NgModule({
     imports: [
         routing,
@@ -10,7 +11,7 @@ import {ShareModule} from "../shard/share.moudle";
       
       ],
     providers: [
-      LoginService
+        LoginService, LoginGuard
     ],
     declarations: [LoginComponent]
 })

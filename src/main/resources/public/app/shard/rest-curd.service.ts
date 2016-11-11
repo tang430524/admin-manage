@@ -21,7 +21,7 @@ export class RestCurdService<T> {
     list():Promise<T[]>{
         return this.http.get(this.resourceUrl, {headers: this.getHeader()}).toPromise()
             .then((response) => {
-                if (response._body == "") {
+                if (response.text() == "") {
                     return [];
                 }
                 return response.json() as T[] ;

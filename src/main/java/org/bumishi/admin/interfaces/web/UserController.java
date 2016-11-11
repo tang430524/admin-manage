@@ -85,4 +85,5 @@ public class UserController {
         SecurityUtil.getUser().setEmail(myInfo.getEmail());
     }
 
+
 }

@@ -8,14 +8,16 @@ import {Headers, Http} from "@angular/http";
 export class LoginService {
     private headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     private url = '/login';  // URL to web api
+    isLogin:boolean = false;
     constructor(private http:Http) {
     }
 
-    login(username,password,remember): Promise<boolean> {
+    login(username, password, remember):Promise<Boolean> {
         return this.http.post(this.url, `username=${username}&password=${password}&remember-me=${remember}`, {headers: this.headers}).toPromise()
             .then((response) => {
                 let token = response.headers.get("x-auth-token");
                 sessionStorage.setItem("token", token);
+                this.isLogin = true;
                 return response.ok;
             });
     }

@@ -1,10 +1,10 @@
 import {NgModule, ErrorHandler} from "@angular/core";
-import {routing} from "./app.routing";
 import {AppComponent} from "./app.compent";
 import {DashBordComponent} from "./dashbord.compent";
 import {LoginModule} from "./login/login.moudle";
 import {SystemModule} from "./system/system.moudle";
 import {ShareModule} from "./shard/share.moudle";
+import {AppRoutingModule} from "./app.routing.moudle";
 
 export class GlableErrorHandle implements ErrorHandler {
     // constructor(
@@ -31,7 +31,7 @@ export class GlableErrorHandle implements ErrorHandler {
     imports: [
         LoginModule,
         SystemModule,
-        routing,
+        AppRoutingModule,
         ShareModule
       ],
    
@@ -41,6 +41,3 @@ export class GlableErrorHandle implements ErrorHandler {
 })
 
 export class AppModule { }
-/**
- * Created by qiangxie on 2016/9/24.
- */
