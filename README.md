@@ -26,7 +26,6 @@
 ##演示地址
 [在线演示](http://bumishi.tech/)
 
-
 账号密码：root/root，无任何权限限制
 
 ###开发阶段运行###
@@ -43,7 +42,9 @@
 
    5.启动后台应用，IDE中直接运行Application的main方法即可
 
-   6.浏览器打开http://localhost:8080/index.html，账号root,密码root
+   6.浏览器打开http://localhost:8080/index.html
+
+   账号root,密码root
 
 
 ###支持前后分离部署，配置nginx代理即可
