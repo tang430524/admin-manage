@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -24,7 +23,7 @@ import java.io.IOException;
  * @author qiang.xie
  * @date 2016/9/23
  */
-@Component
+
 public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
 
     @Autowired

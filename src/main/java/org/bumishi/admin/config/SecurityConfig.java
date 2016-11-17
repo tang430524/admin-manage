@@ -18,13 +18,11 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
@@ -39,16 +37,15 @@ import java.util.List;
  * @author qiang.xie
  * @date 2016/9/22
  */
+
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity 注释掉可以既能享受到springboot的自动配置又能覆盖某些配置
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected UserDetailService userDetailService;
 
-    @Autowired
-    protected UrlSecurityInterceptor urlSecurityInterceptor;
 
     @Autowired
     protected Md5PasswordEncoder md5PasswordEncoder;
@@ -56,31 +53,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${remember.key}")
     private String key="weixin:javajidi_com";
 
-    /*
-        区别于传统的服务端应用直接返回页面内容（包括页面片段），服务器端采用restful的接口返回json数据，而页面则由客户端框架来实现。所以Spring Security的默认配置不是很适合。
-    *   禁用csrf，由于login form并不是由服务端实现，所以spring防御跨站请求伪造的方式在这里不适用;
-        配置哪些url不需要拦截，通常css，js之类的静态资源不需要权限控制;
-        配置对login的处理，这里用自定义的handle类覆盖了原有的login处理方式；默认情况下成功login后会跳转到用户指定的url，覆盖为只返回200，不做跳转，由客户端决定login成功后的行为。同样login失败默认的处理是返回401，并跳转到指定的url，所以同样覆盖为只返回401，不做跳转；
-        配置对logout的处理，同样覆盖为只返回200，不做跳转；
-        配置权限认证不通过后的行为，返回401。
-    * */
+
+    @Bean
+    public UrlSecurityInterceptor urlSecurityInterceptor() {
+        return new UrlSecurityInterceptor();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.httpBasic().realmName("bumishi");
+        http.csrf().disable();
         http.cors().disable();
         http.headers().disable();
         http.jee().disable();
         http.x509().disable();
         http.servletApi().disable();
-        http.csrf().disable();
         http.anonymous().disable();
+        http.requestCache().disable();
+
+        // http.csrf().ignoringAntMatchers("/","/index");
         http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(true);
-        http.addFilterBefore(urlSecurityInterceptor,FilterSecurityInterceptor.class);//处理自定义的权限
+        http.addFilterBefore(urlSecurityInterceptor(), FilterSecurityInterceptor.class);//处理自定义的权限
        //authorizeRequests()对应FilterSecurityInterceptor，不配置就不会加入FilterSecurityInterceptor
        // http.authorizeRequests().anyRequest().denyAll();//其他url全部拒绝
-        http.formLogin().successHandler(new RestAuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
-        http.logout().logoutSuccessHandler(new RestLogoutSuccessHandler());
-        http.exceptionHandling().authenticationEntryPoint(new RestAuthenticationEntryPoint());
+        http.formLogin().loginProcessingUrl("/login").defaultSuccessUrl("/").loginPage("/to-login").failureUrl("/to-login");
+        http.logout().logoutSuccessUrl("/to-login");
+        http.exceptionHandling().accessDeniedPage("/401");
     }
 
     @Override
@@ -107,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/**/*.js", "/**/*.js.map", "/**/*.ts", "/**/*.css", "/**/*.png ", "/**/*.gif ", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf", "/**/*.html", "/admin/api/**");
+        web.ignoring().antMatchers("/**/*.js", "/**/*.js.map", "/**/*.ts", "/**/*.css", "/**/*.css.map", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf", "/admin/api/**", "/to-login", "/404", "/401", "/error");
     }
 
     //由于springboot默认会将所要的servlet,filter,listenr等标准servlet组件自动加入到servlet的过滤器链中，自定义的UrlSecurityInterceptor只希望加入security的过滤器链，中，所以这里配置不向servlet容器中注册
@@ -117,6 +114,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registration.setEnabled(false);
         return registration;
     }
+
+
+     /*
+        区别于传统的服务端应用直接返回页面内容（包括页面片段），服务器端采用restful的接口返回json数据，而页面则由客户端框架来实现。所以Spring Security的默认配置不是很适合。
+    *   禁用csrf，由于login form并不是由服务端实现，所以spring防御跨站请求伪造的方式在这里不适用;
+        配置哪些url不需要拦截，通常css，js之类的静态资源不需要权限控制;
+        配置对login的处理，这里用自定义的handle类覆盖了原有的login处理方式；默认情况下成功login后会跳转到用户指定的url，覆盖为只返回200，不做跳转，由客户端决定login成功后的行为。同样login失败默认的处理是返回401，并跳转到指定的url，所以同样覆盖为只返回401，不做跳转；
+        配置对logout的处理，同样覆盖为只返回200，不做跳转；
+        配置权限认证不通过后的行为，返回401。
+    * */
 
     public static class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

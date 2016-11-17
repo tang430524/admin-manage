@@ -1,5 +1,6 @@
 package org.bumishi.admin.security;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -8,11 +9,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityUtil {
 
     public static String getUid(){
-        return getUser().getUid();
+        return getUser() == null ? "" : getUser().getUid();
     }
 
     public static SecurityUser getUser() {
-        return (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        return (SecurityUser) authentication.getPrincipal();
     }
 
     public static boolean isRoot() {

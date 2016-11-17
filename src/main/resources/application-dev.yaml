@@ -10,7 +10,6 @@ debug: false
 ##登录记住我的token加密key
 remember:
   key: javajidi_com
-
 ##actuator config,actuator运行在一个独立的webappcontext中，see AnnotationConfigEmbeddedWebApplicationContext
 management:
   context-path: /management
@@ -45,3 +44,8 @@ spring:
     admin:
       url: http://localhost:${server.port}${spring.boot.admin.context-path}
       context-path: /admin
+      client:
+        enabled: false
+  thymeleaf:
+      prefix: classpath:/public/thymeleaf/
+      cache: false
