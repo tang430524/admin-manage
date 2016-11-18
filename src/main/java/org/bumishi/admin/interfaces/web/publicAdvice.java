@@ -1,5 +1,6 @@
 package org.bumishi.admin.interfaces.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.application.MenuService;
 import org.bumishi.admin.security.SecurityUser;
 import org.bumishi.admin.security.SecurityUtil;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author qiang.xie
@@ -22,9 +25,16 @@ public class PublicAdvice {
     protected MenuService menuService;
 
     @ExceptionHandler
-    public String handleControllerException(HttpServletRequest request, Throwable ex) {
+    public void handleControllerException(HttpServletRequest request, HttpServletResponse response, Throwable ex) throws IOException {
         ex.printStackTrace();
-        return "error";
+        String ajax = request.getHeader("X-Requested-With");
+        response.setCharacterEncoding("utf-8");
+        if (StringUtils.isBlank(ajax)) {
+            response.sendRedirect("/error");
+        } else {
+            response.getWriter().println("出错了:" + ex.getMessage());
+        }
+
     }
 
     @ModelAttribute

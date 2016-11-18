@@ -16,6 +16,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -48,6 +49,11 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
+        if (((HttpServletRequest) request).getServletPath().equals("/login")) {
+            fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+            return;
+        }
+
         Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
         if(authentication==null || authentication instanceof AnonymousAuthenticationToken){
             //没有认证的，直接就结束

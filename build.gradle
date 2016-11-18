@@ -7,7 +7,7 @@ apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
 buildscript {
-    def springbootVersion = '1.4.0.RELEASE'
+    def springbootVersion = '1.4.2.RELEASE'
     repositories {
         jcenter()
         maven { url "http://repo.spring.io/snapshot" }
@@ -36,7 +36,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-starter-cache")
-    // compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-security'
 
 //    compile("de.codecentric:spring-boot-admin-server:1.4.3")
 //    compile("de.codecentric:spring-boot-admin-server-ui:1.4.3")
@@ -55,8 +55,8 @@ dependencies {
 
     compile 'com.google.guava:guava:19.0'
 
-    compile 'org.springframework.security:spring-security-web:4.1.3.RELEASE'
-    compile 'org.springframework.security:spring-security-config:4.1.3.RELEASE'
+//    compile 'org.springframework.security:spring-security-web:4.1.3.RELEASE'
+//    compile 'org.springframework.security:spring-security-config:4.1.3.RELEASE'
 
 
 }

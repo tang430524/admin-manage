@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>不迷失-Admin | 未认证 </title>
+    <title>不迷失-Admin | 无权访问 </title>
     <div th:replace="head"></div>
     <div th:remove="all">
         <meta charset="utf-8"/>
@@ -48,11 +48,11 @@
             <br/>
             <section class="content">
                 <div class="error-page">
-                    <h2 class="headline text-yellow"> 401</h2>
+                    <h2 class="headline text-yellow"> 403</h2>
 
                     <div class="error-content">
                         <br/> <br/>
-                        <h3><i class="fa fa-warning text-yellow"></i> Oops! un authenticed.</h3>
+                        <h3><i class="fa fa-warning text-yellow"></i> Oops! forbidden.</h3>
 
                     </div>
                     <!-- /.error-content -->

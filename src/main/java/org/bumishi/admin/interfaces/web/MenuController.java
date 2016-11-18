@@ -8,10 +8,7 @@ import org.bumishi.admin.interfaces.facade.commondobject.MenuUpdateCommond;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author qiang.xie
@@ -30,6 +27,7 @@ public class MenuController {
         return "redirect:/menu";
     }
 
+
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     public String modify(@PathVariable("id") String id, MenuUpdateCommond menu) {
         menuService.modify(MenuAssembler.updateCommendToDomain(id, menu));
@@ -37,23 +35,31 @@ public class MenuController {
     }
 
 
-    @RequestMapping(value = "/{id}/status", method = RequestMethod.GET)
-    public String switchStatus(@PathVariable("id") String id, @RequestParam("disable") boolean disable) {
+    @RequestMapping(value = "/{id}/status", method = RequestMethod.PUT)
+    @ResponseBody
+    public void switchStatus(@PathVariable("id") String id, @RequestParam("disable") boolean disable) {
         menuService.switchStatus(id,disable);
-        return "redirect:/menu";
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public String delete(@PathVariable("id") String id) {
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void delete(@PathVariable("id") String id) {
          menuService.delete(id);
-        return "redirect:/menu";
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public String toform(@RequestParam(value = "id", required = false) String id, Model model) {
-        if (StringUtils.isNotBlank(id)) {
+    public String toform(@RequestParam(value = "id", required = false) String id, @RequestParam(value = "parent", required = false) boolean parent, Model model) {
+        String url = null;
+        if (StringUtils.isNotBlank(id) && !parent) {
             model.addAttribute("menu", menuService.get(id));
+            url = "/menu/" + id + "/modify";
+        } else {
+            url = "/menu/add";
+            if (StringUtils.isNotBlank(id)) {
+                model.addAttribute("parentPath", id);
+            }
         }
+        model.addAttribute("api", url);
         return "menu/form";
     }
 

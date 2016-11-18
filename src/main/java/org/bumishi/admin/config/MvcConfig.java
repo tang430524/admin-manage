@@ -13,10 +13,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/to-login").setViewName("login");
-//        registry.addViewController("/404").setViewName("err404");
-//        registry.addViewController("/401").setViewName("401");
-        registry.addViewController("/error").setViewName("error/error");
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/error").setViewName("error");
 
     }
 
