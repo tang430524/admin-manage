@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>不迷失-Admin form</title>
+    <title>不迷失-Admin 菜单管理</title>
     <div th:replace="head"></div>
 </head>
 
@@ -35,7 +35,7 @@
                                         <input type="text" name="id" th:value="${menu}? ${menu.id}"
                                                th:readonly="${menu}?true:false" class="form-control" id="inputEmail3"
                                                placeholder=""
-                                               required="required"/>
+                                               required="required" maxlength="50"/>
                                     </div>
                                 </div>
 
@@ -45,7 +45,7 @@
                                     <div class="col-sm-10">
                                         <input type="text" name="label" th:value="${menu}? ${menu.label}"
                                                class="form-control" id="inputEmail3" placeholder=""
-                                               required="required"/>
+                                               required="required" maxlength="30"/>
                                     </div>
                                 </div>
 
@@ -64,7 +64,7 @@
                                     <div class="col-sm-10">
                                         <input type="text" name="url" th:value="${menu}? ${menu.url}"
                                                class="form-control" id="inputEmail3" placeholder=""
-                                               required="required"/>
+                                               required="required" maxlength="225"/>
                                     </div>
                                 </div>
 
@@ -84,8 +84,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer" style="text-align: center;">
-                                <button type="reset" class="btn btn-default">Reset</button>
-                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
                                 <button type="submit" class="btn btn-info">Submit</button>
                             </div>
                             <!-- /.box-footer -->

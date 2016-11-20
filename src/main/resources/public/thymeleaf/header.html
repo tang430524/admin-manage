@@ -1,7 +1,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="@{/}" class="logo">
+    <a th:href="@{/}" class="logo">
         <span class="logo-mini"><b>不迷失</b>admin</span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><b>不迷失</b>Admin</span>
@@ -19,8 +19,8 @@
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                    <a href="@{/profile}" class="dropdown-toggle" data-toggle="dropdown">
-                        <span class="hidden-xs" th:text="${user}?${user.username}">username</span>
+                    <a th:href="@{/user/profile}">
+                        <span class="glyphicon glyphicon-user"></span> &nbsp;&nbsp;<span th:text="${user}?${user.username}"></span>
                     </a>
 
                 </li>

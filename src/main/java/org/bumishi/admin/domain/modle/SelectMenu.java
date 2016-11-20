@@ -33,4 +33,15 @@ public class SelectMenu {
         return checked;
     }
 
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 }

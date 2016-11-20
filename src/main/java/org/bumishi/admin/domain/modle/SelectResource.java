@@ -33,5 +33,15 @@ public class SelectResource {
         return checked;
     }
 
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
 
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 }

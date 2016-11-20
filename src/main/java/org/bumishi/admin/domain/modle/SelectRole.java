@@ -35,4 +35,15 @@ public class SelectRole {
         return name;
     }
 
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 }

@@ -73,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // http.csrf().disable();
         http.cors().disable();
         http.headers().disable();
         http.jee().disable();
@@ -82,13 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.anonymous().disable();
         http.requestCache().disable();
 
-        http.csrf().ignoringAntMatchers("/", "/index");
-        http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(true);
-        http.addFilterAfter(urlSecurityInterceptor(), FilterSecurityInterceptor.class);//处理自定义的权限
+        http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(false).alwaysRemember(true);
+        http.addFilterAt(urlSecurityInterceptor(), FilterSecurityInterceptor.class);//处理自定义的权限
         //http.authorizeRequests()对应FilterSecurityInterceptor，不配置就不会加入FilterSecurityInterceptor
         //http.authorizeRequests().antMatchers("/login").permitAll().anyRequest().permitAll();
 
-        http.formLogin().defaultSuccessUrl("/").failureUrl("/login").successHandler(new AuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
+        http.formLogin().loginProcessingUrl("/login").loginPage("/to-login").defaultSuccessUrl("/").successHandler(new AuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
         http.logout().logoutSuccessHandler(new LogoutSuccessHandler());
         http.exceptionHandling().authenticationEntryPoint(new MyAuthenticationEntryPoint()).accessDeniedHandler(new MyAccessDeniedHandler());
     }
@@ -117,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/**/*.js", "/**/*.js.map", "/**/*.ts", "/**/*.css", "/**/*.css.map", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf", "/admin/api/**", "/404", "/401", "/error");
+        web.ignoring().antMatchers("/**/*.js", "/**/*.js.map", "/**/*.ts", "/**/*.css", "/**/*.css.map", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.fco", "/**/*.woff", "/**/*.woff2", "/**/*.font", "/**/*.svg", "/**/*.ttf", "/**/*.pdf","/*.ico", "/admin/api/**", "/404", "/401","/403", "/error");
     }
 
     //由于springboot默认会将所要的servlet,filter,listenr等标准servlet组件自动加入到servlet的过滤器链中，自定义的UrlSecurityInterceptor只希望加入security的过滤器链，中，所以这里配置不向servlet容器中注册
@@ -169,7 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             if (isAjax(request)) {
                 response.getWriter().println("请登录");
             } else {
-                response.sendRedirect("/login");
+                response.sendRedirect("/to-login");
             }
 
         }

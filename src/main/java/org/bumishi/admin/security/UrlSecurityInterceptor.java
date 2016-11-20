@@ -49,7 +49,7 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         FilterInvocation fi = new FilterInvocation(request, response, chain);
-        if (((HttpServletRequest) request).getServletPath().equals("/login")) {
+        if (((HttpServletRequest) request).getServletPath().equals("/to-login")) {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
             return;
         }
@@ -58,6 +58,17 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
         if(authentication==null || authentication instanceof AnonymousAuthenticationToken){
             //没有认证的，直接就结束
             throw new AuthenticationCredentialsNotFoundException("please login");
+        }
+        String url=((HttpServletRequest) request).getServletPath();
+        request.setAttribute("currentMenu","system");
+        if(url.length()>2) {
+            url=url.substring(1);
+            String currentMenu =url;
+            int index=url.indexOf("/");
+            if(index>0) {
+                currentMenu = url.substring(0, index);
+            }
+            request.setAttribute("currentMenu",currentMenu);
         }
         String currentUser = authentication.getName();
         if ("root".equalsIgnoreCase(currentUser)) {//不处理root账户的授权
