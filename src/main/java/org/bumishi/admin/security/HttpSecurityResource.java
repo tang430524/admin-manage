@@ -57,6 +57,7 @@ public class HttpSecurityResource implements FilterInvocationSecurityMetadataSou
             });
 
         });
+
         return attributes;
     }
 

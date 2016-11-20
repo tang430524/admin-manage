@@ -29,7 +29,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
@@ -84,9 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().userDetailsService(userDetailService).key(key).useSecureCookie(false).alwaysRemember(true);
         http.addFilterAt(urlSecurityInterceptor(), FilterSecurityInterceptor.class);//处理自定义的权限
         //http.authorizeRequests()对应FilterSecurityInterceptor，不配置就不会加入FilterSecurityInterceptor
-        //http.authorizeRequests().antMatchers("/login").permitAll().anyRequest().permitAll();
-
-        http.formLogin().loginProcessingUrl("/login").loginPage("/to-login").defaultSuccessUrl("/").successHandler(new AuthenticationSuccessHandler()).failureHandler(new SimpleUrlAuthenticationFailureHandler());
+        http.formLogin().loginProcessingUrl("/login").loginPage("/to-login").defaultSuccessUrl("/").successHandler(new AuthenticationSuccessHandler());
         http.logout().logoutSuccessHandler(new LogoutSuccessHandler());
         http.exceptionHandling().authenticationEntryPoint(new MyAuthenticationEntryPoint()).accessDeniedHandler(new MyAccessDeniedHandler());
     }

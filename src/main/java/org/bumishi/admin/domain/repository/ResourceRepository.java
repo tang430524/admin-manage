@@ -23,7 +23,7 @@ public interface ResourceRepository {
 
     List<Resource> listByRole(String roleId);
 
-    List<Resource> getUrlResources(String userId);
+    List<Resource> getEnableResources();
 
 
 
