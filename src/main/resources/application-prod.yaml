@@ -1,11 +1,10 @@
-
 server:
   port: 80
 
 debug: false
 
-#logging:
-#  file: /var/log/admin-manager.log
+logging:
+  file: /var/log/admin-manager/log
 
 ##登录记住我的token加密key
 remember:
