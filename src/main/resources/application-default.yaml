@@ -1,6 +1,9 @@
 
 server:
   port: 8080
+  compression:
+    enabled: true
+  connection-timeout: 3000
 
 debug: false
 

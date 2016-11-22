@@ -1,5 +1,8 @@
 server:
   port: 80
+   compression:
+      enabled: true
+    connection-timeout: 3000
 
 debug: false
 
