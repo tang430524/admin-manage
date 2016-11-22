@@ -77,6 +77,7 @@ public class UrlSecurityInterceptor extends FilterSecurityInterceptor {
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
         }else{
             InterceptorStatusToken token = super.beforeInvocation(fi);
+            //只保护在resource表中配置的资源
             if(token==null && isSecurityUrl(((HttpServletRequest) request).getServletPath())){
                 throw new AccessDeniedException("only root can accsess");
             }
