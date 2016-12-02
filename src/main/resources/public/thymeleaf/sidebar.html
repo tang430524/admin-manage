@@ -7,9 +7,9 @@
 
             <!--Multilevel-->
             <li th:if="${not #lists.isEmpty(navs)}" class="treeview active" th:each="nav:${navs}">
-                <a href="#">
+                <a th:href="@{${nav.url}?:'#'}">
                     <span th:text="${nav.label}">label</span>
-            <span class="pull-right-container">
+                    <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                 </a>
