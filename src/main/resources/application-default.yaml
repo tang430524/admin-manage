@@ -7,9 +7,6 @@ server:
 
 debug: false
 
-#logging:
-#  file: /var/log/admin-manager.log
-
 ##登录记住我的token加密key
 remember:
   key: javajidi_com
@@ -50,3 +47,11 @@ spring:
   thymeleaf:
       prefix: classpath:/public/thymeleaf/
       cache: false
+#logging:
+#  level:
+#    root: warn
+#    org:
+#      springframework:
+#        jdbc:
+#          core:
+#            JdbcTemplate: debug
