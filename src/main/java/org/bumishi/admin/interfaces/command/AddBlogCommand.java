@@ -33,6 +33,12 @@ public class AddBlogCommand {
     @NotBlank
     private String md;
 
+    /**
+     * 展示内容
+     */
+    @NotBlank
+    private String display;
+
     @NotBlank
     /**封面图片，主要迎合微信公众号*/
     private String img;
@@ -75,5 +81,13 @@ public class AddBlogCommand {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(String display) {
+        this.display = display;
     }
 }

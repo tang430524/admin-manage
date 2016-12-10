@@ -23,7 +23,7 @@ public class BlogController {
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     public String modify(@PathVariable("id") String id, AddBlogCommand command) {
-
+        System.out.println(command);
 
         return "redirect:/blog";
     }

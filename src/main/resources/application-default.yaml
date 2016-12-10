@@ -19,6 +19,12 @@ management:
 spring:
   application:
     name: admin-managee
+    qiniu:
+        access-key: ac
+        securt-key: ct
+        bucket: bumishi-blog
+        domain: http://ohtnk29z2.bkt.clouddn.com
+
   datasource:
     url: jdbc:mysql://localhost:3306/admin_manage?characterEncoding=utf-8
     username: root
@@ -47,11 +53,4 @@ spring:
   thymeleaf:
       prefix: classpath:/public/thymeleaf/
       cache: false
-#logging:
-#  level:
-#    root: warn
-#    org:
-#      springframework:
-#        jdbc:
-#          core:
-#            JdbcTemplate: debug
+

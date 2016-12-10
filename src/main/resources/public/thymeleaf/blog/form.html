@@ -27,7 +27,7 @@
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                        <form class="form-horizontal" th:action="@{${api}}" method="post" onsubmit="processHtml();">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">主标题</label>
@@ -64,7 +64,7 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">封面图片</label>
 
                                     <div class="col-sm-10">
-                                        <input type="file" name="img" required="required"/>
+                                        <input type="file" name="img"/>
                                     </div>
                                 </div>
 
@@ -72,13 +72,13 @@
                                 <div id="editormd">
                                     <textarea class="editormd-markdown-textarea" name="md"></textarea>;
 
-                                    <textarea class="editormd-html-textarea" name="html"></textarea>;
+                                    <textarea class="editormd-html-textarea" name="display" id="display"></textarea>;
                                 </div>
                                 <br/><br/>
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer" style="text-align: center;">
-                                <button type="button" onclick="mdd()" class="btn btn-info">Submit</button>
+                                <button type="submit" class="btn btn-info">Submit</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -112,23 +112,16 @@
             saveHTMLToTextarea: true,
             imageUpload: true,
             imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-            imageUploadURL: "/blog/upload"
-
-            /*
-             上传的后台只需要返回一个 JSON 数据，结构如下：
-             {
-             success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
-             message : "提示的信息，上传成功或上传失败及错误信息等。",
-             url     : "图片地址"        // 上传成功时才返回
-             }
-             */
+            imageUploadURL: "/upload/image"
 
         });
 
     });
 
-    function mdd() {
+    function processHtml() {
         var html = testEditor.getPreviewedHTML();
+        $("#display").val(html);
+        return true;
 
     }
 </script>
