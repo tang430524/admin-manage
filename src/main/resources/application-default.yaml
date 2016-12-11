@@ -1,6 +1,6 @@
 
 server:
-  port: 8080
+  port: 80
   compression:
     enabled: true
   connection-timeout: 3000
@@ -20,8 +20,8 @@ spring:
   application:
     name: admin-managee
     qiniu:
-        access-key: ac
-        securt-key: ct
+        access-key: ak
+        securt-key: sk
         bucket: bumishi-blog
         domain: http://ohtnk29z2.bkt.clouddn.com
 
@@ -53,4 +53,7 @@ spring:
   thymeleaf:
       prefix: classpath:/public/thymeleaf/
       cache: false
+
+blog:
+  host: http://localhost:8080
 

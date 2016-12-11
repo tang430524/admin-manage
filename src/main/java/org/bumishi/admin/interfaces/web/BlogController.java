@@ -1,10 +1,15 @@
 package org.bumishi.admin.interfaces.web;
 
 import org.apache.commons.lang3.StringUtils;
+import org.bumishi.admin.config.BlogConfig;
 import org.bumishi.admin.interfaces.command.AddBlogCommand;
+import org.bumishi.toolbox.model.PageModel;
+import org.bumishi.toolbox.model.RestResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * @author qiang.xie
@@ -14,10 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/blog")
 public class BlogController {
 
+    @Autowired
+    protected BlogConfig blogConfig;
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public String create(AddBlogCommand command) {
-
+         new RestTemplate().postForObject(blogConfig.getBlogHost()+"/admin/blog/add",command, RestResponse.class);
         return "redirect:/blog";
     }
 
@@ -48,7 +55,8 @@ public class BlogController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        //model.addAttribute("list",blogService.list());
+        PageModel pageModel=(PageModel) new RestTemplate().getForObject(blogConfig.getBlogHost()+"/rest/blog/latest",RestResponse.class).getData();
+        model.addAttribute("list",pageModel.getList());
         return "blog/list";
     }
 
