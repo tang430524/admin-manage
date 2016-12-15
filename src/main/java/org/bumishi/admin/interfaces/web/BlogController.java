@@ -1,5 +1,7 @@
 package org.bumishi.admin.interfaces.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.config.BlogConfig;
 import org.bumishi.admin.interfaces.command.AddBlogCommand;
@@ -24,21 +26,27 @@ public class BlogController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     public String create(AddBlogCommand command) {
-         new RestTemplate().postForObject(blogConfig.getBlogHost()+"/admin/blog/add",command, RestResponse.class);
-        return "redirect:/blog";
+        RestResponse restResponse = new RestTemplate().postForObject(blogConfig.getBlogHost() + "/admin/blog/add", command, RestResponse.class);
+        if (restResponse.success()) {
+            return "redirect:/blog";
+        }
+        return "blog/form";
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     public String modify(@PathVariable("id") String id, AddBlogCommand command) {
-        System.out.println(command);
-
-        return "redirect:/blog";
+        RestResponse restResponse = new RestTemplate().postForObject(blogConfig.getBlogHost() + "/admin/blog/update", command, RestResponse.class);
+        if (restResponse.success()) {
+            return "redirect:/blog";
+        }
+        return "blog/form";
     }
 
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public void delete(@PathVariable("id") String id) {
+        new RestTemplate().delete(blogConfig.getBlogHost() + "/admin/blog/{id}/delete", id);
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
@@ -55,8 +63,10 @@ public class BlogController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model) {
-        PageModel pageModel=(PageModel) new RestTemplate().getForObject(blogConfig.getBlogHost()+"/rest/blog/latest",RestResponse.class).getData();
-        model.addAttribute("list",pageModel.getList());
+        String json = new RestTemplate().getForObject(blogConfig.getBlogHost() + "/rest/blog/latest", String.class);
+        RestResponse<PageModel<AddBlogCommand>> response = JSON.parseObject(json, new TypeReference<RestResponse<PageModel<AddBlogCommand>>>() {
+        });
+        model.addAttribute("pageModel", response.getData());
         return "blog/list";
     }
 
