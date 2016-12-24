@@ -7,7 +7,7 @@ apply plugin: 'eclipse'
 apply plugin: 'spring-boot'
 
 buildscript {
-    def springbootVersion = '1.4.2.RELEASE'
+    def springbootVersion = '1.4.3.RELEASE'
     repositories {
         jcenter()
         maven { url "http://repo.spring.io/snapshot" }

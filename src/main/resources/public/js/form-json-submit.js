@@ -7,10 +7,13 @@ $(function () {
     $("form").submit(function (event) {
         var form=$(this);
         var data = form.serializeJSON();
-        console.log(JSON.stringify(data, null, 4));
+        var json = JSON.stringify(data, null, 4);
+        console.log(json);
         $.ajax({
             url:form.attr("action"),
             type:'post',
+            contentType: 'application/json;charset=utf-8',
+            data: json,
             dataType:'json',
             success:function (data) {
                 if (data.success){
@@ -20,6 +23,7 @@ $(function () {
                 }
             },
             error:function (e) {
+                console.log(e);
                 alert("未知错误");
             }
         });

@@ -1,7 +1,6 @@
 /**
  * Created by xieqiang on 2016/11/20.
  */
-$.ajaxSetup({headers:{'X-CSRF-TOKEN':$("#csrf_token").attr("content")}});
 
 $(function () {
   ajaxClick('lock','PUT');
@@ -14,8 +13,14 @@ function ajaxClick(name,type){
             type:type,
             url:$(this).attr("data"),
             success:function (data) {
-                if(data){
+                if (typeof data == 'string') {//admin系统管理方面的接口存在错误
                     alert(data);
+                } else if (typeof data == 'object') {//blog站点管理接口
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
                 }else{
                     window.location.reload();
                 }
