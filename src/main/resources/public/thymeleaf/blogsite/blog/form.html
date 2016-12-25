@@ -23,17 +23,19 @@
                     <!-- Horizontal Form -->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">文章编辑</h3>
+                            <h3 class="box-title">博客文章编辑</h3>
                         </div>
                         <!-- /.box-header -->
+
+                        <h2 th:if="${rep!=null &amp;&amp; !rep.success}" th:text="${rep.msg}"></h2>
                         <!-- form start -->
-                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                        <form th:if="${rep==null || rep.success}" class="form-horizontal" th:action="@{${api}}" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">主标题</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="title" th:value="${blog}? ${blog.title}"
+                                        <input type="text" name="title" th:value="${rep}?(${rep.data}? ${rep.data.title})"
                                                class="form-control" id="inputEmail3" placeholder=""
                                                required="required" maxlength="50"/>
                                     </div>
@@ -43,7 +45,7 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">副标题</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="sencondTitle" th:value="${blog}? ${blog.sencondTitle}"
+                                        <input type="text" name="sencondTitle" th:value="${rep}?(${rep.data}?(${rep.data.secondTitle}?${rep.data.secondTitle}))"
                                                class="form-control" id="inputEmail3" placeholder=""
                                                maxlength="30"/>
                                     </div>
@@ -71,7 +73,7 @@
 
                                 <div id="editormd">
                                     <textarea class="editormd-markdown-textarea" name="md"
-                                              th:text="${blog}? ${blog.md}"></textarea>;
+                                              th:text="${rep}?(${rep.data}? ${rep.data.md})"></textarea>;
 
                                     <textarea class="editormd-html-textarea" name="display" id="display"></textarea>;
                                 </div>

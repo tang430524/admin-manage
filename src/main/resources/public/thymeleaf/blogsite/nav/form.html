@@ -22,19 +22,22 @@
                     <!-- Horizontal Form -->
                     <div class="box box-info">
                         <div class="box-header with-border">
-                            <h3 class="box-title">菜单管理</h3>
+                            <h3 class="box-title">博客导航菜单管理</h3>
                         </div>
                         <!-- /.box-header -->
+
+                        <h2 th:if="${rep!=null &amp;&amp;!rep.success}" th:text="${rep.msg}"></h2>
+
                         <!-- form start -->
-                        <form class="form-horizontal" th:action="@{${api}}" method="post">
+                        <form th:if="${rep==null || rep.success}" class="form-horizontal" th:action="@{${api}}" method="post">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">id</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="id" th:value="${menu}? ${menu.id}"
-                                               th:readonly="${menu}?true:false" class="form-control" id="inputEmail3"
-                                               placeholder=""
+                                        <input type="text" name="id" th:value="${rep}?(${rep.data}? ${rep.data.id})"
+                                                class="form-control" id="inputEmail3"
+                                               placeholder=""  th:readonly="${rep}?(${rep.data}?true)"
                                                required="required" maxlength="50"/>
                                     </div>
                                 </div>
@@ -43,28 +46,19 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">label</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="label" th:value="${menu}? ${menu.label}"
+                                        <input type="text" name="label" th:value="${rep}?(${rep.data}? ${rep.data.label})"
                                                class="form-control" id="inputEmail3" placeholder=""
                                                required="required" maxlength="30"/>
                                     </div>
                                 </div>
 
-                                <!--<div class="form-group">-->
-                                <!--<label for="inputEmail3" class="col-sm-2 control-label">类型</label>-->
-
-                                <!--<div class="col-sm-10">-->
-                                <!--<input type="text" name="type" class="form-control" id="inputEmail3" placeholder=""-->
-                                <!--required="required">-->
-                                <!--</div>-->
-                                <!--</div>-->
-
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-2 control-label">url</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="url" th:value="${menu}? ${menu.url}"
+                                        <input type="text" name="url" th:value="${rep}?(${rep.data}?(${rep.data.url}? ${rep.data.url}))"
                                                class="form-control" id="inputEmail3" placeholder=""
-                                               required="required" maxlength="225"/>
+                                                maxlength="225"/>
                                     </div>
                                 </div>
 
@@ -72,11 +66,11 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">排序</label>
 
                                     <div class="col-sm-10">
-                                        <input type="number" name="order" th:value="${menu}? ${menu.order} : 10"
+                                        <input type="number" name="order" th:value="${rep}?(${rep.data}? ${rep.data.order}) : 10"
                                                class="form-control" id="inputEmail3" placeholder=""
                                         />
                                         <input type="hidden" name="path"
-                                               th:value="${menu}? ${menu.path} : (${parentPath} ? ${parentPath} :0)"/>
+                                               th:value="${rep}?(${rep.data}? ${rep.data.path}) : (${parentPath} ? ${parentPath} :0)"/>
                                     </div>
                                 </div>
 
@@ -106,5 +100,8 @@
 <!-- ./wrapper -->
 <div th:replace="script"></div>
 
+<script th:src="@{/js/jquery.serializejson.min.js}"></script>
+<script th:src="@{/js/ajax-setup.js}"></script>
+<script th:src="@{/js/form-json-submit.js}"></script>
 </body>
 </html>

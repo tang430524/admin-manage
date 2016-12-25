@@ -43,7 +43,7 @@ public class BlogController {
     public String toform(@RequestParam(value = "id", required = false) String id, Model model) {
         String api = "/blogsite/blog/add";
         if (StringUtils.isNotBlank(id)) {
-            model.addAttribute("blog", restTemplate.getForObject("/admin/blog/" + id).getData());
+            model.addAttribute("rep", restTemplate.getForObject("/admin/blog/" + id));
             api = "/blogsite/blog/" + id + "/modify";
         }
         model.addAttribute("api", api);
@@ -53,12 +53,8 @@ public class BlogController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-//        String json = restTemplate.getForObject("/admin/blog?page="+page, String.class);
-//        RestResponse<PageModel<BlogDto>> response = JSON.parseObject(json, new TypeReference<RestResponse<PageModel<BlogDto>>>() {
-//        });
-
         RestResponse<PageModel> response = restTemplate.getForPageModelResponseObject("/admin/blog?page=" + page);//todo 不能正确反序列化
-        model.addAttribute("pageModel", response.getData());
+        model.addAttribute("rep",response);
         return "blogsite/blog/list";
     }
 

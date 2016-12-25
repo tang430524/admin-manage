@@ -24,7 +24,7 @@ $(function () {
             },
             error:function (e) {
                 console.log(e);
-                alert("未知错误");
+                alert("未知错误:"+e);
             }
         });
         event.preventDefault();

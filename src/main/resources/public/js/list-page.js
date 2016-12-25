@@ -24,6 +24,10 @@ function ajaxClick(name,type){
                 }else{
                     window.location.reload();
                 }
+            },
+            error:function (e) {
+                console.log(e);
+                alert("未知错误:"+e);
             }
         })
     })
