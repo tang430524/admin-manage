@@ -58,7 +58,7 @@
                                               style="cursor: pointer" class="glyphicon glyphicon-lock"></span>
 
                                     </td>
-                                    <td><a href=""
+                                    <td><a th:if="${item.level==1}"
                                            th:href="@{/blogsite/book/{bookId}/indexs/form(bookId=${bookId},id=${item.path}+','+${item.id},parent=true)}">add
                                         item</a></td>
                                     <td style="text-align: center">

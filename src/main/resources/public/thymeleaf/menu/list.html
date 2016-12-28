@@ -55,7 +55,8 @@
                                               style="cursor: pointer" class="glyphicon glyphicon-lock"></span>
 
                                     </td>
-                                    <td><a href="" th:href="@{/menu/form/(id=${item.path}+','+${item.id},parent=true)}">add
+                                    <td><a th:if="${item.level==1}"
+                                           th:href="@{/menu/form/(id=${item.path}+','+${item.id},parent=true)}">add
                                         item</a></td>
                                     <td style="text-align: center">
                                         <a th:href="@{/menu/form(id=${item.id})}"><span class="glyphicon glyphicon-edit"
