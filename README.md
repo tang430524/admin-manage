@@ -1,7 +1,7 @@
 #基于springboot+spring security+spring session+thymeleaf技术和领域驱动设计思想的通用后台管理系统##
 
 
-###交流群:245130488###
+###交流群:[245130488](http://shang.qq.com/wpa/qunwpa?idkey=d1d7f068205e1ff5dbcc1ecda23d5195d2ce61254c0f7188741c758111e1c2f2)###
 
 
 ##专注Java技术研究的公众号:javajidi_com##
@@ -37,5 +37,10 @@
    6.浏览器打开http://localhost:8080/
 
    账号root,密码root
+
+#注意#
+   如果大家希望使用这个后台系统到自己的业务应用中，请使用mini-admin-manage分支
+   ，这个分支是最小后台代码，可以用在任何项目，目前主分支正在结合[不迷失博客](http://git.oschina.net/mvc-easy/tech-blog-api)项目开发中
+
 
 
