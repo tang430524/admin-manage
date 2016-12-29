@@ -3,7 +3,9 @@
 <head>
     <title>不迷失-Admin book编辑</title>
     <div th:replace="head"></div>
-    <link rel="stylesheet" th:href="@{/editor.md/css/editormd.css}"/>
+    <link href="http://7xqp2l.com1.z0.glb.clouddn.com/uploadfile.css" rel="stylesheet">
+    <!--<script src="http://7xqp2l.com1.z0.glb.clouddn.com/jquery-1.11.2.min.js" type="text/javascript"></script>-->
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini ">
@@ -58,7 +60,10 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">封面图片</label>
 
                                     <div class="col-sm-10">
-                                        <input type="file" name="img"/>
+                                        <div id="fileuploader">Upload</div>
+                                        <button id="extrabutton" class="ajax-file-upload-green">上传</button>
+                                        <input type="hidden" name="img"
+                                               th:value="${rep}?(${rep.data}?(${rep.data.img}?${rep.data.img}))"/>
                                     </div>
                                 </div>
 
@@ -101,6 +106,39 @@
 <script th:src="@{/js/jquery.serializejson.min.js}"></script>
 <script th:src="@{/js/ajax-setup.js}"></script>
 <script th:src="@{/js/form-json-submit.js}"></script>
+<script src="http://7xqp2l.com1.z0.glb.clouddn.com/jquery.uploadfile.js"></script>
+<script>
+    $(document).ready(function () {
+        var extraObj = $("#fileuploader").uploadFile({
+            url: "[(@{/upload/image})]",
+            fileName: "editormd-image-file",
+            showFileSize: true,
+            showDelete: true,
+            autoSubmit: false,
+            statusBarWidth: 590,
+            dragdropWidth: 590,
+            dragdropHeight: 200,
+            uploadStr: "选择",
+            cancelStr: "取消",
+            abortStr: "终止",
+            deleteStr: "删除",
+            dynamicFormData: function () {
+                var data = {"_csrf": "[(${_csrf}?${_csrf.token})]"};
+                return data;
+            },
+            onSuccess: function (files, data, xhr, pd) {
+                var obj = eval(data);
+                console.log(obj);
+                $("#img").val(data.url);
+            }
 
+        });
+
+        $("#extrabutton").click(function () {
+            extraObj.startUpload();
+        });
+
+    });
+</script>
 </body>
 </html>
