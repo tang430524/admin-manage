@@ -3,6 +3,7 @@ package org.bumishi.admin.config;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.security.UrlSecurityInterceptor;
 import org.bumishi.admin.security.UserDetailService;
+import org.bumishi.toolbox.model.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -162,7 +163,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                              AuthenticationException authException) throws IOException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
-                response.getWriter().println("请登录");
+                response.getWriter().println(RestResponse.fail("请登录"));
             } else {
                 response.sendRedirect("/to-login");
             }
@@ -175,7 +176,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
-                response.getWriter().println("您无权访问");
+                response.getWriter().println(RestResponse.fail("您无权访问"));
             } else {
                 response.sendRedirect("/403");
             }
