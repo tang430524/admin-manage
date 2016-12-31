@@ -4,7 +4,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 buildscript {
     def springbootVersion = '1.4.3.RELEASE'
