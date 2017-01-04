@@ -13,7 +13,7 @@ function ajaxClick(name,type){
             type:type,
             url:$(this).attr("data"),
             success:function (data) {
-                if (typeof data == 'string') {//admin系统管理方面的接口存在错误
+                if (data && typeof data == 'string') {//admin系统管理方面的接口
                     alert(data);
                 } else if (typeof data == 'object') {//blog站点管理接口
                     if (data.success) {
