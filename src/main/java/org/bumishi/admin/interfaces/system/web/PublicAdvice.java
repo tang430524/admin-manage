@@ -1,9 +1,11 @@
 package org.bumishi.admin.interfaces.system.web;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.application.MenuService;
 import org.bumishi.admin.security.SecurityUser;
 import org.bumishi.admin.security.SecurityUtil;
+import org.bumishi.toolbox.model.RestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,7 +34,9 @@ public class PublicAdvice {
         if (StringUtils.isBlank(ajax)) {
             response.sendRedirect("/error");
         } else {
-            response.getWriter().println("出错了:" + ex.getMessage());
+            String json= JSON.toJSONString(RestResponse.fail("出错了:" + ex.getMessage()));
+            response.setContentType("application/json");
+            response.getWriter().println(json);
         }
 
     }
