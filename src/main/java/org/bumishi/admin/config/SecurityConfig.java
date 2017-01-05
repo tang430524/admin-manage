@@ -1,5 +1,6 @@
 package org.bumishi.admin.config;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.security.UrlSecurityInterceptor;
 import org.bumishi.admin.security.UserDetailService;
@@ -163,7 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                              AuthenticationException authException) throws IOException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
-                response.getWriter().println(RestResponse.fail("请登录"));
+                response.getWriter().println(JSON.toJSONString(RestResponse.fail("请登录")));
             } else {
                 response.sendRedirect("/to-login");
             }
@@ -176,7 +177,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
-                response.getWriter().println(RestResponse.fail("您无权访问"));
+                response.getWriter().println(JSON.toJSONString(RestResponse.fail("您无权访问")));
             } else {
                 response.sendRedirect("/403");
             }
