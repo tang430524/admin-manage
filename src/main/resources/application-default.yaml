@@ -48,6 +48,7 @@ spring:
  #spring-boot-admin config
   boot:
     admin:
+    #用于将当前应用注册到Spring Boot Admin
       url: http://localhost:${server.port}${spring.boot.admin.context-path}
       context-path: /admin
   thymeleaf:

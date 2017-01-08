@@ -42,12 +42,18 @@ public class BlogController {
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String toform(@RequestParam(value = "id", required = false) String id, Model model) {
         String api = "/blogsite/blog/add";
+        boolean isUpdate=false;
         if (StringUtils.isNotBlank(id)) {
-            model.addAttribute("rep", restTemplate.getForObject("/admin/blog/" + id));
-            api = "/blogsite/blog/" + id + "/modify";
+            RestResponse restResponse=restTemplate.getForObject("/admin/blog/" + id);
+            model.addAttribute("rep", restResponse);
+            if(restResponse!=null && restResponse.isSuccess() && restResponse.getData()!=null) {
+                api = "/blogsite/blog/" + id + "/modify";
+                isUpdate = true;
+            }
         }
+        model.addAttribute("isUpdate",isUpdate);//是否是新增还是修改，简化模板中的判断
         model.addAttribute("api", api);
-
+        model.addAttribute("catalogs",restTemplate.getForObject("/admin/catalog").getData());
         return "blogsite/blog/form";
     }
 

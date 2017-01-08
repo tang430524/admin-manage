@@ -55,12 +55,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-2 control-label">url</label>
+                                    <label for="inputEmail3" class="col-sm-2 control-label">链接(如果是链接到某篇博客请输入博客id,否则输入完整地址)</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="url"
+                                        <input type="text" required="required" name="url"
                                                th:value="${rep}?(${rep.data}?(${rep.data.url}? ${rep.data.url}))"
-                                               class="form-control" id="inputEmail3" placeholder=""
+                                               class="form-control" id="url" placeholder=""
                                                maxlength="225"/>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                             <div class="box-footer" style="text-align: center;">
                                 <button type="button" class="btn btn-info" onclick="backToList();">返回</button>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-info">提交</button>
+                                <button id="submitBtn" type="submit" class="btn btn-info">提交</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>
@@ -111,9 +111,20 @@
 <script th:src="@{/js/form-json-submit.js}"></script>
 <script th:inline="javascript">
     function backToList() {
-        location.href = [[@{/blogsite/book / {bookId} / indexs(bookId =${bookId})
+        location.href = [[@{/blogsite/book/{bookId}/indexs(bookId =${bookId});
     }]]
-    }
+    };
+
+    $(function () {
+        $("#submitBtn").click(function (event) {
+               var url=$("#url").val();
+                if (!(url.startsWith("/") || url.startsWith("http://") || url.startsWith("https://"))){
+                    url="/book/[(${bookId})]/blog/"+url;
+                    $("#url").val(url);
+                }
+        });
+    })
+
 
 </script>
 </body>

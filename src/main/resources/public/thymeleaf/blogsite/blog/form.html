@@ -35,7 +35,7 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">主标题</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="title" th:value="${rep}?(${rep.data}? ${rep.data.title})"
+                                        <input type="text" name="title" th:value="${isUpdate}? ${rep.data.title}"
                                                class="form-control" id="inputEmail3" placeholder=""
                                                required="required" maxlength="50"/>
                                     </div>
@@ -45,7 +45,7 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">副标题</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" name="sencondTitle" th:value="${rep}?(${rep.data}?(${rep.data.secondTitle}?${rep.data.secondTitle}))"
+                                        <input type="text" name="sencondTitle" th:value="${isUpdate}?(${rep.data.secondTitle}?${rep.data.secondTitle})"
                                                class="form-control" id="inputEmail3" placeholder=""
                                                maxlength="30"/>
                                     </div>
@@ -56,8 +56,8 @@
 
                                     <div class="col-sm-10">
                                         <select name="catalog"
-                                                class="form-control">
-                                            <option value="java">java</option>
+                                                class="form-control" required>
+                                            <option th:each="item : ${catalogs}" th:value="${item.id}" th:text="${item.label}" th:selected="${isUpdate}?(${item.id==rep.data.catalog}?'selected')" >java</option>
                                         </select>
                                     </div>
                                 </div>
@@ -66,7 +66,11 @@
                                     <label for="inputEmail3" class="col-sm-2 control-label">封面图片</label>
 
                                     <div class="col-sm-10">
-                                        <input type="file" name="img"/>
+                                        <input class="form-control" type="url" name="img" required="required" th:value="${isUpdate}? (${rep.data.img}?${rep.data.img})"/>
+                                        <br/>
+                                        <div th:if="${isUpdate and (rep.data.img!=null)}" style="text-align: center">
+                                            <img th:src="${rep.data.img}"/>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -122,7 +126,12 @@
 
         });
 
-        $("#submitBtn").click(function () {
+        $("#submitBtn").click(function (event) {
+            if (testEditor.getMarkdown()===""){
+                alert("内容不能为空");
+                event.preventDefault();
+                return;
+            }
             processHtml();
         })
 

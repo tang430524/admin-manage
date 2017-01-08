@@ -58,7 +58,7 @@ dependencies {
     compile 'org.thymeleaf:thymeleaf:3.0.2.RELEASE'
     compile 'org.thymeleaf:thymeleaf-spring4:3.0.2.RELEASE'
     compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.0.3'
-    compile files('src/main/lib/bumishi-toolbox-1.0.jar')
+   // compile files('src/main/lib/bumishi-toolbox-1.0.jar')
 
 
 }

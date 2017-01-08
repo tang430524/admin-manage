@@ -3,8 +3,10 @@ package org.bumishi.admin.interfaces.system.web;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import org.bumishi.admin.config.ApplicationConfig;
+import org.bumishi.toolbox.image.ImageUtils;
 import org.bumishi.toolbox.qiniu.QiNiuApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,8 +32,11 @@ public class UploadController {
 
     @PostMapping("/image")
     public UploadResponse uploadImage(@RequestParam("editormd-image-file") MultipartFile file) throws IOException {
+        String contentType=file.getContentType();
+        System.out.println(contentType);
         String key = System.currentTimeMillis() + "" + new Random().nextInt(10000) + file.getOriginalFilename();
-        Response response = qiNiuApi.upload(file.getBytes(), key, applicationConfig.getQiniu_bucket());
+        byte[] withWaterImage= ImageUtils.addWaterForImage(file.getInputStream(),new ClassPathResource("/water.png").getInputStream());
+        Response response = qiNiuApi.upload(withWaterImage, key, applicationConfig.getQiniu_bucket());
         return create(response, key);
     }
 

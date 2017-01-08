@@ -1,13 +1,26 @@
 package org.bumishi.admin.interfaces.blogsite.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.qiniu.http.Response;
 import org.apache.commons.lang3.StringUtils;
+import org.bumishi.admin.config.ApplicationConfig;
+import org.bumishi.admin.infrastructure.RequestMapToJsonUtil;
 import org.bumishi.admin.interfaces.blogsite.BlogSiteRestTemplate;
+import org.bumishi.toolbox.image.ImageUtils;
 import org.bumishi.toolbox.model.PageModel;
 import org.bumishi.toolbox.model.RestResponse;
+import org.bumishi.toolbox.qiniu.QiNiuApi;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @author qiang.xie
@@ -20,18 +33,61 @@ public class BookController {
     @Autowired
     private BlogSiteRestTemplate restTemplate;
 
+    @Autowired
+    protected QiNiuApi qiNiuApi;
+
+    @Autowired
+    protected ApplicationConfig applicationConfig;
+
     @RequestMapping(method = RequestMethod.POST, value = "/add")
     @ResponseBody
-    public RestResponse create(@RequestBody String json) {
-        return restTemplate.post("/admin/book/add", json);
+    public RestResponse create(HttpServletRequest request,@RequestParam("image") MultipartFile file) {
+        RestResponse uploadResponse=upload(file);
+        if(!uploadResponse.isSuccess()) {
+            return uploadResponse;
+        }
+        Map<String,String[]> params=request.getParameterMap();
+        String json = RequestMapToJsonUtil.toJson(params);
+        JSONObject jsonObject= JSON.parseObject(json);
+        jsonObject.put("img",applicationConfig.getQiniu_domain()+"/"+uploadResponse.getData().toString());
+        return restTemplate.post("/admin/book/add", jsonObject.toJSONString());
+
     }
 
     @RequestMapping(value = "/{id}/modify", method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse modify(@PathVariable("id") String id, @RequestBody String json) {
-        return restTemplate.post("/admin/book/" + id + "/update", json, id);
+    public RestResponse modify(@PathVariable("id") String id, @RequestParam(value = "image",required = false) MultipartFile file,HttpServletRequest request) {
+        Map<String,String[]> params=request.getParameterMap();
+        String json = RequestMapToJsonUtil.toJson(params);
+        if(file==null){
+            return restTemplate.post("/admin/book/" + id + "/update", json, id);
+        }
+        RestResponse uploadResponse=upload(file);
+        if(!uploadResponse.isSuccess()) {
+            return uploadResponse;
+        }
+
+        JSONObject jsonObject= JSON.parseObject(json);
+        jsonObject.put("img",applicationConfig.getQiniu_domain()+"/"+uploadResponse.getData().toString());
+        return restTemplate.post("/admin/book/" + id + "/update", jsonObject.toJSONString(), id);
     }
 
+    private RestResponse upload(MultipartFile file){
+        String contentType=file.getContentType();
+        System.out.println(contentType);
+        String key = System.currentTimeMillis() + "" + new Random().nextInt(10000) + file.getOriginalFilename();
+        try {
+            byte[] withWaterImage= ImageUtils.addWaterForImage(file.getInputStream(),new ClassPathResource("/water.png").getInputStream());
+            Response response = qiNiuApi.upload(withWaterImage, key, applicationConfig.getQiniu_bucket());
+            if(response==null || !response.isOK()){
+                return RestResponse.fail("upload fail:"+response.bodyString());
+            }
+            return RestResponse.ok(key);
+
+        }catch (Exception e){
+            return RestResponse.fail("upload fail:"+e.getMessage());
+        }
+    }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
     @ResponseBody
@@ -42,12 +98,18 @@ public class BookController {
     @RequestMapping(value = "/form", method = RequestMethod.GET)
     public String toform(@RequestParam(value = "id", required = false) String id, Model model) {
         String api = "/blogsite/book/add";
+        boolean isUpdata=false;
         if (StringUtils.isNotBlank(id)) {
-            model.addAttribute("rep", restTemplate.getForObject("/admin/book/" + id));
-            api = "/blogsite/book/" + id + "/modify";
+            RestResponse restResponse=restTemplate.getForObject("/admin/book/" + id);
+            model.addAttribute("rep", restResponse);
+            if(restResponse!=null && restResponse.isSuccess() && restResponse.getData()!=null) {
+                api = "/blogsite/book/" + id + "/modify";
+                isUpdata = true;
+            }
         }
+        model.addAttribute("isUpdate",isUpdata);//是否是新增还是修改，简化模板中的判断
         model.addAttribute("api", api);
-
+        model.addAttribute("catalogs",restTemplate.getForObject("/admin/catalog").getData());
         return "blogsite/book/form";
     }
 
