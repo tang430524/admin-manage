@@ -59,7 +59,7 @@ public class BlogController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
-        RestResponse<PageModel> response = restTemplate.getForPageModelResponseObject("/admin/blog?page=" + page);//todo 不能正确反序列化
+        RestResponse<PageModel> response = restTemplate.getForPageModelResponseObject("/admin/blog?page=" + page);
         model.addAttribute("rep",response);
         return "blogsite/blog/list";
     }
