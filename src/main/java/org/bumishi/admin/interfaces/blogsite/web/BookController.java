@@ -7,12 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.bumishi.admin.config.ApplicationConfig;
 import org.bumishi.admin.infrastructure.RequestMapToJsonUtil;
 import org.bumishi.admin.interfaces.blogsite.BlogSiteRestTemplate;
-import org.bumishi.toolbox.image.ImageUtils;
 import org.bumishi.toolbox.model.PageModel;
 import org.bumishi.toolbox.model.RestResponse;
 import org.bumishi.toolbox.qiniu.QiNiuApi;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +29,8 @@ import java.util.Random;
 @Controller
 @RequestMapping("/blogsite/book")
 public class BookController {
+
+    private Logger logger= LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     private BlogSiteRestTemplate restTemplate;
@@ -74,11 +76,10 @@ public class BookController {
 
     private RestResponse upload(MultipartFile file){
         String contentType=file.getContentType();
-        System.out.println(contentType);
+        logger.info("upload type:"+contentType);
         String key = System.currentTimeMillis() + "" + new Random().nextInt(10000) + file.getOriginalFilename();
         try {
-            byte[] withWaterImage= ImageUtils.addWaterForImage(file.getInputStream(),new ClassPathResource("/water.png").getInputStream());
-            Response response = qiNiuApi.upload(withWaterImage, key, applicationConfig.getQiniu_bucket());
+            Response response = qiNiuApi.upload(file.getBytes(), key, applicationConfig.getQiniu_bucket());
             if(response==null || !response.isOK()){
                 return RestResponse.fail("upload fail:"+response.bodyString());
             }
