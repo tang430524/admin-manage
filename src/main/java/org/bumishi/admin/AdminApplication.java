@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
  */
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableAdminServer
-public class Application {
+public class AdminApplication {
 
     public static void main(String[] arg){
-        SpringApplication.run(Application.class);
+        SpringApplication.run(AdminApplication.class);
     }
 }
 
