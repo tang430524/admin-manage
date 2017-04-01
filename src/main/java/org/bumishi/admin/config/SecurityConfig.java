@@ -164,6 +164,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                              AuthenticationException authException) throws IOException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
+                response.setContentType("application/json");
                 response.getWriter().println(JSON.toJSONString(RestResponse.fail("请登录")));
             } else {
                 response.sendRedirect("/to-login");
@@ -177,6 +178,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
             response.setCharacterEncoding("utf-8");
             if (isAjax(request)) {
+                response.setContentType("application/json");
                 response.getWriter().println(JSON.toJSONString(RestResponse.fail("您无权访问")));
             } else {
                 response.sendRedirect("/403");
