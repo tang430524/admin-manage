@@ -35,14 +35,6 @@
 http://localhost:10000
 账号root,密码root
 
-项目地址
-http://git.oschina.net/mvc-easy/admin-manage
-
-注意，主分支master目前正在与我的博客系统同步开发中，请使用mini-admin-manage分支
-
-线上演示
-http://bumishi.tech/
-demo/demo
 
 效果预览
 
@@ -62,11 +54,4 @@ demo/demo
 
 ![](http://static.bumishi.cn/1483550671566486admin2.png)
 
-
-欢迎提出建议与意见！
-
-交流群:245130488
-
-不迷失微信公众号:javajidi_com
-
-#@不迷失，专注Java技术研究#
+转载：http://git.oschina.net/mvc-easy/admin-manage
