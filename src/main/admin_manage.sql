@@ -153,7 +153,7 @@ CREATE TABLE `user` (
   `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   `lastTime` datetime DEFAULT NULL COMMENT '最后登录时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `loginname` (`username`) USING BTREE
+  UNIQUE KEY `loginname`  USING BTREE (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------

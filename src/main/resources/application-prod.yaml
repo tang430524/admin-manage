@@ -27,8 +27,8 @@ spring:
       domain: http://static.bumishi.cn
   datasource:
     url: jdbc:mysql://localhost:3306/admin_manage?characterEncoding=utf-8
-    username: app
-    password: app
+    username: root
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
